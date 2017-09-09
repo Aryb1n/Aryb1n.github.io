@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head>
+    <meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.5.0 -->
+    <script>
+        window.materialVersion = "1.5.0"
+        // Delete localstorage with these tags
+        window.oldVersion = [
+            'codestartv1',
+            '1.3.4',
+            '1.4.0',
+            '1.4.0b1'
+        ]
+    </script>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Title -->
+    
+    <title>
+        
+            数据结构复习 | 
+        
+        Aryb1n&#39;s notebook
+    </title>
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="Aryb1n">
+    <meta name="description" itemprop="description" content="">
+    <meta name="keywords" content=",复习 数据结构">
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(key){try{localStorage.removeItem(key)}catch(e){}};lsloader.setLS=function(key,val){try{localStorage.setItem(key,val)}catch(e){}};lsloader.getLS=function(key){var val="";try{val=localStorage.getItem(key)}catch(e){val=""}return val};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var keys=[];for(var i=0;i<localStorage.length;i++){keys.push(localStorage.key(i))}keys.forEach(function(key){var data=lsloader.getLS(key);if(window.oldVersion){var remove=window.oldVersion.reduce(function(p,c){return p||data.indexOf("/*"+c+"*/")!==-1},false);if(remove){lsloader.removeLS(key)}}})}catch(e){}};lsloader.clean();lsloader.load=function(jsname,jspath,cssonload,isJs){if(typeof cssonload==="boolean"){isJs=cssonload;cssonload=undefined}isJs=isJs||false;cssonload=cssonload||function(){};var code;code=this.getLS(jsname);if(code&&code.indexOf(versionString)===-1){this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload,isJs);return}if(code){var versionNumber=code.split(versionString)[0];if(versionNumber!=jspath){console.log("reload:"+jspath);this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload,isJs);return}code=code.split(versionString)[1];if(isJs){this.jsRunSequence.push({name:jsname,code:code});this.runjs(jspath,jsname,code)}else{document.getElementById(jsname).appendChild(document.createTextNode(code));cssonload()}}else{this.requestResource(jsname,jspath,cssonload,isJs)}};lsloader.requestResource=function(name,path,cssonload,isJs){var that=this;if(isJs){this.iojs(path,name,function(path,name,code){that.setLS(name,path+versionString+code);that.runjs(path,name,code)})}else{this.iocss(path,name,function(code){document.getElementById(name).appendChild(document.createTextNode(code));that.setLS(name,path+versionString+code)},cssonload)}};lsloader.iojs=function(path,jsname,callback){var that=this;that.jsRunSequence.push({name:jsname,code:""});try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(path,jsname,xhr.response);return}}that.jsfallback(path,jsname)}};xhr.send(null)}catch(e){that.jsfallback(path,jsname)}};lsloader.iocss=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.iofonts=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.runjs=function(path,name,code){if(!!name&&!!code){for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code=code}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var script=document.createElement("script");script.appendChild(document.createTextNode(this.jsRunSequence[0].code));script.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(script);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var that=this;var script=document.createElement("script");script.src=this.jsRunSequence[0].path;script.type="text/javascript";this.jsRunSequence[0].status="loading";script.onload=function(){that.jsRunSequence.shift();if(that.jsRunSequence.length>0){that.runjs()}};document.body.appendChild(script)}};lsloader.tagLoad=function(path,name){this.jsRunSequence.push({name:name,code:"",path:path,status:"failed"});this.runjs()};lsloader.jsfallback=function(path,name){if(!!this.jsnamemap[name]){return}else{this.jsnamemap[name]=name}for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code="";this.jsRunSequence[k].status="failed";this.jsRunSequence[k].path=path}}this.runjs()};lsloader.cssfallback=function(path,name,cssonload){if(!!this.cssnamemap[name]){return}else{this.cssnamemap[name]=1}var link=document.createElement("link");link.type="text/css";link.href=path;link.rel="stylesheet";link.onload=link.onerror=cssonload;var root=document.getElementsByTagName("script")[0];root.parentNode.insertBefore(link,root)};lsloader.runInlineScript=function(scriptId,codeId){var code=document.getElementById(codeId).innerText;this.jsRunSequence.push({name:scriptId,code:code});this.runjs()};lsloader.loadCombo=function(jslist){var updateList="";var requestingModules={};for(var k in jslist){var LS=this.getLS(jslist[k].name);if(!!LS){var version=LS.split(versionString)[0];var code=LS.split(versionString)[1]}else{var version=""}if(version==jslist[k].path){this.jsRunSequence.push({name:jslist[k].name,code:code,path:jslist[k].path})}else{this.jsRunSequence.push({name:jslist[k].name,code:null,path:jslist[k].path,status:"comboloading"});requestingModules[jslist[k].name]=true;updateList+=(updateList==""?"":";")+jslist[k].path}}var that=this;if(!!updateList){var xhr=new XMLHttpRequest;xhr.open("get",combo+updateList,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){that.runCombo(xhr.response,requestingModules);return}}else{for(var i in that.jsRunSequence){if(requestingModules[that.jsRunSequence[i].name]){that.jsRunSequence[i].status="failed"}}that.runjs()}}};xhr.send(null)}this.runjs()};lsloader.runCombo=function(comboCode,requestingModules){comboCode=comboCode.split("/*combojs*/");comboCode.shift();for(var k in this.jsRunSequence){if(!!requestingModules[this.jsRunSequence[k].name]&&!!comboCode[0]){this.jsRunSequence[k].status="comboJS";this.jsRunSequence[k].code=comboCode[0];this.setLS(this.jsRunSequence[k].name,this.jsRunSequence[k].path+versionString+comboCode[0]);comboCode.shift()}}this.runjs()}})();</script>
+
+    <!-- Import queue -->
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
+    <link rel="icon" sizes="192x192" href="/img/favicon.png">
+    <link rel="apple-touch-icon" href="/img/favicon.png">
+
+    <!--iOS -->
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Aryb1n&#39;s notebook">
+
+    <!-- Site Verification -->
+    
+    
+
+    <!-- RSS -->
+    
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import CSS -->
+    
+        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/css/material.min.css?Z7a72R1E4SxzBKR/WGctOA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+        
+
+    
+
+    
+
+    <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    overflow-x: hidden !important;
+  }
+  
+  code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #0097A7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #0097A7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #0097A7 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body {
+        background-color: ;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text {
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+<!-- Import Roboto -->
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+
+
+<!-- Import Material Icon -->
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+
+
+    <!-- Import jQuery -->
+    
+        <script>lsloader.load("jq_js","//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js", true)</script>
+    
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://yoursite.com">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="数据结构复习 | Aryb1n&#39;s notebook">
+    <meta property="og:image" content="http://yoursite.com/img/favicon.png" />
+    <meta property="og:description" content="">
+    <meta property="og:article:tag" content="复习 数据结构"> 
+
+    
+        <meta property="article:published_time" content="Sun Aug 27 2017 10:13:42 GMT+0800" />
+        <meta property="article:modified_time" content="Tue Aug 29 2017 21:25:57 GMT+0800" />
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:title" content="数据结构复习 | Aryb1n&#39;s notebook">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:image" content="http://yoursite.com/img/favicon.png">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="http://yoursite.com" />
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="http://yoursite.com/2017/08/27/数据结构复习/index.html" />
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": "http://yoursite.com/2017/08/27/数据结构复习/index.html",
+    "headline": "数据结构复习",
+    "datePublished": "Sun Aug 27 2017 10:13:42 GMT+0800",
+    "dateModified": "Tue Aug 29 2017 21:25:57 GMT+0800",
+    "author": {
+        "@type": "Person",
+        "name": "Aryb1n",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/avatar.png"
+        },
+        "description": "Hi, nice to meet you"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "Aryb1n&#39;s notebook",
+        "logo": {
+            "@type":"ImageObject",
+            "url": "/img/favicon.png"
+        }
+    },
+    "keywords": ",复习 数据结构",
+    "description": "",
+}
+</script>
+
+
+    
+
+    <!-- Analytics -->
+    
+    
+    
+
+    <!-- Custom Head -->
+    
+
+</head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+
+    <!-- Left aligned menu below button -->
+    
+    
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#栈"><span class="post-toc-number">1.</span> <span class="post-toc-text">栈</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#应用"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">应用</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#队列"><span class="post-toc-number">2.</span> <span class="post-toc-text">队列</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#数据成员"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">数据成员</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#操作"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">操作</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#循环队列里存在的问题"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">循环队列里存在的问题</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#应用-1"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">应用</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#链表"><span class="post-toc-number">3.</span> <span class="post-toc-text">链表</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#实现方式"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">实现方式</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#应用-2"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">应用</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#操作-待写"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">操作(待写)</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#线性表"><span class="post-toc-number">4.</span> <span class="post-toc-text">线性表</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#存储方式"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">存储方式</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#推广"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">推广</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#树"><span class="post-toc-number">5.</span> <span class="post-toc-text">树</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#相关概念"><span class="post-toc-number">5.1.</span> <span class="post-toc-text">相关概念</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二叉树-amp-树"><span class="post-toc-number">5.2.</span> <span class="post-toc-text">二叉树 & 树</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一个公式"><span class="post-toc-number">5.3.</span> <span class="post-toc-text">一个公式</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#二叉树"><span class="post-toc-number">6.</span> <span class="post-toc-text">二叉树</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#性质"><span class="post-toc-number">6.1.</span> <span class="post-toc-text">性质</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#满二叉树"><span class="post-toc-number">6.2.</span> <span class="post-toc-text">满二叉树</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#完全二叉树"><span class="post-toc-number">6.3.</span> <span class="post-toc-text">完全二叉树</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#几个题目"><span class="post-toc-number">6.4.</span> <span class="post-toc-text">几个题目</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二叉树的遍历"><span class="post-toc-number">6.5.</span> <span class="post-toc-text">二叉树的遍历</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#应用场景"><span class="post-toc-number">6.6.</span> <span class="post-toc-text">应用场景</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#线索二叉树"><span class="post-toc-number">6.7.</span> <span class="post-toc-text">线索二叉树</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#树和森林的存储方式"><span class="post-toc-number">6.8.</span> <span class="post-toc-text">树和森林的存储方式</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#各种树"><span class="post-toc-number">6.9.</span> <span class="post-toc-text">各种树</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#图"><span class="post-toc-number">7.</span> <span class="post-toc-text">图</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一些概念"><span class="post-toc-number">7.1.</span> <span class="post-toc-text">一些概念</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#图的存储方式"><span class="post-toc-number">7.2.</span> <span class="post-toc-text">图的存储方式</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#图的遍历算法"><span class="post-toc-number">7.3.</span> <span class="post-toc-text">图的遍历算法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#最小生成树"><span class="post-toc-number">7.4.</span> <span class="post-toc-text">最小生成树</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#拓扑排序-有向图"><span class="post-toc-number">7.5.</span> <span class="post-toc-text">拓扑排序(有向图)</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#关键路径"><span class="post-toc-number">7.6.</span> <span class="post-toc-text">关键路径</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#最短路"><span class="post-toc-number">7.7.</span> <span class="post-toc-text">最短路</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#查找"><span class="post-toc-number">8.</span> <span class="post-toc-text">查找</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#树-1"><span class="post-toc-number">8.1.</span> <span class="post-toc-text">树</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Hash表"><span class="post-toc-number">8.2.</span> <span class="post-toc-text">Hash表</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#排序"><span class="post-toc-number">9.</span> <span class="post-toc-text">排序</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#插入排序"><span class="post-toc-number">9.1.</span> <span class="post-toc-text">插入排序</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#交换类排序"><span class="post-toc-number">9.2.</span> <span class="post-toc-text">交换类排序</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#选择排序"><span class="post-toc-number">9.3.</span> <span class="post-toc-text">选择排序</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#归并排序"><span class="post-toc-number">9.4.</span> <span class="post-toc-text">归并排序</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#基数排序"><span class="post-toc-number">9.5.</span> <span class="post-toc-text">基数排序</span></a></li></ol></li></ol>
+    </ul>
+    
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 19 + 1);
+
+    $('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').addClass('lazy');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                数据结构复习
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>Aryb1n</strong>
+        <span>8月 27, 2017</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/复习-数据结构/">复习 数据结构</a>
+    </ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=数据结构复习&url=http://yoursite.com/2017/08/27/数据结构复习/index.html&pic=http://yoursite.com/img/favicon.png&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=数据结构复习&url=http://yoursite.com/2017/08/27/数据结构复习/index.html&via=Aryb1n" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/08/27/数据结构复习/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://yoursite.com/2017/08/27/数据结构复习/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <p>其实主要是记一些名词</p>
+<h2 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h2><p>没什么好说的.用数组模拟即可</p>
+<h3 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h3><ul>
+<li>括号配对, 自己写了一下, 不难, 但好久不做题, 手有点生</li>
+<li>进行四则运算, 待写</li>
+<li>DFS, 实际拿函数递归来实现</li>
+</ul>
+<h2 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h2><p>和栈差不多…但是有一些细节. 就是为了有效利用空间, 要使用循环队列…队尾放满了要折回去放到头, 所以有个取膜的操作</p>
+<h3 id="数据成员"><a href="#数据成员" class="headerlink" title="数据成员"></a>数据成员</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">nptr front  <span class="comment">// 头指针</span></div><div class="line">nptr rear   <span class="comment">// 尾指针</span></div><div class="line">element data[maxlen]</div></pre></td></tr></table></figure>
+<h3 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h3><p>入队<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">rear = (rear + <span class="number">1</span>) % maxlen</div><div class="line">data[rear] = ele;</div></pre></td></tr></table></figure></p>
+<p>出队<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">front = (front + <span class="number">1</span>) % maxlen</div></pre></td></tr></table></figure></p>
+<h3 id="循环队列里存在的问题"><a href="#循环队列里存在的问题" class="headerlink" title="循环队列里存在的问题"></a>循环队列里存在的问题</h3><p>循环队列解决了空间利用不是很有效的问题, 但是与此同时, 带来了新的问题…<br>就是队列空和队列满没办法区分<br>因为判断条件都是<code>front == rear</code></p>
+<p>解决方法:</p>
+<ul>
+<li><p>增设操作标志, 当首尾指针相等时<br>如果进行了入队操作, 那么队列满<br>如果进行了出队操作, 那么队列空</p>
+</li>
+<li><p>约定一个保留空间<br>即空出来一个空间, 最多存放<code>maxlen - 1</code>个…, 这样子的话</p>
+</li>
+</ul>
+<h3 id="应用-1"><a href="#应用-1" class="headerlink" title="应用"></a>应用</h3><p>杨辉三角<br>BFS</p>
+<h2 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h2><h3 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h3><ul>
+<li>静态链表, 数组实现</li>
+<li>动态链表, 指针实现</li>
+</ul>
+<h3 id="应用-2"><a href="#应用-2" class="headerlink" title="应用"></a>应用</h3><ul>
+<li><p>链栈<br>没什么好说的</p>
+</li>
+<li><p>链队列<br>增设头结点, 头尾指针都有方便操作<br>从头指针的地方出队, 从尾指针的地方入队<br>在出队时候要注意的点在于…当只剩下一个头结点的时候, 要把尾指针也置为front, 因为这个时候, rear本来是指向最后一个节点的, 但我们把最后一个节点删掉了,,,所以要rear指向开头</p>
+</li>
+</ul>
+<h3 id="操作-待写"><a href="#操作-待写" class="headerlink" title="操作(待写)"></a>操作(待写)</h3><p>把链表就地逆置<br>链表合并(保持大小关系)</p>
+<h2 id="线性表"><a href="#线性表" class="headerlink" title="线性表"></a>线性表</h2><h3 id="存储方式"><a href="#存储方式" class="headerlink" title="存储方式"></a>存储方式</h3><ul>
+<li>顺序存储结构</li>
+<li>链式存储结构<br>按照这样子的话, 栈, 队列, 线性表都有 顺序和链式的两种存储结构<h3 id="推广"><a href="#推广" class="headerlink" title="推广"></a>推广</h3>广义表: 每个元素可以是一个不可分割的原子, 也可能是一个表<br>这个..广义表有两种操作<br>head(A) 取表头：返回表A中第一个元素的值。<br>tail(A) 取表尾：返回表A中删除第一个元素后所得的表。<br>广义表的存储有几种方式:</li>
+<li>链式存储结构</li>
+<li>树/图表示</li>
+</ul>
+<h2 id="树"><a href="#树" class="headerlink" title="树"></a>树</h2><h3 id="相关概念"><a href="#相关概念" class="headerlink" title="相关概念"></a>相关概念</h3><ul>
+<li>节点的度: 某节点的直接子节点的个数</li>
+<li>树的度:   树中最大节点度</li>
+<li>树的深度: 就是树中最深节点的高度</li>
+</ul>
+<blockquote>
+<p>一个疑问就是. 深度和高度… 有的人说, 高度和深度一个是从下往上数的, 另一个则相反. 这个我也还不太知道</p>
+</blockquote>
+<h3 id="二叉树-amp-树"><a href="#二叉树-amp-树" class="headerlink" title="二叉树 &amp; 树"></a>二叉树 &amp; 树</h3><p>ppt里说, 二叉树, 节点左右不同就算两种状态, 而树的话就不是这样子了<br>左子树 &amp; 右子树这些都是,,,二叉树里的概念</p>
+<h3 id="一个公式"><a href="#一个公式" class="headerlink" title="一个公式"></a>一个公式</h3><p>节点总数 = <code>\sum(n_i * i) + 1</code>…. 就是度数乘上拥有该度数的节点个数最后再加个1<br>这个主题好像没有<code>Mathjax</code>, 不能写latex公式就好坑啊</p>
+<h2 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h2><p>单独拿出来, 看一下</p>
+<h3 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h3><p>这里是把根节点作为第1层</p>
+<ul>
+<li>第i层的节点数 <code>&lt;= 2 ^ (i - 1)</code></li>
+<li>高度为k的二叉树的节点总数 <code>&lt;= 2^k - 1</code></li>
+<li>度为0, 1, 2的节点数量分别记为<code>n0, n1, n2</code>, 那么有<code>n0 = n2 + 1</code><br>推倒是: <code>n0 + n1 + n2 = n1 + 2*n2 + 1 = 节点总数</code></li>
+</ul>
+<p>所以对于二叉树的话,由于是<code>n0 = n2 + 1</code>, 所以只是需要有<code>n0, n1</code>, 或者<code>n2, n1</code>就能求出节点总数了</p>
+<h3 id="满二叉树"><a href="#满二叉树" class="headerlink" title="满二叉树"></a>满二叉树</h3><p>高度为k, 并且有<code>2^k - 1</code>个节点的二叉树叫满二叉树</p>
+<h3 id="完全二叉树"><a href="#完全二叉树" class="headerlink" title="完全二叉树"></a>完全二叉树</h3><p>在满二叉树中, 只有最后一层, 从右到左连续去掉了若干节点的二叉树<br>介绍一个概念, 肯定要有利用价值…对吧, 那完全二叉树的<em>优势</em>在于:<br>如果把根节点编号为1号, 那么树中某一节点编号i的两个子节点编号就是<code>2i</code>和<code>2i + 1</code></p>
+<blockquote>
+<p>需要注意的点, 就是根节点编号一定要是1, 不能是0…</p>
+</blockquote>
+<p>关于完全二叉树的两个结论</p>
+<ul>
+<li>有n个节点的完全二叉树的高度为<code>[logn] + 1</code>, 按照国际惯例, 是以2为底, 并且这里的取整函数是向下取整,比如, <code>2.多</code>也是取<code>2</code></li>
+<li>如果孩子i有父亲, 那么孩子i的父亲编号应该是: <code>[i/2]</code>, 这里也是向下取整, 就是<code>i &gt;&gt; 2</code>, 对吧</li>
+<li>度为1的节点最多有一个, 或者没有</li>
+</ul>
+<p>由于节点编号的特殊性, 所以完全二叉树可以使用数组来存…多么开心的一件事情</p>
+<h3 id="几个题目"><a href="#几个题目" class="headerlink" title="几个题目"></a>几个题目</h3><ol>
+<li><p>求100个节点的完全二叉树的叶子节点数<br>开始选用了, 很麻烦的做法, 算出了最后一层多少个叶子, 倒数第二层多少个, 然后加起来是总共50个…<br>好的解法应该是: 根据100号节点, 算出他的父亲是50号…所以, emmmm, 从51~100号都是叶子, 所以是50个…</p>
+</li>
+<li><p>完全二叉树第七层有10个节点…问共有多少节点, 有多少是叶子呢?<br>前6层有63个…对吧, 所以共有73个<br>然后最后一个节点编号是73了, 所以他爸爸是36号, 所以从<code>37 ~ 73</code>都是叶子, 共有37个</p>
+</li>
+<li><p>编号为i, j的两个节点在同一层的条件是: <code>[log(i)] = [log(j)]</code>, 依然是向下取整</p>
+</li>
+<li><p>LCA 最小公共祖先问题<br>baby暴力: 最容易想到的方法是, 从根节点分别走到i, j两节点, 并且记录下路径, 然后从头比较, 到第一个分叉的地方之前的那个节点就是最小公共祖先</p>
+</li>
+</ol>
+<p>是不是上面的写法太暴力了…</p>
+<p>暴力plus: 可以先dfs一下子…然后记下每个节点的父亲和深度….(其实…这个时候用bfs, dfs都可以是吗), 之后对于俩节点, 深度深的往上跳, 跳到和另一节点同一深度, 这个时候一起跳….当跳到同一点的时候就成功GG了. </p>
+<p>暴力plusplus: 就是上面的暴力plus + 倍增, 倍增就是按照<code>2^n</code>这样子跳, 不是一下一下跳</p>
+<blockquote>
+<p>在DFS中, 一个度为n, 的节点一定会被访问(n + 1) 次, 因为会回溯n次</p>
+</blockquote>
+<p>还有离线的tarjan和在线的RMQ, QAQ, 已经都不会写了, 我现在咸鱼一条,可能只会, 那个, 俩点往上一跳一跳的操作….</p>
+<p>先不在这里花时间了.</p>
+<h3 id="二叉树的遍历"><a href="#二叉树的遍历" class="headerlink" title="二叉树的遍历"></a>二叉树的遍历</h3><p>其实, 有个问题是, 我们经常说的<code>先序</code>, <code>后序</code>, <code>中序</code>  和 <code>DFS</code>, <code>BFS</code>之间的关系…emmmmmm, 我可能是个傻子<br>网络上基本上没有人放在一起考虑过<br>但仔细想了一下…<br>其实<code>先..中..后</code>这个应该是<code>dfs</code>, 因为其实<code>dfs</code>和<code>递归</code>对应, 我现在认为<code>前中后</code>是给dfs节点打时间戳的不同方法…就比如先序的话就认为是…第一次访问这个节点就打…后续的话…认为dfs过程中….该节点的孩子都遍历完了, 再打…<br>而且由于..这个先序的特点…好像看起来先序就和我们通常意义上说的dfs是完全一样的了<br>再仔细想一想…dfs其实是没有规定访问子节点的顺序的, 但可以认为规定先访问左子树还是右子树..所以,其实这个dfs还比<code>先中后</code>要多样…可以认为我们二叉树<code>先中后</code>只是dfs一些…说不出来</p>
+<p>恩, 对…前中后就是打个时间戳,你甚至可以每次遍历打两个时间戳, 一个先序, 一个后序…那么某个节点两次时间戳之间的内容就是他的子树..其实拿出代码来一看…很清楚的东西..为什么我这才意识到<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(node *p)</span> </span>&#123;</div><div class="line">    <span class="comment">// visit(p); 位置1</span></div><div class="line">    dfs(p -&gt; lson);</div><div class="line">    <span class="comment">// visit(p); 位置2</span></div><div class="line">    dfs(p -&gt; rson);</div><div class="line">    <span class="comment">// visit(p); 位置3</span></div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">visit</span><span class="params">(node * p)</span> </span>&#123;</div><div class="line">    print(<span class="string">"node %d has been visited\n"</span>, p -&gt; index);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在这里的dfs里, visit分别在1, 2, 3位置就是前中后序<br>所以, 以后就可以说是, 中序的dfs…这样子说话</p>
+<p>而bfs这种队列实现的搜索方法…好像和这些没有关系</p>
+<p>以上仅对二叉树而言….因为多叉树的话还能bfs, dfs, 但其实不存在中序遍历了</p>
+<p>就是…<br><code>dfs</code>, <code>栈</code>, <code>递归</code> 这都是联系在一起的<br><code>bfs</code>, <code>队列</code>是联系在一起的…, 好像bfs也叫层次遍历<br>所以写dfs, 原理上是用栈…但实际上只要写函数调用(递归)就可以…而不像<code>bfs</code>要我们自己维护一个队列</p>
+<h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><p>后序的话用在…父节点状态要在孩子节点信息之上推出的场景…其实很常用, 比如求解, 树的高度<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">dfs</span><span class="params">(node * p)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span>(p != <span class="literal">NULL</span>) &#123;</div><div class="line">        <span class="keyword">int</span> lf = dfs(p -&gt; lson);</div><div class="line">        <span class="keyword">int</span> rf = dfs(p -&gt; rson);</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span> + max(lf, rf);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>我很久不写代码了, 也不知道写的对不对</p>
+<p>要统计一个累加的量的时候, 感觉好像其实, 前中后就没那么重要了<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(node * p)</span> </span>&#123; </div><div class="line">    <span class="keyword">if</span>(p != <span class="literal">NULL</span>) &#123;</div><div class="line">        sum++;</div><div class="line">        dfs(p -&gt; lson);</div><div class="line">        <span class="comment">// sum++放在这里也可以</span></div><div class="line">        dfs(p -&gt; rson);</div><div class="line">        <span class="comment">// sum++放在这里也可以</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">// 如果用c++的话, 这里的sum可以用应用传进来.写成`void dfs(node *p, int &amp;sum)`</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(node * p, <span class="keyword">int</span> &amp;sum)</span> </span>&#123; </div><div class="line">    <span class="keyword">if</span>(p != <span class="literal">NULL</span>) &#123;</div><div class="line">        sum++;</div><div class="line">        dfs(p -&gt; lson, sum);</div><div class="line">        <span class="comment">// sum++放在这里也可以</span></div><div class="line">        dfs(p -&gt; rson, sum);</div><div class="line">        <span class="comment">// sum++放在这里也可以</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里的<code>sum</code>是一个全局变量<br>还有一种和那个求树的高度的写法极其类似的写法见下边….几乎就是一毛一样…明显更加简洁. perfect<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">dfs</span><span class="params">(node *p)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span>(p != <span class="literal">NULL</span>) &#123;</div><div class="line">        <span class="keyword">return</span> num(p -&gt; lson) + num(p -&gt; rson) + <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>已知<code>先-中</code>或者<code>后-中</code>, 就可以确定一颗二叉树的结构….</p>
+<h3 id="线索二叉树"><a href="#线索二叉树" class="headerlink" title="线索二叉树"></a>线索二叉树</h3><p>这里先跳过了</p>
+<h3 id="树和森林的存储方式"><a href="#树和森林的存储方式" class="headerlink" title="树和森林的存储方式"></a>树和森林的存储方式</h3><p>这里</p>
+<h3 id="各种树"><a href="#各种树" class="headerlink" title="各种树"></a>各种树</h3><p>哈夫曼树<br>线段树<br>字典树<br>主席树<br>划分树<br>…<br>…<br>陷入沉思<br>我想回宿舍了….突然厌烦</p>
+<h2 id="图"><a href="#图" class="headerlink" title="图"></a>图</h2><p>表示方法: <code>G = &lt;V, E&gt;</code><br>V: 定点集合<br>G: 边集合…又有有方向和没有方向两种<br>通常有方向的记为<code>&lt;V1, V2&gt;</code>, 没有方向的边记为<code>(V1, V2)</code></p>
+<p>定点的度: 有向图还分为入度和出度</p>
+<blockquote>
+<p>这里有个东西…你看…就是…怎么说…那个.这个.我..就是<br>在树中, 我们说的度其实指的是某一个节点的出度…(如果把树看做图的话…), 而没有算他的入度, 对不对</p>
+</blockquote>
+<h3 id="一些概念"><a href="#一些概念" class="headerlink" title="一些概念"></a>一些概念</h3><p>简单路径: 中间经过节点不重复的路径(不算首尾)<br>回路    : 首尾相同的路径<br>简单回路: 简单路径 + 回路</p>
+<p>连通图: 无向图中任意两点都存在路径的话, 则称为连通图, 否则就是非联通图</p>
+<ol>
+<li>任何连通图的连通分量只有一个, 就是它本身</li>
+<li>非连通的无向图有多个连通分量, 这些分量好像都叫..极大连通子图</li>
+</ol>
+<p>强连通图: 在有向图G中, 若任意两点都可达(可达意味着正反都存在路径), 那么就称为是强连通</p>
+<ol>
+<li>任何强连通图的连通分量只有一个, 就是它本身</li>
+<li>非强连通的有向图有多个强连通分量, 这些分量好像都叫..极大连通子图</li>
+</ol>
+<p>完全图: 无向的话…是任意两点间都有一条边…有向的话…是相当于任意两定点都一来一回对吧, 所以<br>n个节点的无向完全图..共有<code>n * (n - 1) / 2</code>条边<br>n个节点的有向完全图..共有<code>n * (n - 1)</code>条边</p>
+<p>树: 连通无回路的无向图, n个节点, (n - 1)条边, 树是有最少边数的连通图</p>
+<p>你看…这个树是<code>无向 无环</code>, 而DAG是<code>有向 无环</code>, 是不是有些相似的定义</p>
+<h3 id="图的存储方式"><a href="#图的存储方式" class="headerlink" title="图的存储方式"></a>图的存储方式</h3><ol>
+<li><p>邻接矩阵<br>无向图的邻接矩阵是三角对称结构<br>对于某一顶点, 分别, 横着数, 竖着数, 就能.能!算出入度和出度了<br>邻接关系也好确定</p>
+</li>
+<li><p>邻接表<br>比起邻接矩阵, 其实邻接表,在判断是否邻接的时候…比较麻烦…要遍历才能得到..无向图还好, 有向的话…确实有点…<br>矩阵相当于是空间换时间了, 方便而且…如果过于稀疏的话, 我们才用邻接表, 就是这样<br>有一个折中的办法是:<br>用一个邻接表和一个逆邻接的表…这样子的话, 判断入度出度的话就方便一些…</p>
+</li>
+</ol>
+<h3 id="图的遍历算法"><a href="#图的遍历算法" class="headerlink" title="图的遍历算法"></a>图的遍历算法</h3><ol>
+<li>深度优先DFS<br>DFS用在非连通图或者某些有向图里, 能实现一个效果…就是, 当遍历完所有节点之后(可能调用了多次DFS), 这个时候就能得到各个(强)连通分量, 代码大概如下<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(graph G)</span> </span>&#123;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</div><div class="line">        visited[i] = <span class="literal">false</span>; <span class="comment">// 初始化</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</div><div class="line">        <span class="keyword">if</span>(!visited[i]) </div><div class="line">            dfs(i);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>应用(先mark, 没有具体写)<br>求无向图的连通分量: 这个可以DFS一遍, 也可以并查集, 还可以BFS一遍…<br>感觉应该是并查集快一些…但难写一些?</p>
+<p>求有向图的强连通分量(SCC):</p>
+<ol>
+<li>Tarjan</li>
+<li>Kosaraju</li>
+<li><p>Gabow<br>这三种应该都是DFS, 或者多次DFS</p>
+</li>
+<li><p>广度优先BFS<br>广度优先的话可以说是层次遍历<br>应用: 算出最短路径….</p>
+</li>
+</ol>
+<h3 id="最小生成树"><a href="#最小生成树" class="headerlink" title="最小生成树"></a>最小生成树</h3><p>权值最小的边一定在最小生成树里<br>两种算法可解决</p>
+<ol>
+<li><p>prim<br>基本思想:<br>在<code>一端已选，另一端未选</code>的候选边中选出一条最小的边…<br>有点绕口, 但思路是很简单的<br>如何高效的维护这个侯选边的集合是我们的关键</p>
+</li>
+<li><p>Kruskal<br>基本思想:<br>选一条最小的边使得其和已经选择的边不构成回路<br>关键在于如何判断构成回路</p>
+</li>
+</ol>
+<h3 id="拓扑排序-有向图"><a href="#拓扑排序-有向图" class="headerlink" title="拓扑排序(有向图)"></a>拓扑排序(有向图)</h3><p>依然是常用的两种算法, 哎, 省赛的时候就在这里搁了…自己脑残把两种算法无缝拼接了一下…然后发现运行不了了…然后和一等说白白了…23333, 回想起来, 都是泪</p>
+<ol>
+<li><p>Kahn<br>这个名字..其实听得不多….但一说..这个算法的关键,在于维护..那个入度为0的点的集合..每次要做的操作就是把入度为0的点去掉…就可以了<br>这个算法还能判断是不是有环…即DAG的判断<br>但我隐约记得…Kahn要实现按照字典序来输出拓扑排序结果好像有点问题<br>因为..某一节点入度的改变是由于与她相连的的节点的删去而引起的…所以可以只考察, 刚删去的节点的后继节点是不是该加入这个候选集合, 综述, 可以使用<code>栈</code>来实现这个拓扑排序</p>
+</li>
+<li><p>dfs</p>
+</li>
+</ol>
+<h3 id="关键路径"><a href="#关键路径" class="headerlink" title="关键路径"></a>关键路径</h3><h3 id="最短路"><a href="#最短路" class="headerlink" title="最短路"></a>最短路</h3><ol>
+<li>单源Dijkstar</li>
+<li>多源Floyd<br>等下写</li>
+</ol>
+<h2 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h2><ol>
+<li>简单顺序查找: 一个一个找</li>
+<li>二分查找    : 需要是有序的…也就是说要选排序, 复杂度带<code>logn</code><br>记得自己然后手写一个二分….虽然STL里好像有…STL啥都有…STL选手</li>
+<li>分块        : 块间有序, 块内无序, 分块的大小一般取<code>√n</code>, 这个复杂度带<code>√n</code><br>分块就是块内暴力…的方法..看着很暴力…其实还挺好用的..不太动脑筋而复杂度常常能达到要求</li>
+</ol>
+<h3 id="树-1"><a href="#树-1" class="headerlink" title="树"></a>树</h3><ol>
+<li><p>BST<br>就是左子树中所有节点值小于父节点值, 而右子树大于父节点<br>所以,按照中序遍历就能得到一个非降序列…<br>BST有个问题就是刻意构造的数据可能导致BST退化成链表<br>针对这个问题…大家想出了平衡树这个东西</p>
+</li>
+<li><p>平衡树<br>平衡树其实有很多很多种….<br>只要满足下面条件的BST都是平衡树:</p>
+<ol>
+<li>左右子树的高度差绝对值不大于1</li>
+<li>左右子树都是平衡树<br>所以…这个平衡树这一类树是采用各种方法来防止BST退化的方法的树<br>具体地说, 代表之一就是AVL…<br>其实朝鲜树, 替罪羊, 还有SBT这些…都算是平衡树,可能不太平衡…就是说可能不满足这里定义说的高度差不超过1, 但是用自己的方法来保证了树的相对平衡</li>
+</ol>
+</li>
+<li><p>AVL</p>
+</li>
+<li><p>B-Tree</p>
+</li>
+</ol>
+<h3 id="Hash表"><a href="#Hash表" class="headerlink" title="Hash表"></a>Hash表</h3><p>大概涉及到几个问题</p>
+<ol>
+<li>计算ASL</li>
+<li>构造散列函数</li>
+<li>解决冲突</li>
+</ol>
+<p>构造散列函数的方法</p>
+<ol>
+<li><p>直接定址法</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Hash(k) = k, 或者 Hash(k) = a*k+b</div></pre></td></tr></table></figure>
+</li>
+<li><p>除留取余<br>Hash(k) = k % p, 一般这个p是个质数(prime)</p>
+</li>
+<li><p>平方取中法<br>这是什么玄学…把数字算个平方…然后取出来中间两位算hash</p>
+</li>
+<li><p>康拓展开<br>这个是以前做过的一个八数码问题里遇到的, 用于把全排列进行hash的一种没有冲突的方法</p>
+</li>
+</ol>
+<p>冲突是指出现了:<br>k1 ~= k2, 但Hash(k1) = Hash(k2) 的情况<br>处理冲突的方法, 感觉可能会考</p>
+<ol>
+<li><p>开放地址法</p>
+</li>
+<li><p>拉链法<br>把hash值相同的丢到一个vector里…这不就是一个邻接表吗….</p>
+</li>
+<li><p>再散列法</p>
+</li>
+</ol>
+<h2 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h2><p>其实…看了下整个块…排序算是不太熟悉的…因为自己遇到问题, 复杂度不要求的话写个最好写的冒泡, 要求的话写个快排..其他的这些奇奇怪怪的排序都很少手写</p>
+<p>几个概念：<br>    稳定排序  : 排序过程中， 关键字相同的元素相对次序不变<br>    不稳定排序: 排序过程中， 不能保证关键字相同的元素相对次序不变<br>    内/外部排序: 外部的话。。。部分数据在内存， 部分在外存</p>
+<h3 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h3><p>思想: 把整个待排序的表看成两部分. 左边是有序的, 右边是无序的…整个过程是把无序区的元素插入到有序区</p>
+<ol>
+<li>简单插入排序<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(element_type A[])</span> </span>&#123;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</div><div class="line">        <span class="keyword">int</span> temp = A[i];</div><div class="line">        <span class="keyword">int</span> j = i - <span class="number">1</span>;</div><div class="line">        <span class="keyword">while</span>((A[j].key &gt; temp.key) &amp;&amp; (j &gt;= <span class="number">1</span>)) &#123;</div><div class="line">            A[j + <span class="number">1</span>] = A[j];</div><div class="line">            j--;</div><div class="line">        &#125;</div><div class="line">        A[j + <span class="number">1</span>] = temp;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>就是一轮下来， 边比较, 边挪位置<code>A[j + 1] = A[j]</code>, 的那满足条件的时候…把本次考察的值放到找好的这个空位置上…<br>有一个技巧叫设置<del>烧饼</del> 哨兵, 我们把A[0]作为烧饼的话, 就是A[0]一定会满足条件… 那我们上面代码中的边界状态判断<code>j &gt;= 1</code>, 就可以去掉了<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(element_type A[])</span> </span>&#123;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</div><div class="line">        A[<span class="number">0</span>] = A[i];</div><div class="line">        <span class="keyword">int</span> j = i - <span class="number">1</span>;</div><div class="line">        <span class="keyword">while</span>((A[j].key &gt; A[<span class="number">0</span>].key)) &#123;</div><div class="line">            A[j + <span class="number">1</span>] = A[j];</div><div class="line">            j--;</div><div class="line">        &#125;</div><div class="line">        A[j + <span class="number">1</span>] = A[<span class="number">0</span>];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>很明显，这个直接插入排序是稳定的</p>
+<ol>
+<li>希尔排序<br>分组的简单插入排序<br>这个排的我有点迷…不稳定排序， 但复杂度变成了<code>nlogn</code><br>每次相隔d的元素化成一组进行排序….这个d是变步长的..开始的时候 d = n/2, 每次都会有<code>d /= 2</code>…最后一次的d是1…就是所有元素都排<br>代码上来讲,,,,和普通插基本一样的感觉<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">shell</span><span class="params">(elementtype A[])</span> </span>&#123;</div><div class="line">    d = n / <span class="number">2</span>;</div><div class="line">    <span class="keyword">while</span>(d &gt; <span class="number">0</span>) &#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = d + <span class="number">1</span>; i &lt;= n; i++) &#123;</div><div class="line">            <span class="keyword">int</span> x = A[i];</div><div class="line">            j = i - d;</div><div class="line">            <span class="keyword">while</span>((A[j].key &gt; x.key) &amp;&amp; (j &gt;= <span class="number">1</span>)) &#123;</div><div class="line">                A[j + d].key = A[j].key;</div><div class="line">                j = j - d;</div><div class="line">            &#125;</div><div class="line">            A[j + d] = x;</div><div class="line">        &#125;</div><div class="line">        d /= <span class="number">2</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="交换类排序"><a href="#交换类排序" class="headerlink" title="交换类排序"></a>交换类排序</h3><p>思想: 两两比较交换, 一边比啊一边换</p>
+<blockquote>
+<p>比较插入排序的话, 插入是每次考察一个元素, 和已经有序的区域比较, 直到找到合适的位置放进去</p>
+<ol>
+<li>冒泡排序<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">bubble</span><span class="params">(elementtype A[])</span> </span>&#123;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n - <span class="number">1</span>; i++)</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = n; j &gt;= i+<span class="number">1</span>; j--)</div><div class="line">            <span class="keyword">if</span>(A[j].key &lt; A[j - <span class="number">1</span>].key)</div><div class="line">                swap(A[j], A[j - <span class="number">1</span>])</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+</blockquote>
+<p>冒泡是稳定的..</p>
+<ol>
+<li>快排<br>快排不稳定…然后写个好看的快排</li>
+</ol>
+<h3 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h3><p>在每一趟排序中, 从待选子表中选出关键字最大或者最小的元素放到最终位置上</p>
+<ol>
+<li>直接选择排序<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">select</span><span class="params">(elementtype A[])</span> </span>&#123;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n - <span class="number">1</span>; i++) &#123;</div><div class="line">        min = i;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; n; j++) &#123;</div><div class="line">            <span class="keyword">if</span>(A[j].key &lt; A[min].key)</div><div class="line">                min = j;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(min != i)</div><div class="line">            swap(A[min], A[i]);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>选择排序居然也是不稳定排序, emmmmm</p>
+<ol>
+<li><p>树形选择排序<br>看到树,首先想到复杂度肯定是比较小….<br>md， 这个操作还挺好看的…言语不是很好描述</p>
+</li>
+<li><p>堆排序<br>这个最难写了，我肯定不会用这个<br>堆<br>用完全二叉树实现, 父亲(i)的值比儿子(2i, 2i + 1)的值要大(小), 就对应着大(小)顶堆</p>
+</li>
+</ol>
+<h3 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h3><p>归并也算是…二分的结构吧<br>两两合并， 一直到合成一个…和希尔排序有点像???<br>也不太像…</p>
+<p>然而归并是稳定的, 希尔是不稳定的</p>
+<p>而且归并有二路归并，四路， 八路…????</p>
+<h3 id="基数排序"><a href="#基数排序" class="headerlink" title="基数排序"></a>基数排序</h3><p>其实还感觉…这一块比较乱…我学这么多排序干啥呢</p>
+
+        
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/2017/09/01/操作系统复习/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2017/08/25/static-in-c/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/avatar.png" alt="Aryb1n's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        youremail@email.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="#" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">16</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">38</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">14</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">52</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">26</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">13</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/11/">十一月 2016<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/10/">十月 2016<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/07/">七月 2016<span class="sidebar_archives-count">13</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
+                
+                分类
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                
+            </ul>
+        </li>
+        
+    
+
+    <!-- Pages  -->
+    
+        <li>
+            <a href="/tags" title="标签">
+                
+                    <i class="material-icons sidebar-material-icons">label</i>
+                
+                标签
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/links" title="友链">
+                
+                    <i class="material-icons sidebar-material-icons">person</i>
+                
+                友链
+            </a>
+        </li>
+        
+    
+
+    <!-- Article Number  -->
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+
+<!-- Theme Material -->
+
+    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+            主题 - Material
+            <span class="sidebar-badge badge-circle">i</span>
+        </div>
+    </a>
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+        <a href="https://twitter.com/twitter" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-twitter">
+                <span class="visuallyhidden">Twitter</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Facebook -->
+    
+        <a href="https://www.facebook.com/facebook" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-facebook">
+                <span class="visuallyhidden">Facebook</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Google + -->
+    
+        <a href="https://www.google.com/" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-gplus">
+                <span class="visuallyhidden">Google Plus</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+    
+    <!-- V2EX -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>Aryb1n's notebook
+            
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import JS File -->
+
+    <script>lsloader.load("lazyload_js","/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==", true)</script>
+
+
+
+    <script>lsloader.load("js_js","/js/js.min.js?V/53wGualMuiPM3xoetD5Q==", true)</script>
+
+
+
+    <script>lsloader.load("np_js","/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==", true)</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Import prettify js  -->
+
+
+
+<!-- Window Load -->
+<!-- add class for prettify -->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+
+    
+    
+</script>
+
+<!-- MathJax Load-->
+
+
+<!-- Bing Background -->
+
+<script type="text/ls-javascript" id="Bing-Background-script">
+    queue.offer(function(){
+        $('body').attr('data-original', 'https://api.i-meto.com/bing?N');
+    });
+</script>
+
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Custom Footer -->
+
+
+
+<script>
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+console.log('\n %c © Material Theme | Version: 1.5.0 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+</script>
+
+                </main>
+            </div>
+        </body>
+    
+</html>

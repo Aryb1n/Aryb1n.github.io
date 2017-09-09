@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head>
+    <meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.5.0 -->
+    <script>
+        window.materialVersion = "1.5.0"
+        // Delete localstorage with these tags
+        window.oldVersion = [
+            'codestartv1',
+            '1.3.4',
+            '1.4.0',
+            '1.4.0b1'
+        ]
+    </script>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Title -->
+    
+    <title>
+        
+            关于堆 | 
+        
+        Aryb1n&#39;s notebook
+    </title>
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="Aryb1n">
+    <meta name="description" itemprop="description" content="">
+    <meta name="keywords" content=",pwn">
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(key){try{localStorage.removeItem(key)}catch(e){}};lsloader.setLS=function(key,val){try{localStorage.setItem(key,val)}catch(e){}};lsloader.getLS=function(key){var val="";try{val=localStorage.getItem(key)}catch(e){val=""}return val};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var keys=[];for(var i=0;i<localStorage.length;i++){keys.push(localStorage.key(i))}keys.forEach(function(key){var data=lsloader.getLS(key);if(window.oldVersion){var remove=window.oldVersion.reduce(function(p,c){return p||data.indexOf("/*"+c+"*/")!==-1},false);if(remove){lsloader.removeLS(key)}}})}catch(e){}};lsloader.clean();lsloader.load=function(jsname,jspath,cssonload,isJs){if(typeof cssonload==="boolean"){isJs=cssonload;cssonload=undefined}isJs=isJs||false;cssonload=cssonload||function(){};var code;code=this.getLS(jsname);if(code&&code.indexOf(versionString)===-1){this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload,isJs);return}if(code){var versionNumber=code.split(versionString)[0];if(versionNumber!=jspath){console.log("reload:"+jspath);this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload,isJs);return}code=code.split(versionString)[1];if(isJs){this.jsRunSequence.push({name:jsname,code:code});this.runjs(jspath,jsname,code)}else{document.getElementById(jsname).appendChild(document.createTextNode(code));cssonload()}}else{this.requestResource(jsname,jspath,cssonload,isJs)}};lsloader.requestResource=function(name,path,cssonload,isJs){var that=this;if(isJs){this.iojs(path,name,function(path,name,code){that.setLS(name,path+versionString+code);that.runjs(path,name,code)})}else{this.iocss(path,name,function(code){document.getElementById(name).appendChild(document.createTextNode(code));that.setLS(name,path+versionString+code)},cssonload)}};lsloader.iojs=function(path,jsname,callback){var that=this;that.jsRunSequence.push({name:jsname,code:""});try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(path,jsname,xhr.response);return}}that.jsfallback(path,jsname)}};xhr.send(null)}catch(e){that.jsfallback(path,jsname)}};lsloader.iocss=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.iofonts=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.runjs=function(path,name,code){if(!!name&&!!code){for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code=code}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var script=document.createElement("script");script.appendChild(document.createTextNode(this.jsRunSequence[0].code));script.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(script);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var that=this;var script=document.createElement("script");script.src=this.jsRunSequence[0].path;script.type="text/javascript";this.jsRunSequence[0].status="loading";script.onload=function(){that.jsRunSequence.shift();if(that.jsRunSequence.length>0){that.runjs()}};document.body.appendChild(script)}};lsloader.tagLoad=function(path,name){this.jsRunSequence.push({name:name,code:"",path:path,status:"failed"});this.runjs()};lsloader.jsfallback=function(path,name){if(!!this.jsnamemap[name]){return}else{this.jsnamemap[name]=name}for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code="";this.jsRunSequence[k].status="failed";this.jsRunSequence[k].path=path}}this.runjs()};lsloader.cssfallback=function(path,name,cssonload){if(!!this.cssnamemap[name]){return}else{this.cssnamemap[name]=1}var link=document.createElement("link");link.type="text/css";link.href=path;link.rel="stylesheet";link.onload=link.onerror=cssonload;var root=document.getElementsByTagName("script")[0];root.parentNode.insertBefore(link,root)};lsloader.runInlineScript=function(scriptId,codeId){var code=document.getElementById(codeId).innerText;this.jsRunSequence.push({name:scriptId,code:code});this.runjs()};lsloader.loadCombo=function(jslist){var updateList="";var requestingModules={};for(var k in jslist){var LS=this.getLS(jslist[k].name);if(!!LS){var version=LS.split(versionString)[0];var code=LS.split(versionString)[1]}else{var version=""}if(version==jslist[k].path){this.jsRunSequence.push({name:jslist[k].name,code:code,path:jslist[k].path})}else{this.jsRunSequence.push({name:jslist[k].name,code:null,path:jslist[k].path,status:"comboloading"});requestingModules[jslist[k].name]=true;updateList+=(updateList==""?"":";")+jslist[k].path}}var that=this;if(!!updateList){var xhr=new XMLHttpRequest;xhr.open("get",combo+updateList,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){that.runCombo(xhr.response,requestingModules);return}}else{for(var i in that.jsRunSequence){if(requestingModules[that.jsRunSequence[i].name]){that.jsRunSequence[i].status="failed"}}that.runjs()}}};xhr.send(null)}this.runjs()};lsloader.runCombo=function(comboCode,requestingModules){comboCode=comboCode.split("/*combojs*/");comboCode.shift();for(var k in this.jsRunSequence){if(!!requestingModules[this.jsRunSequence[k].name]&&!!comboCode[0]){this.jsRunSequence[k].status="comboJS";this.jsRunSequence[k].code=comboCode[0];this.setLS(this.jsRunSequence[k].name,this.jsRunSequence[k].path+versionString+comboCode[0]);comboCode.shift()}}this.runjs()}})();</script>
+
+    <!-- Import queue -->
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
+    <link rel="icon" sizes="192x192" href="/img/favicon.png">
+    <link rel="apple-touch-icon" href="/img/favicon.png">
+
+    <!--iOS -->
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Aryb1n&#39;s notebook">
+
+    <!-- Site Verification -->
+    
+    
+
+    <!-- RSS -->
+    
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import CSS -->
+    
+        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/css/material.min.css?Z7a72R1E4SxzBKR/WGctOA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+        
+
+    
+
+    
+
+    <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    overflow-x: hidden !important;
+  }
+  
+  code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #0097A7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #0097A7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #0097A7 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body {
+        background-color: ;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text {
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+<!-- Import Roboto -->
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+
+
+<!-- Import Material Icon -->
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+
+
+    <!-- Import jQuery -->
+    
+        <script>lsloader.load("jq_js","//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js", true)</script>
+    
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://yoursite.com">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="关于堆 | Aryb1n&#39;s notebook">
+    <meta property="og:image" content="http://yoursite.com/img/favicon.png" />
+    <meta property="og:description" content="">
+    <meta property="og:article:tag" content="pwn"> 
+
+    
+        <meta property="article:published_time" content="Tue Jul 25 2017 10:23:46 GMT+0800" />
+        <meta property="article:modified_time" content="Tue Jul 25 2017 17:27:32 GMT+0800" />
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:title" content="关于堆 | Aryb1n&#39;s notebook">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:image" content="http://yoursite.com/img/favicon.png">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="http://yoursite.com" />
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="http://yoursite.com/2017/07/25/关于堆/index.html" />
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": "http://yoursite.com/2017/07/25/关于堆/index.html",
+    "headline": "关于堆",
+    "datePublished": "Tue Jul 25 2017 10:23:46 GMT+0800",
+    "dateModified": "Tue Jul 25 2017 17:27:32 GMT+0800",
+    "author": {
+        "@type": "Person",
+        "name": "Aryb1n",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/avatar.png"
+        },
+        "description": "Hi, nice to meet you"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "Aryb1n&#39;s notebook",
+        "logo": {
+            "@type":"ImageObject",
+            "url": "/img/favicon.png"
+        }
+    },
+    "keywords": ",pwn",
+    "description": "",
+}
+</script>
+
+
+    
+
+    <!-- Analytics -->
+    
+    
+    
+
+    <!-- Custom Head -->
+    
+
+</head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+
+    <!-- Left aligned menu below button -->
+    
+    
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前面"><span class="post-toc-number">1.</span> <span class="post-toc-text">前面</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前面-1"><span class="post-toc-number">2.</span> <span class="post-toc-text">前面</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#emmmm"><span class="post-toc-number">3.</span> <span class="post-toc-text">emmmm</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#allocated-chunk"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">allocated chunk</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Free-chunk"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">Free chunk</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#bins"><span class="post-toc-number">4.</span> <span class="post-toc-text">bins</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Fast-bin"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">Fast bin</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#其他-bin"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">其他 bin</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Unsorted-bin"><span class="post-toc-number">4.2.1.</span> <span class="post-toc-text">Unsorted bin</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Small-bin"><span class="post-toc-number">4.2.2.</span> <span class="post-toc-text">Small bin</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Large-bin"><span class="post-toc-number">4.2.3.</span> <span class="post-toc-text">Large bin</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Top-chunck"><span class="post-toc-number">4.3.</span> <span class="post-toc-text">Top chunck</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#存储bin的数据结构"><span class="post-toc-number">5.</span> <span class="post-toc-text">存储bin的数据结构</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Chunk-和-bin-list"><span class="post-toc-number">6.</span> <span class="post-toc-text">Chunk 和 bin list</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#实例"><span class="post-toc-number">7.</span> <span class="post-toc-text">实例</span></a></li></ol>
+    </ul>
+    
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 19 + 1);
+
+    $('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').addClass('lazy');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                关于堆
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>Aryb1n</strong>
+        <span>7月 25, 2017</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/pwn/">pwn</a>
+    </ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=关于堆&url=http://yoursite.com/2017/07/25/关于堆/index.html&pic=http://yoursite.com/img/favicon.png&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=关于堆&url=http://yoursite.com/2017/07/25/关于堆/index.html&via=Aryb1n" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/07/25/关于堆/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://yoursite.com/2017/07/25/关于堆/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <h2 id="前面"><a href="#前面" class="headerlink" title="前面"></a>前面</h2><p>网上一个博主说感觉Linux下堆内存分配不如windows下安全<br>这篇主要是参考自Sploitfun的<a href="https://sploitfun.wordpress.com/2015/02/10/understanding-glibc-malloc/" target="_blank" rel="external">blog</a>,然后才发现网络上好多堆相关的文章配图都来自这里</p>
+<h2 id="前面-1"><a href="#前面-1" class="headerlink" title="前面"></a>前面</h2><p>Glibc使用的是<code>ptmalloc2</code>,是<code>fork</code>自<code>dlmalloc</code><br>malloc底层其实是调用了<code>brk</code>或者<code>mmap</code></p>
+<h2 id="emmmm"><a href="#emmmm" class="headerlink" title="emmmm"></a>emmmm</h2><p>作者写太好了,翻译不出来,看英文好了</p>
+<h3 id="allocated-chunk"><a href="#allocated-chunk" class="headerlink" title="allocated chunk"></a>allocated chunk</h3><p>没有fd,bk…本来应该放这些指针的空间现在用来存储数据<br><code>previous size</code>这个字段,如果previous的块是空闲的,那么这个字段确实存储的是<code>previous size</code>,否则,这一块也丢给上一个块存数据…这样子听起来好像把这个字段送给别人的感觉,ahhhhhh~<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">+---------------+ ==</div><div class="line">previous size   + |</div><div class="line">+---------------+ |</div><div class="line">size | N | M |P + |  chunk[xxx]</div><div class="line">+---------------+ |</div><div class="line">User data       + |</div><div class="line">+---------------+ ==</div><div class="line">previous size   + ----&gt; 由于chunk[xxx]以及分配,这个也存放`chuck[xxx]`的User data</div><div class="line">----------------+ |</div><div class="line">......</div></pre></td></tr></table></figure></p>
+<p>我有一个问题,就是…我们在malloc的时候给的一个size,到这里指的是,上图的<code>User data</code>,还是<code>User Data</code>加上下一块的这个<code>previous size</code><br>感觉应该是不算???</p>
+<h3 id="Free-chunk"><a href="#Free-chunk" class="headerlink" title="Free chunk"></a>Free chunk</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">+---------------+ ====</div><div class="line">previous size --+------&gt; 因为空闲块都会合并,前面的块一定是allocated的,这里存的就是User data</div><div class="line">+---------------+ |</div><div class="line">size | N | M |P + |  chunk[xxx]</div><div class="line">+---------------+ |</div><div class="line">fd ---------------+---&gt; to next chunk [Free]</div><div class="line">bk ---------------+---&gt; to previous chunk [Free]</div><div class="line">User data       + |</div><div class="line">+---------------+ ====</div><div class="line">previous size   + -----&gt; 因为chunk[xxx]是Free的,所以这里存的就是previous size</div><div class="line">----------------+ |</div><div class="line">......</div></pre></td></tr></table></figure>
+<p>所有的free的chunk会串联成一串就是叫做<code>bins list</code></p>
+<p>所这样子看起来,正常情况,只有一种<code>previous size</code> 的用途不确定(可能不适用于Fast bin???)</p>
+<table>
+<thead>
+<tr>
+<th>当前块</th>
+<th>当前块previous</th>
+<th>下一块previous</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>allocated</td>
+<td>未知</td>
+<td>存上一块data</td>
+</tr>
+<tr>
+<td>free</td>
+<td>存上一块Data</td>
+<td>存previous size</td>
+</tr>
+</tbody>
+</table>
+<h2 id="bins"><a href="#bins" class="headerlink" title="bins"></a>bins</h2><p>根据chunk大小分为</p>
+<h3 id="Fast-bin"><a href="#Fast-bin" class="headerlink" title="Fast bin"></a>Fast bin</h3><p>大小: 16 - 80字节<br>数量: 10101010101010101010<br>特点: 每个中存储的是单向链表, 并且链上的chunk是LIFO的</p>
+<h3 id="其他-bin"><a href="#其他-bin" class="headerlink" title="其他 bin"></a>其他 bin</h3><p>这其他的都是双向链表,所以每一表项有fd,bk两项<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> &#123;</span></div><div class="line"><span class="keyword">void</span> * fd;</div><div class="line"><span class="keyword">void</span> * bk</div><div class="line">&#125;bins[]</div></pre></td></tr></table></figure></p>
+<h4 id="Unsorted-bin"><a href="#Unsorted-bin" class="headerlink" title="Unsorted bin"></a>Unsorted bin</h4><p>大小: 任意<br>数量: 1 (Bin1)<br>特点: Small chunck, Large chunck被Free掉的时候,就来到了这里,这样子就可以用两次再回到原表里</p>
+<h4 id="Small-bin"><a href="#Small-bin" class="headerlink" title="Small bin"></a>Small bin</h4><p>大小: 小于512字节<br>数量: 62 (Bin2~Bin63)<br>特点: 8字节递增</p>
+<p>Bin2: 16字节<br>…<br>Bin63: 63 * 8 = 504字节</p>
+<h4 id="Large-bin"><a href="#Large-bin" class="headerlink" title="Large bin"></a>Large bin</h4><p>大小: 大于等于512字节<br>数量: 63<br>特点: 比较迷乱,看下面</p>
+<ul>
+<li>32 bins contain binlist of chunks of size which are 64 bytes apart. ie) First large bin (Bin 65) contains binlist of chunks of size 512 bytes to 568 bytes, second large bin (Bin 66) contains binlist of chunks of size 576 bytes to 632 bytes and so on…</li>
+<li>16 bins contain binlist of chunks of size which are 512 bytes apart.</li>
+<li>8 bins contain binlist of chunks of size which are 4096 bytes apart.</li>
+<li>4 bins contain binlist of chunks of size which are 32768 bytes apart.</li>
+<li>2 bins contain binlist of chunks of size which are 262144 bytes apart.</li>
+<li>1 bin contains a chunk of remaining size.</li>
+</ul>
+<h3 id="Top-chunck"><a href="#Top-chunck" class="headerlink" title="Top chunck"></a>Top chunck</h3><p>Top chunk 不属于任何bin,找不到任何合适的bin的时候才会使用Top chunk</p>
+<h2 id="存储bin的数据结构"><a href="#存储bin的数据结构" class="headerlink" title="存储bin的数据结构"></a>存储bin的数据结构</h2><p>fastbinsY: This array hold fast bins.<br>bins: This array hold unsorted, small and large bins. Totally there are 126 bins and its divided as follows:</p>
+<ul>
+<li>Bin 1 –&gt; Unsorted bin</li>
+<li>Bin 2 to Bin 63 –&gt; Small bin</li>
+<li>Bin 64 to Bin 126 –&gt; Large bin</li>
+</ul>
+<h2 id="Chunk-和-bin-list"><a href="#Chunk-和-bin-list" class="headerlink" title="Chunk 和 bin list"></a>Chunk 和 bin list</h2><p>bin list相当于只是存着指针(或者双向指针)的一个数组,数组中每一项都通过指针把可用的chunk串起来,所以只是表,表,表,那我如何得到bin list的地址呢</p>
+<p>chunk是实实际际上可用的内存块,heap区的, 所以地址可能是<code>0x080xxxxx</code>,malloc的返回值就是某一块chunk的user data的首地址,不包括chunck头部的哦</p>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><p>来自原作者blog<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* </span></div><div class="line"><span class="comment"> Heap overflow vulnerable program. </span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">( <span class="keyword">int</span> argc, <span class="keyword">char</span> * argv[] )</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">        <span class="keyword">char</span> * first, * second;</div><div class="line"></div><div class="line"><span class="comment">/*[1]*/</span> first = <span class="built_in">malloc</span>( <span class="number">666</span> );</div><div class="line"><span class="comment">/*[2]*/</span> second = <span class="built_in">malloc</span>( <span class="number">12</span> );</div><div class="line">        <span class="keyword">if</span>(argc!=<span class="number">1</span>)</div><div class="line"><span class="comment">/*[3]*/</span>         <span class="built_in">strcpy</span>( first, argv[<span class="number">1</span>] );</div><div class="line"><span class="comment">/*[4]*/</span> <span class="built_in">free</span>( first );</div><div class="line"><span class="comment">/*[5]*/</span> <span class="built_in">free</span>( second );</div><div class="line"><span class="comment">/*[6]*/</span> <span class="keyword">return</span>( <span class="number">0</span> );</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>我们执行过[1], [2]两句,看一下<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">gdb-peda$ p first</div><div class="line">$<span class="number">2</span> = <span class="number">0x804b008</span> <span class="string">""</span></div><div class="line">gdb-peda$ p second</div><div class="line">$<span class="number">3</span> = <span class="number">0x804b2a8</span> <span class="string">""</span></div><div class="line"></div><div class="line">gdb-peda$ x/<span class="number">20</span>x <span class="number">0x804b2a8</span> - <span class="number">0x08</span></div><div class="line"><span class="number">0x804b2a0</span>:	<span class="number">0x00000000</span>	<span class="number">0x00000011</span>	<span class="number">0x00000000</span>	<span class="number">0x00000000</span></div><div class="line"><span class="number">0x804b2b0</span>:	<span class="number">0x00000000</span>	<span class="number">0x00020d51</span>	<span class="number">0x00000000</span>	<span class="number">0x00000000</span></div><div class="line"><span class="number">0x804b2c0</span>:	<span class="number">0x00000000</span>	<span class="number">0x00000000</span>	<span class="number">0x00000000</span>	<span class="number">0x00000000</span></div><div class="line"><span class="number">0x804b2d0</span>:	<span class="number">0x00000000</span>	<span class="number">0x00000000</span>	<span class="number">0x00000000</span>	<span class="number">0x00000000</span></div><div class="line"><span class="number">0x804b2e0</span>:	<span class="number">0x00000000</span>	<span class="number">0x00000000</span>	<span class="number">0x00000000</span>	<span class="number">0x00000000</span></div><div class="line">gdb-peda$ x/<span class="number">20</span>x <span class="number">0x804b008</span> - <span class="number">0x08</span></div><div class="line"><span class="number">0x804b000</span>:	<span class="number">0x00000000</span>	<span class="number">0x000002a1</span>	<span class="number">0x00000000</span>	<span class="number">0x00000000</span></div><div class="line"><span class="number">0x804b010</span>:	<span class="number">0x00000000</span>	<span class="number">0x00000000</span>	<span class="number">0x00000000</span>	<span class="number">0x00000000</span></div><div class="line"><span class="number">0x804b020</span>:	<span class="number">0x00000000</span>	<span class="number">0x00000000</span>	<span class="number">0x00000000</span>	<span class="number">0x00000000</span></div><div class="line"><span class="number">0x804b030</span>:	<span class="number">0x00000000</span>	<span class="number">0x00000000</span>	<span class="number">0x00000000</span>	<span class="number">0x00000000</span></div><div class="line"><span class="number">0x804b040</span>:	<span class="number">0x00000000</span>	<span class="number">0x00000000</span>	<span class="number">0x00000000</span>	<span class="number">0x00000000</span></div></pre></td></tr></table></figure></p>
+<p>我们<code>-0x08</code>是为了看到他chunk的头部<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">+-------------+</div><div class="line">Top chunk</div><div class="line">+-------------+</div><div class="line">size=0x20d51</div><div class="line">+-------------+ </div><div class="line">previous size</div><div class="line">+-------------+ </div><div class="line">second chunk</div><div class="line">+-------------+ 0x804b2a8 ------+</div><div class="line">size=0x11                       |</div><div class="line">+-------------+ 0x804b2a4       |</div><div class="line">previous size                   |=&gt; 0x2a0个字节</div><div class="line">+-------------+ 0x804b2a0       |</div><div class="line">First chunck                    |</div><div class="line">+-------------+ 0x804b008 ------+</div><div class="line">size=0x2a1</div><div class="line">+-------------+ 0x804b004</div><div class="line">previous size</div><div class="line">+-------------+ 0x804b000</div></pre></td></tr></table></figure></p>
+<p>first chunk在malloc的时候给的参数是666,这里first chunk的size是<br>0x2a1 = 673  为什么是这样子???<br>智障了吧,最后三位是0 or 1不代表大小<br>后三位是没有意义的,他会8字节对齐,最后三位用于标志位<br>0x2a1 = 0000 0010 1010 0<code>001</code><br>所以这里代表的大小是 666 对于 8 向上对齐,就是 672 / 8 = 84<br>所以First Chunk是从 0x804b200 ~ 0x804b2a8 这672字节</p>
+<p>这样子的话是不是说Heap最低地址一般都是 0x804x000<br>然后<code>size + previous size</code> 是 8字节<br>这样子正好chunk的User data开始的地址也是对齐的<br>是这个意思吗</p>
+<p>同理,second chunk大小是12也不能对齐8,所以对齐到了16(0x10),又由于second的前一块,即first chunk也被allocate出去了,所以标志位最后一位是1,所以,内存中second chunk的大小是0x11 = 0000 0000 0001 0<code>001</code></p>
+<p>不过有点不太对劲啊,难道…这0x2a0个字节只是说了这一块User data到下一块User data之间的距离,已经把人家下一块的<code>size + previous</code>也算进去了???</p>
+<p>也就是说计算的时候,对应的项差size个字节是这个意思吗???<br>就是<br>chunk[1].size == chunk[2].data_offset - chunk[1].data_offset<br>chunk[1].size == chunk[2].size_offset - chunk[1].size_offset<br>…</p>
+<p>那我们验证一下,second chunk的size在0x804b2a4,大小为0x10,那0x804b2b4 = 0x804b2a4 + 0x10存的应该是op chunk的大小</p>
+<p>喔,,,果然是这样子<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">gdb-peda$ x <span class="number">0x804b004</span></div><div class="line"><span class="number">0x804b004</span>:	<span class="number">0x000002a1</span>   <span class="comment">// first chunk'size</span></div><div class="line">gdb-peda$ x <span class="number">0x804b004</span> + <span class="number">0x000002a0</span></div><div class="line"><span class="number">0x804b2a4</span>:	<span class="number">0x00000011</span>  <span class="comment">// second chunk'size</span></div><div class="line">gdb-peda$ x <span class="number">0x804b2a4</span> + <span class="number">0x00000010</span></div><div class="line"><span class="number">0x804b2b4</span>:	<span class="number">0x00020d51</span>  <span class="comment">// Top chunk'size</span></div></pre></td></tr></table></figure></p>
+<p>所以在[4], free掉Fisrt chunk的时候<br>检查前一块是否使用<br>通过自己的size = 0x2a1, 最后一位是1, 所以前一块不空闲(这里first chunk是第一块,他其实是没有前一块,但应该为了统一,假设第一块前面那一块不存在的块是在使用的块,就不能合并了)</p>
+<p>检查后一块是否使用<br>检查后一块就是检查second块,可以通过second的下一块即Top chunk的size字段最后一位,即0x00020d51的最后一位标志的top的前一块也就是second正在使用,所以不能合并</p>
+<p>这里都不是空闲的,如果是空闲的话,就会触发binlist的unlink操作,就是把被合并的块从binlist里卸下来</p>
+<p>而如果我们在[3]里的strcpy的时候,进行了奇怪的操作,就是不光写了first chunk的data部分,还写了second chunk的头部<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">prev_size = even number <span class="keyword">and</span> hence PREV_INUSE bit is unset.</div><div class="line">size = <span class="number">-4</span></div><div class="line">fd = <span class="built_in">free</span> address – <span class="number">12</span></div><div class="line">bk = shellcode address</div></pre></td></tr></table></figure></p>
+<p>那么在[4], free掉First chunk的时候,<br>检查前一块是否使用<br>通过自己的size = 0x2a1, 最后一位是1, 所以前一块不空闲</p>
+<p>检查后一块是否使用<br>检查后一块就是检查second块,可以通过second的下一块的size字段来看,上面刚说到这个下一块的size字段,其实就是用second的size字段的位置加上second的size字段,放在这里就是,往回数4个字节,正好到了sedond chunk的previous size这里,而这里被我们改写成了偶数,这个时候malloc就会认为我们的second是free的,就会把他从bin list上取下来,准备合并</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">+-------------+ 高地址</div><div class="line">Top chunk</div><div class="line">+-------------+</div><div class="line">size=0x20d51</div><div class="line">+-------------+ </div><div class="line">previous size</div><div class="line">+-------------+ </div><div class="line">second chunk</div><div class="line">bk -------------&gt; addr_free - 12</div><div class="line">fd -------------&gt; addr_shellcode</div><div class="line">+-------------+ </div><div class="line">size= -4</div><div class="line">+-------------+ &lt;--- size_of_second</div><div class="line">previous size =&gt;&gt;&gt;&gt; 覆盖成偶数</div><div class="line">+-------------+ &lt;--addr_size_of_second + size_of_second</div></pre></td></tr></table></figure>
+<p>在unlink掉second时候,会将second的fd和bk字段赋值给FD和BK变量,还有,还有看代码吧<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">define</span> unlink(P, BK, FD) &#123;                                            \</span></div><div class="line">    FD = P-&gt;fd;								      \</div><div class="line">    BK = P-&gt;bk;								      \</div><div class="line">    FD-&gt;bk = BK;							      \</div><div class="line">    BK-&gt;fd = FD;							      \</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在我们这里是<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">FD = addr_free - <span class="number">12</span>;</div><div class="line">BK = addr_shellcode; </div><div class="line">FD -&gt; bk = addr_shellcode; <span class="comment">//GOT[free] = addr_shellcode, 到此就完成了GOT overwrite</span></div><div class="line">BK -&gt; fd = FD;  <span class="comment">// (shellcode + 8) = addr_free - 12</span></div></pre></td></tr></table></figure></p>
+<p>这里的addr_free就是GOT[free],我们的FD是addr_GOT[free]-12,对吧,这里的12怎么来的就是看第三句,我们要<code>FD -&gt; bk</code>, 我们看下,对于一个块,他的bk指针是偏移12字节的,前面有<code>prev_size</code>, <code>size</code>和<code>fd</code><br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> &#123;</span></div><div class="line">dword prev_size;</div><div class="line">dword size;</div><div class="line">bin * fd;</div><div class="line">bin * bk;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>结论:这链表链着的是块头部,从prev_size开始的<br>炒鸡注意:这里第四句会把shellcode的第8-11这四个字节给破坏掉</p>
+</blockquote>
+<p>这里就是整个比较老的glibc的攻击思路</p>
+<p>前面的我们搞清楚了</p>
+<p>但.新的glibc加了一些防护功能<br>见wooyun这一篇 <a href="http://www.tuicool.com/articles/E3Ezu2u" target="_blank" rel="external">http://www.tuicool.com/articles/E3Ezu2u</a></p>
+
+        
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/2017/07/25/一些点滴关于pwn/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2017/07/24/GOT-overwitre-GOT-dereference/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/avatar.png" alt="Aryb1n's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        youremail@email.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="#" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">16</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">38</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">14</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">52</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">26</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">13</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/11/">十一月 2016<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/10/">十月 2016<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/07/">七月 2016<span class="sidebar_archives-count">13</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
+                
+                分类
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                
+            </ul>
+        </li>
+        
+    
+
+    <!-- Pages  -->
+    
+        <li>
+            <a href="/tags" title="标签">
+                
+                    <i class="material-icons sidebar-material-icons">label</i>
+                
+                标签
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/links" title="友链">
+                
+                    <i class="material-icons sidebar-material-icons">person</i>
+                
+                友链
+            </a>
+        </li>
+        
+    
+
+    <!-- Article Number  -->
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+
+<!-- Theme Material -->
+
+    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+            主题 - Material
+            <span class="sidebar-badge badge-circle">i</span>
+        </div>
+    </a>
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+        <a href="https://twitter.com/twitter" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-twitter">
+                <span class="visuallyhidden">Twitter</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Facebook -->
+    
+        <a href="https://www.facebook.com/facebook" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-facebook">
+                <span class="visuallyhidden">Facebook</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Google + -->
+    
+        <a href="https://www.google.com/" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-gplus">
+                <span class="visuallyhidden">Google Plus</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+    
+    <!-- V2EX -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>Aryb1n's notebook
+            
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import JS File -->
+
+    <script>lsloader.load("lazyload_js","/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==", true)</script>
+
+
+
+    <script>lsloader.load("js_js","/js/js.min.js?V/53wGualMuiPM3xoetD5Q==", true)</script>
+
+
+
+    <script>lsloader.load("np_js","/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==", true)</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Import prettify js  -->
+
+
+
+<!-- Window Load -->
+<!-- add class for prettify -->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+
+    
+    
+</script>
+
+<!-- MathJax Load-->
+
+
+<!-- Bing Background -->
+
+<script type="text/ls-javascript" id="Bing-Background-script">
+    queue.offer(function(){
+        $('body').attr('data-original', 'https://api.i-meto.com/bing?N');
+    });
+</script>
+
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Custom Footer -->
+
+
+
+<script>
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+console.log('\n %c © Material Theme | Version: 1.5.0 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+</script>
+
+                </main>
+            </div>
+        </body>
+    
+</html>
