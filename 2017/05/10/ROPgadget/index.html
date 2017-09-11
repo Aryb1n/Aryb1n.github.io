@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -478,10 +479,11 @@
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
         <p>看到网上推荐的rop工具,就down了一份<code>ROPgadget</code></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">haibin$: ROPgadget --binary /lib/x86_64-linux-gnu/libc.so.6 --only <span class="string">"pop|ret"</span> | grep rdi</div></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash"><code class="language-bash">haibin$: ROPgadget --binary /lib/x86_64-linux-gnu/libc.so.6 --only <span class="token string">"pop|ret"</span> <span class="token operator">|</span> <span class="token function">grep</span> rdi
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>看蒸米的文章里有</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">payload = &quot;\x00&quot;*136 + p64(pop_ret_addr) + p64(binsh_addr) + p64(system_addr)</div></pre></td></tr></table></figure>
-<p>开始没看懂这个payload，还是太菜</p>
+<pre><code>payload = &quot;\x00&quot;*136 + p64(pop_ret_addr) + p64(binsh_addr) + p64(system_addr)
+</code></pre><p>开始没看懂这个payload，还是太菜</p>
 <p>用<code>p64(pop_ret_addr)</code>覆写了<code>ret_address</code>， 所以在ret的时候先跳到一个<code>pop rdi; ret</code>的地方<br>这个时候栈顶应该已经是<code>p64(binsh_addr) + p64(system_addr)</code> 这部分内容了<br>所以这个时候<code>pop rdi</code>就把<code>p64(binsh_addr)</code>pop到了<code>$rdi</code>里作为第一个参数<br>然后<code>ret</code>跳到<code>p64(system_addr)</code>,然后起来shell?好像很完美的样子….</p>
 
         

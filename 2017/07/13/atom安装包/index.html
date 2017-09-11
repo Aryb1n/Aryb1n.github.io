@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -478,8 +479,14 @@
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
         <p>编辑<code>~/.atom/.apmrc</code></p>
-<p>添加<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">strict-ssl=<span class="literal">false</span></div><div class="line">https-proxy=http://127.0.0.1:1080/</div><div class="line">http-proxy=http://127.0.0.1:1080/</div></pre></td></tr></table></figure></p>
-<p>网上还有说设置<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">registry=https://registry.npm.taobao.org/</div></pre></td></tr></table></figure></p>
+<p>添加</p>
+<pre class="line-numbers language-bash"><code class="language-bash">strict-ssl<span class="token operator">=</span>false
+https-proxy<span class="token operator">=</span>http://127.0.0.1:1080/
+http-proxy<span class="token operator">=</span>http://127.0.0.1:1080/
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>网上还有说设置</p>
+<pre class="line-numbers language-bash"><code class="language-bash">registry<span class="token operator">=</span>https://registry.npm.taobao.org/
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>其实只是这样子是不行的，因为atom安装包还要访问atom官网，而不只是npm的问题</p>
 
         

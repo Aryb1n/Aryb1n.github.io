@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -487,11 +488,48 @@
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
         <h2 id="关于Omi"><a href="#关于Omi" class="headerlink" title="关于Omi"></a>关于Omi</h2><p>Omi 是腾讯前端团队…balabala</p>
-<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mkdir omi-demo</div><div class="line"><span class="built_in">cd</span> omi-demo</div><div class="line">wget https://unpkg.com/omi@1.3.2/dist/omi.min.js</div><div class="line">sudo npm install -g browser-sync</div></pre></td></tr></table></figure>
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">mkdir</span> omi-demo
+<span class="token function">cd</span> omi-demo
+<span class="token function">wget</span> https://unpkg.com/omi@1.3.2/dist/omi.min.js
+<span class="token function">sudo</span> <span class="token function">npm</span> <span class="token function">install</span> -g browser-sync
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p>哦，本来其实<code>browser-sync</code>和<code>Gulp</code>一起用的，我没有就不xx了</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><p>抄了一个demo <code>index.js</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Omi <span class="keyword">from</span> <span class="string">'./omi.min.js'</span>;</div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Hello</span> <span class="keyword">extends</span> <span class="title">Omi</span>.<span class="title">Component</span> </span>&#123;</div><div class="line">    <span class="keyword">constructor</span>(data) &#123;</div><div class="line">        <span class="keyword">super</span>(data);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    style () &#123;</div><div class="line">        <span class="keyword">return</span>  <span class="string">`</span></div><div class="line"><span class="string">        &lt;style&gt;</span></div><div class="line"><span class="string">            h1&#123;</span></div><div class="line"><span class="string">                cursor:pointer;</span></div><div class="line"><span class="string">            &#125;</span></div><div class="line"><span class="string">        &lt;/style&gt;</span></div><div class="line"><span class="string">         `</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    handleClick(target, evt)&#123;</div><div class="line">        alert(target.innerHTML);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    render() &#123;</div><div class="line">        <span class="keyword">return</span>  <span class="string">`</span></div><div class="line"><span class="string">        &lt;div&gt;</span></div><div class="line"><span class="string">            &lt;h1 onclick="handleClick(this, event)"&gt;Hello ,&#123;&#123;name&#125;&#125;!&lt;/h1&gt;</span></div><div class="line"><span class="string">        &lt;/div&gt;</span></div><div class="line"><span class="string">        `</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"> </div><div class="line">Omi.render(<span class="keyword">new</span> Hello(&#123; <span class="attr">name</span> : <span class="string">"Omi"</span> &#125;),<span class="string">"#container"</span>);</div></pre></td></tr></table></figure></p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><p>抄了一个demo <code>index.js</code></p>
+<pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token keyword">import</span> Omi <span class="token keyword">from</span> <span class="token string">'./omi.min.js'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Hello</span> <span class="token keyword">extends</span> <span class="token class-name">Omi<span class="token punctuation">.</span>Component</span> <span class="token punctuation">{</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    style <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span>  <span class="token template-string"><span class="token string">`
+        &lt;style>
+            h1{
+                cursor:pointer;
+            }
+        &lt;/style>
+         `</span></span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token function">handleClick</span><span class="token punctuation">(</span>target<span class="token punctuation">,</span> evt<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token function">alert</span><span class="token punctuation">(</span>target<span class="token punctuation">.</span>innerHTML<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span>  <span class="token template-string"><span class="token string">`
+        &lt;div>
+            &lt;h1 onclick="handleClick(this, event)">Hello ,{{name}}!&lt;/h1>
+        &lt;/div>
+        `</span></span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+Omi<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Hello</span><span class="token punctuation">(</span><span class="token punctuation">{</span> name <span class="token punctuation">:</span> <span class="token string">"Omi"</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">"#container"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>好了，跑一下</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">browser-sync start --server index.js</div></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash"><code class="language-bash">browser-sync start --server index.js
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>然后访问下<code>http://localhost:3000/</code></p>
 <p>好了，<code>Cannot GET /</code>，失败</p>
 

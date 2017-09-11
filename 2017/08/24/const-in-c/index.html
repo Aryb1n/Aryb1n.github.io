@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -478,11 +479,23 @@
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
         <p>一直不太知道const…</p>
-<h2 id="指针上使用const"><a href="#指针上使用const" class="headerlink" title="指针上使用const"></a>指针上使用const</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">char</span> * <span class="keyword">const</span> p;     <span class="comment">//p的值不可变, 也就是指向不能变</span></div><div class="line"></div><div class="line"><span class="keyword">const</span> <span class="keyword">char</span> * p;     <span class="comment">//p所指向的内容不可变, [*]常用</span></div><div class="line"><span class="keyword">char</span> <span class="keyword">const</span> * p;     <span class="comment">// 同上, p指向的内容不能变</span></div><div class="line"></div><div class="line"><span class="keyword">const</span> <span class="keyword">char</span> * <span class="keyword">const</span> p;       <span class="comment">//都不可变</span></div></pre></td></tr></table></figure>
+<h2 id="指针上使用const"><a href="#指针上使用const" class="headerlink" title="指针上使用const"></a>指针上使用const</h2><pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">char</span> <span class="token operator">*</span> <span class="token keyword">const</span> p<span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">//p的值不可变, 也就是指向不能变</span>
+
+<span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span> p<span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">//p所指向的内容不可变, [*]常用</span>
+<span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span> p<span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">// 同上, p指向的内容不能变</span>
+
+<span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span> <span class="token keyword">const</span> p<span class="token punctuation">;</span>       <span class="token comment" spellcheck="true">//都不可变</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>如果const在指针的左边</p>
 <p>如果const在指针的右边</p>
 <h2 id="const做函数形参"><a href="#const做函数形参" class="headerlink" title="const做函数形参"></a>const做函数形参</h2><p>普通形参加不加const限定符对实参没有影响，引用形参和指针形参前面没有const限定符时，实参必须是非const的<br>所以要保证的是指针所指向的内容不变…所以是<br>fun(const int * arg)<br>的形式, 注意const位置</p>
-<h2 id="const成员函数"><a href="#const成员函数" class="headerlink" title="const成员函数"></a>const成员函数</h2><p>大概是这样子的<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> &#123;</span></div><div class="line">    ...</div><div class="line">    func(...arg) <span class="keyword">const</span>;</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="const成员函数"><a href="#const成员函数" class="headerlink" title="const成员函数"></a>const成员函数</h2><p>大概是这样子的</p>
+<pre class="line-numbers language-c"><code class="language-c">class A <span class="token punctuation">{</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token function">func</span><span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>arg<span class="token punctuation">)</span> <span class="token keyword">const</span><span class="token punctuation">;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>任何..不修改成员变量的函数都应当声明为const的. 这样子的话如果试图修改成员变量, 将报错???….就像是java里@override差不多. 为了增强程序的鲁棒性</p>
 <p>但, 好像实际原因是这里的const其实是把<code>this *</code>给const掉了, 在汇编层面,this指针是成员函数的第一个参数(g++), MSVC的话由于是this call, 也没啥第一个不第一个</p>
 <p>原来的this指针只是指向不能变, 当给成员函数加了const修饰以后, 就是传给函数的this指针指向的对象也不能变…所以就不能修改成员变量了</p>

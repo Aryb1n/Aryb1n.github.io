@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -489,15 +490,56 @@
         <ol>
 <li>先看<em>变量的覆盖(遮盖)</em></li>
 </ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">InterCalculator</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> sum;</div><div class="line">    ...</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">DecimalCalculator</span> <span class="keyword">extends</span> <span class="title">InterCalculator</span> </span>&#123;</div><div class="line">    <span class="keyword">double</span> sum;</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<pre class="line-numbers language-java"><code class="language-java">
+<span class="token keyword">class</span> <span class="token class-name">InterCalculator</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> sum<span class="token punctuation">;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">DecimalCalculator</span> <span class="token keyword">extends</span> <span class="token class-name">InterCalculator</span> <span class="token punctuation">{</span>
+    <span class="token keyword">double</span> sum<span class="token punctuation">;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>当由一个派生层次更高的类型(父类)来引用一个子类对象，那么被遮蔽的对象会怎样呢</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">DecimalCalculator dc = <span class="keyword">new</span> DecimalCalculator();</div><div class="line">InterCalculator ic = dc;</div><div class="line"></div><div class="line"><span class="keyword">int</span> s = ic.num; <span class="comment">//access InterCalculator sum</span></div><div class="line"></div><div class="line"><span class="comment">// 如果我们访问的对象使用到了InterCalculator类型的显示类型转换或者我们把一个实例传递给接受父类类型的方法，也会是这种情况</span></div></pre></td></tr></table></figure>
+<pre class="line-numbers language-java"><code class="language-java">DecimalCalculator dc <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">DecimalCalculator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+InterCalculator ic <span class="token operator">=</span> dc<span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> s <span class="token operator">=</span> ic<span class="token punctuation">.</span>num<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//access InterCalculator sum</span>
+
+<span class="token comment" spellcheck="true">// 如果我们访问的对象使用到了InterCalculator类型的显示类型转换或者我们把一个实例传递给接受父类类型的方法，也会是这种情况</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ol>
 <li>而类似的方法的覆盖,我一直叫 <em>方法的重写</em> (override)</li>
 </ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animal</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">sleep</span><span class="params">()</span> </span>&#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line">    ...</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Mammal</span> <span class="keyword">extends</span> <span class="title">Animal</span> </span>&#123;</div><div class="line">    <span class="comment">// override the method sleep</span></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">sleep</span><span class="params">()</span> </span>&#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line">    ...</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cat</span> <span class="keyword">extends</span> <span class="title">Mammal</span> </span>&#123;</div><div class="line">    <span class="comment">// override the method sleep</span></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">sleep</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Animal</span> <span class="token punctuation">{</span>
+    <span class="token keyword">void</span> <span class="token function">sleep</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token punctuation">}</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Mammal</span> <span class="token keyword">extends</span> <span class="token class-name">Animal</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// override the method sleep</span>
+    <span class="token keyword">void</span> <span class="token function">sleep</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token punctuation">}</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Cat</span> <span class="token keyword">extends</span> <span class="token class-name">Mammal</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// override the method sleep</span>
+    <span class="token keyword">void</span> <span class="token function">sleep</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>类似上面， 当由一个派生层次更高的类型(父类)来引用一个子类对象，那么被遮蔽的对象会怎样呢</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Cat simon = <span class="keyword">new</span> Cat();</div><div class="line">Animal creature = simon;</div><div class="line">...</div><div class="line">creature.sleep();   <span class="comment">// access Cat sleep</span></div></pre></td></tr></table></figure>
+<pre class="line-numbers language-java"><code class="language-java">Cat simon <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Cat</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+Animal creature <span class="token operator">=</span> simon<span class="token punctuation">;</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+creature<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">// access Cat sleep</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p>方法的override与前面的变量的遮蔽不太一样</p>
 <h3 id="从行为来看-Cat就是一个Cat，不管你怎么叫他-而其他时候creature更像一个Animal。要通过Animal引用访问一个被遮蔽的变量，则会找到Animal类的实现，而不是Cat。"><a href="#从行为来看-Cat就是一个Cat，不管你怎么叫他-而其他时候creature更像一个Animal。要通过Animal引用访问一个被遮蔽的变量，则会找到Animal类的实现，而不是Cat。" class="headerlink" title="从行为来看,Cat就是一个Cat，不管你怎么叫他,而其他时候creature更像一个Animal。要通过Animal引用访问一个被遮蔽的变量，则会找到Animal类的实现，而不是Cat。"></a>从行为来看,Cat就是一个Cat，不管你怎么叫他,而其他时候creature更像一个Animal。要通过Animal引用访问一个被遮蔽的变量，则会找到Animal类的实现，而不是Cat。</h3>
         

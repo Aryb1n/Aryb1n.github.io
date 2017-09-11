@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -489,11 +490,14 @@
         <blockquote>
 <p>我的是Linux,不知道win是不是差不多</p>
 </blockquote>
-<h2 id="路由器-amp-PC"><a href="#路由器-amp-PC" class="headerlink" title="路由器 &amp; PC"></a>路由器 &amp; PC</h2><h3 id="ARP表"><a href="#ARP表" class="headerlink" title="ARP表"></a>ARP表</h3><h4 id="pc"><a href="#pc" class="headerlink" title="pc"></a>pc</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">arp [-a]        两种不同的显示arp表的方法</div><div class="line">arp -d          删除</div></pre></td></tr></table></figure>
-<h4 id="router"><a href="#router" class="headerlink" title="router"></a>router</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">show arp        显示arp表</div><div class="line">no arp          删除</div></pre></td></tr></table></figure>
-<h3 id="路由表"><a href="#路由表" class="headerlink" title="路由表"></a>路由表</h3><h4 id="pc-1"><a href="#pc-1" class="headerlink" title="pc"></a>pc</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">netstat -r</div></pre></td></tr></table></figure>
-<h4 id="router-1"><a href="#router-1" class="headerlink" title="router"></a>router</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">show ip route</div><div class="line">no ip route</div></pre></td></tr></table></figure>
-<h2 id="交换机"><a href="#交换机" class="headerlink" title="交换机"></a>交换机</h2><h3 id="CAM表"><a href="#CAM表" class="headerlink" title="CAM表"></a>CAM表</h3><p>这个应该就是传说中的<code>MAC</code>和交换机接口对应的表</p>
+<h2 id="路由器-amp-PC"><a href="#路由器-amp-PC" class="headerlink" title="路由器 &amp; PC"></a>路由器 &amp; PC</h2><h3 id="ARP表"><a href="#ARP表" class="headerlink" title="ARP表"></a>ARP表</h3><h4 id="pc"><a href="#pc" class="headerlink" title="pc"></a>pc</h4><pre><code>arp [-a]        两种不同的显示arp表的方法
+arp -d          删除
+</code></pre><h4 id="router"><a href="#router" class="headerlink" title="router"></a>router</h4><pre><code>show arp        显示arp表
+no arp          删除
+</code></pre><h3 id="路由表"><a href="#路由表" class="headerlink" title="路由表"></a>路由表</h3><h4 id="pc-1"><a href="#pc-1" class="headerlink" title="pc"></a>pc</h4><pre><code>netstat -r
+</code></pre><h4 id="router-1"><a href="#router-1" class="headerlink" title="router"></a>router</h4><pre><code>show ip route
+no ip route
+</code></pre><h2 id="交换机"><a href="#交换机" class="headerlink" title="交换机"></a>交换机</h2><h3 id="CAM表"><a href="#CAM表" class="headerlink" title="CAM表"></a>CAM表</h3><p>这个应该就是传说中的<code>MAC</code>和交换机接口对应的表</p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>netstat命令 <a href="https://linux.cn/article-2434-1.html" target="_blank" rel="external">https://linux.cn/article-2434-1.html</a><br>多层交换概述 <a href="https://wenku.baidu.com/view/5e4111976bec0975f465e203.html" target="_blank" rel="external">https://wenku.baidu.com/view/5e4111976bec0975f465e203.html</a><br>多层交换机与路由器 <a href="http://network.pconline.com.cn/474/4741916.html" target="_blank" rel="external">http://network.pconline.com.cn/474/4741916.html</a><br>MAC表含义 <a href="http://skyeagle.blog.51cto.com/417071/93338" target="_blank" rel="external">http://skyeagle.blog.51cto.com/417071/93338</a></p>
 
         

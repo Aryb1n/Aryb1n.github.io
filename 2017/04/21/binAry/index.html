@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -477,10 +478,22 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <h3 id="p32-u32"><a href="#p32-u32" class="headerlink" title="p32 u32"></a>p32 u32</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> struct</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p32(<span class="number">0xdeadbeef</span>) == struct.pack(<span class="string">'I'</span>, <span class="number">0xdeadbeef</span>)</div><div class="line"><span class="keyword">True</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>u32(<span class="string">'abcd'</span>) == struct.unpack(<span class="string">'I'</span>, <span class="string">'abcd'</span>)[<span class="number">0</span>]</div><div class="line"><span class="keyword">True</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'37130000'</span>.decode(<span class="string">'hex'</span>) == <span class="string">'\x37\x13\x00\x00'</span></div><div class="line"><span class="keyword">True</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>u8(<span class="string">'\x41'</span>) == <span class="number">0x41</span></div><div class="line"><span class="keyword">True</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>u8(<span class="string">'A'</span>) == <span class="number">0x41</span></div><div class="line"><span class="keyword">True</span></div></pre></td></tr></table></figure>
-<h4 id="Notice"><a href="#Notice" class="headerlink" title="Notice:"></a>Notice:</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">u32(&apos;abcd&apos;) =&gt; u32(&apos;\x61\x62\x63\x64&apos;)</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&apos;A&apos; =&gt; &apos;\x41&apos; =&gt; String</div><div class="line">0x41 =&gt; number</div></pre></td></tr></table></figure>
-<p><code>struct.unpack</code> =&gt; <a href="http://blog.csdn.net/gracioushe/article/details/5915900" target="_blank" rel="external">http://blog.csdn.net/gracioushe/article/details/5915900</a><br><code>struct</code> =&gt; <a href="https://docs.python.org/2/library/struct.html" target="_blank" rel="external">https://docs.python.org/2/library/struct.html</a></p>
+        <h3 id="p32-u32"><a href="#p32-u32" class="headerlink" title="p32 u32"></a>p32 u32</h3><pre class="line-numbers language-python"><code class="language-python"><span class="token operator">>></span><span class="token operator">></span> <span class="token keyword">import</span> struct
+<span class="token operator">>></span><span class="token operator">></span> p32<span class="token punctuation">(</span><span class="token number">0xdeadbeef</span><span class="token punctuation">)</span> <span class="token operator">==</span> struct<span class="token punctuation">.</span>pack<span class="token punctuation">(</span><span class="token string">'I'</span><span class="token punctuation">,</span> <span class="token number">0xdeadbeef</span><span class="token punctuation">)</span>
+<span class="token boolean">True</span>
+<span class="token operator">>></span><span class="token operator">></span> u32<span class="token punctuation">(</span><span class="token string">'abcd'</span><span class="token punctuation">)</span> <span class="token operator">==</span> struct<span class="token punctuation">.</span>unpack<span class="token punctuation">(</span><span class="token string">'I'</span><span class="token punctuation">,</span> <span class="token string">'abcd'</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+<span class="token boolean">True</span>
+<span class="token operator">>></span><span class="token operator">></span> <span class="token string">'37130000'</span><span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token string">'hex'</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token string">'\x37\x13\x00\x00'</span>
+<span class="token boolean">True</span>
+<span class="token operator">>></span><span class="token operator">></span> u8<span class="token punctuation">(</span><span class="token string">'\x41'</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0x41</span>
+<span class="token boolean">True</span>
+<span class="token operator">>></span><span class="token operator">></span> u8<span class="token punctuation">(</span><span class="token string">'A'</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0x41</span>
+<span class="token boolean">True</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="Notice"><a href="#Notice" class="headerlink" title="Notice:"></a>Notice:</h4><pre><code>u32(&#39;abcd&#39;) =&gt; u32(&#39;\x61\x62\x63\x64&#39;)
+</code></pre><pre><code>&#39;A&#39; =&gt; &#39;\x41&#39; =&gt; String
+0x41 =&gt; number
+</code></pre><p><code>struct.unpack</code> =&gt; <a href="http://blog.csdn.net/gracioushe/article/details/5915900" target="_blank" rel="external">http://blog.csdn.net/gracioushe/article/details/5915900</a><br><code>struct</code> =&gt; <a href="https://docs.python.org/2/library/struct.html" target="_blank" rel="external">https://docs.python.org/2/library/struct.html</a></p>
 
         
     

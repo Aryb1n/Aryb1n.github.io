@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -566,8 +567,9 @@
 <li>应用层</li>
 </ul>
 <p>相当于是5层结构, 这个很常用</p>
-<h2 id="数据通信基础"><a href="#数据通信基础" class="headerlink" title="数据通信基础"></a>数据通信基础</h2><p>模型构成<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">信源 - 变换器 - 信道 - 反变换器 - 信宿</div></pre></td></tr></table></figure></p>
-<p>信源: 把各种信息转化成原始物理信号<br>变换器: 把原始物理信号进行变换, 以便与在信道上传输<br>噪声源: 信道自身的噪声以及周围环境对信道的干扰</p>
+<h2 id="数据通信基础"><a href="#数据通信基础" class="headerlink" title="数据通信基础"></a>数据通信基础</h2><p>模型构成</p>
+<pre><code>信源 - 变换器 - 信道 - 反变换器 - 信宿
+</code></pre><p>信源: 把各种信息转化成原始物理信号<br>变换器: 把原始物理信号进行变换, 以便与在信道上传输<br>噪声源: 信道自身的噪声以及周围环境对信道的干扰</p>
 <p>下面两个概念对比</p>
 <ul>
 <li>信号带宽: 信号能量所集中的频率范围, 记为<code>H = f_max - f_min</code>, f为频率<br>对于数字信号, 带宽H可以近似表示为<code>H = 1 / t</code>, t 为脉冲宽度…这个没懂</li>
@@ -579,9 +581,13 @@
 <li>信道带宽</li>
 <li>信道的误码率</li>
 </ul>
-<p>信道带宽和数据率的关系:<br>奈奎斯特定理(无噪声信道)<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">C = <span class="number">2</span>H * logL (bps)</div></pre></td></tr></table></figure></p>
+<p>信道带宽和数据率的关系:<br>奈奎斯特定理(无噪声信道)</p>
+<pre class="line-numbers language-c"><code class="language-c">C <span class="token operator">=</span> 2H <span class="token operator">*</span> <span class="token function">logL</span> <span class="token punctuation">(</span>bps<span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>L是数字信号的离散取值数目<br>C为信道的数据率<br>H为信道带宽</p>
-<p>香农定理(有噪声信道, L不受限)<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">C = H * <span class="built_in">log</span>(<span class="number">1</span> + S/N)</div></pre></td></tr></table></figure></p>
+<p>香农定理(有噪声信道, L不受限)</p>
+<pre class="line-numbers language-c"><code class="language-c">C <span class="token operator">=</span> H <span class="token operator">*</span> <span class="token function">log</span><span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">+</span> S<span class="token operator">/</span>N<span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>S为信号功率, N为噪声功率, S/N为信噪比</p>
 <p>波特率: 码元速率, 美秒传输的码元的数目, 单位是波特(B)<br>若码元的离散取值数目是L, 波特率是B, 数据率是C, 则 <code>C = B * logL</code></p>
 <p>误码率: 数字信号比特(二进制位)在传输中出现错误的概率</p>
@@ -605,14 +611,14 @@
 </ul>
 </li>
 </ul>
-<h3 id="数字调制技术"><a href="#数字调制技术" class="headerlink" title="数字调制技术"></a>数字调制技术</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">基带信号 - 调制 - 解调 - 基带信号</div></pre></td></tr></table></figure>
-<h3 id="模拟信号的脉码调制"><a href="#模拟信号的脉码调制" class="headerlink" title="模拟信号的脉码调制"></a>模拟信号的脉码调制</h3><p>脉码调制大概过程: 采样, 量化, 编码</p>
+<h3 id="数字调制技术"><a href="#数字调制技术" class="headerlink" title="数字调制技术"></a>数字调制技术</h3><pre><code>基带信号 - 调制 - 解调 - 基带信号
+</code></pre><h3 id="模拟信号的脉码调制"><a href="#模拟信号的脉码调制" class="headerlink" title="模拟信号的脉码调制"></a>模拟信号的脉码调制</h3><p>脉码调制大概过程: 采样, 量化, 编码</p>
 <p>差分脉码调制: 输出值不是量化值本身, 是当前值和上一个值的差值</p>
 <h3 id="多路复用技术"><a href="#多路复用技术" class="headerlink" title="多路复用技术"></a>多路复用技术</h3><p>将多个信道复用在同一条物理线路上, 使得一条物理线路能够同时传输多路数据信号<br>具体方法有频分, 时分, 统计时分…我对这些不是很了解, 想先跳过</p>
 <h3 id="数据同步方式"><a href="#数据同步方式" class="headerlink" title="数据同步方式"></a>数据同步方式</h3><h3 id="物理层协议"><a href="#物理层协议" class="headerlink" title="物理层协议"></a>物理层协议</h3><p>物理层协议实际上就是通信接口标准<br>机械特性, 功能特性, 规程特性, 电气特性…<br>好了就此打住, 我们先进入下一层</p>
 <h2 id="数据链路层"><a href="#数据链路层" class="headerlink" title="数据链路层"></a>数据链路层</h2><p>主要功能: 在<code>相邻节点</code>间保证<code>数据帧</code>的透明传输</p>
-<h3 id="数据帧"><a href="#数据帧" class="headerlink" title="数据帧"></a>数据帧</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">帧同步 | 目的地址 | 源地址 | 控制 | 数据 | 帧校验</div></pre></td></tr></table></figure>
-<h3 id="差错控制"><a href="#差错控制" class="headerlink" title="差错控制"></a>差错控制</h3><p>检错码: 能够发现差错, 但无法自动纠正差错, 通过重传来获得正确的数据.</p>
+<h3 id="数据帧"><a href="#数据帧" class="headerlink" title="数据帧"></a>数据帧</h3><pre><code>帧同步 | 目的地址 | 源地址 | 控制 | 数据 | 帧校验
+</code></pre><h3 id="差错控制"><a href="#差错控制" class="headerlink" title="差错控制"></a>差错控制</h3><p>检错码: 能够发现差错, 但无法自动纠正差错, 通过重传来获得正确的数据.</p>
 <ul>
 <li>CRC循环冗余<br>纠错码: 不但能过发现差错, 而且知道哪些位出错, 从而能够自动纠正错误.</li>
 <li>海明码</li>
@@ -626,8 +632,9 @@
 <p>其实感觉下面两层好像不是那么的…重要…对于我想做的方面.<br><em>我暂时先跳过这一部分~~</em><br><em>有时间再回来</em><br><em>先学习网络层</em></p>
 <h2 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h2><p>在数据链路层的支持下, 将<code>报文分组</code>从<code>源节点</code>传输到<code>目的节点</code></p>
 <h3 id="网络层和数据链路层区别"><a href="#网络层和数据链路层区别" class="headerlink" title="网络层和数据链路层区别"></a>网络层和数据链路层区别</h3><p>数据链路层仅仅完成相邻节点的数据传输, 而网络层完成源节点到目的节点的</p>
-<h3 id="报文分组"><a href="#报文分组" class="headerlink" title="报文分组"></a>报文分组</h3><p>分组交换技术把报文分成若干分组…报文分组是网络层基本协议数据单元<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">序号 | 源地址 | 目的地址 | 控制信息 | 长度 | 数据</div></pre></td></tr></table></figure></p>
-<p>分组是数据帧(链路层)的数据部分</p>
+<h3 id="报文分组"><a href="#报文分组" class="headerlink" title="报文分组"></a>报文分组</h3><p>分组交换技术把报文分成若干分组…报文分组是网络层基本协议数据单元</p>
+<pre><code>序号 | 源地址 | 目的地址 | 控制信息 | 长度 | 数据
+</code></pre><p>分组是数据帧(链路层)的数据部分</p>
 <h3 id="分组交换技术"><a href="#分组交换技术" class="headerlink" title="分组交换技术"></a>分组交换技术</h3><p>定义: 将一份完整的报文划分为若干个分组， 每个分组以存储/转发方式，独立地从源节点传输到目的节点， 目的节点收到这些分组重新组装成原报文</p>
 <p>分组交换的特点</p>
 <ul>
@@ -672,21 +679,16 @@
 </ul>
 <h3 id="IP协议"><a href="#IP协议" class="headerlink" title="IP协议"></a>IP协议</h3><p>IP地址</p>
 <ul>
-<li><p>A类 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">0 | 网络号(1-7)-7位 | 主机号(8-31)-24位</div></pre></td></tr></table></figure>
-</li>
-<li><p>B类</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">10 | 网络号(2-15)-14位 | 主机号(16-31)-16位</div></pre></td></tr></table></figure>
-</li>
-<li><p>C类</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">110 | 网络号(3-23)-21位 | 主机号(24-31)-8位</div></pre></td></tr></table></figure>
-</li>
-<li><p>D类</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">1110 | 组播地址(4-31)</div></pre></td></tr></table></figure>
-</li>
-<li><p>E类</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">11110 | 保留</div></pre></td></tr></table></figure>
-</li>
+<li>A类 <pre><code>0 | 网络号(1-7)-7位 | 主机号(8-31)-24位
+</code></pre></li>
+<li>B类<pre><code>10 | 网络号(2-15)-14位 | 主机号(16-31)-16位
+</code></pre></li>
+<li>C类<pre><code>110 | 网络号(3-23)-21位 | 主机号(24-31)-8位
+</code></pre></li>
+<li>D类<pre><code>1110 | 组播地址(4-31)
+</code></pre></li>
+<li>E类<pre><code>11110 | 保留
+</code></pre></li>
 </ul>
 <p>计算问题: A类网络中有<code>2^7 - 2</code>个网络, 每个网络最多<code>2^24 - 2</code>个主机</p>
 <ul>
@@ -707,8 +709,9 @@
 <li>ARP</li>
 <li>RARP</li>
 </ul>
-<h3 id="子网划分"><a href="#子网划分" class="headerlink" title="子网划分"></a>子网划分</h3><p>算是很重要的…<br>实质是使用若干位的主机号, 来标示子网号, 引入子网后, IP地址如下划分<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[前置 | 网络号 | 主机号] =&gt; [前置 | 网络号 | 子网号 | 主机号]</div></pre></td></tr></table></figure></p>
-<h2 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h2><p>传输层的任务是完成主机-主机之间的报文传输<br>传输层要彻底解决网络通信问题, 使得应用层不必关心通信问题</p>
+<h3 id="子网划分"><a href="#子网划分" class="headerlink" title="子网划分"></a>子网划分</h3><p>算是很重要的…<br>实质是使用若干位的主机号, 来标示子网号, 引入子网后, IP地址如下划分</p>
+<pre><code>[前置 | 网络号 | 主机号] =&gt; [前置 | 网络号 | 子网号 | 主机号]
+</code></pre><h2 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h2><p>传输层的任务是完成主机-主机之间的报文传输<br>传输层要彻底解决网络通信问题, 使得应用层不必关心通信问题</p>
 <p>传输层是端到端的通信<br>网络层是源节点到目的节点的通信<br>数据链路层是相邻节点的通信</p>
 <p>这个端到端, 点到点….怎么理解, 端从字面意思看的话, 其实和点差不多呀, 难不成端到端还意思是端口到端口…??</p>
 <p>如果发送了4个有效载荷为512B的报文段， 接收方收到后， 向应用层提供2048B的字节流， 而不是4个报文段。 这是因为TCP是真正的端到端通信， 接收端无需再转发</p>
@@ -717,8 +720,9 @@
 <p>传输连接实质上是通过传输地址,建立<code>两个主机``进程</code>之间的连接</p>
 <h3 id="报文段"><a href="#报文段" class="headerlink" title="报文段"></a>报文段</h3><p>这里具体的讲, 有TCP报文段, 和UDP报文段</p>
 <h3 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h3><p>TCP传输地址 <code>&lt;源IP, 源端口, 目的IP, 目的端口&gt;</code><br>端口号16位, 范围是<code>0~65535</code><br>TCP不支持广播和组播<br>TCP是全双工的</p>
-<p>报文段封装的位置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">帧头部 | IP头部 | TCP头部 | TCP有效载荷 | 帧校验</div></pre></td></tr></table></figure></p>
-<p>TCP报文段格式<br><em>太长不写了</em><br>大概是有源端口, 目的端口, 顺序号, 确认号, 校验和还有一些标志位和<br>超级常用的标志有<code>ACK</code>, <code>SYN</code>, <code>FIN</code>~</p>
+<p>报文段封装的位置</p>
+<pre><code>帧头部 | IP头部 | TCP头部 | TCP有效载荷 | 帧校验
+</code></pre><p>TCP报文段格式<br><em>太长不写了</em><br>大概是有源端口, 目的端口, 顺序号, 确认号, 校验和还有一些标志位和<br>超级常用的标志有<code>ACK</code>, <code>SYN</code>, <code>FIN</code>~</p>
 <p>ACK: 标志位为1, 表示确认号有效, 否则无效<br>SYN: </p>
 <ul>
 <li>SYN为1, ACK为0, 则表示建立TCP连接</li>
@@ -755,11 +759,21 @@
 <h3 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a>UDP</h3><p>UDP是非面向连接, 不可靠的传输协议<br>UDP实质上在IP基础上, 增加了端口机制, 实现了主机进程间的数据传输</p>
 <p>UDP的特点:(这些特点与TCP恰好相反)<br>TCP不需要建立连接, 是不可靠的传输协议<br>不支持流量控制和拥塞控制<br>支持广播和组播</p>
 <p>有一个常见的问题是: 既然UDP也不可靠, 也是非连接的, 那么用IP就好了, 要啥UDP, 下面有请大佬解答&gt;&gt;&gt;<br>除了增加了端口, 还有其他的吗</p>
-<p>UCP报文段<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">源端口号 | 目的端口号</div><div class="line">长度     | 校验和</div><div class="line">用户数据</div></pre></td></tr></table></figure></p>
-<p>适合实时应用</p>
+<p>UCP报文段</p>
+<pre><code>源端口号 | 目的端口号
+长度     | 校验和
+用户数据
+</code></pre><p>适合实时应用</p>
 <h2 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h2><h3 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h3><p>利用DNS的一个攻击方式 DNS rebinding Attack</p>
-<h3 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h3><h3 id="SMTP"><a href="#SMTP" class="headerlink" title="SMTP"></a>SMTP</h3><h2 id="局域网"><a href="#局域网" class="headerlink" title="局域网"></a>局域网</h2><p>IEEE802标准<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">=======+======+===============</div><div class="line">链路层 + LLC  +    802.2</div><div class="line">       +------+===============</div><div class="line">       + MAC  + 802.3/802.4</div><div class="line">-------+======+ 802.5/802.11</div><div class="line">物理层 +      + .......</div><div class="line">=======+======+===============</div></pre></td></tr></table></figure></p>
-<p>LLC是独立于通信介质的<br>LLC子层为MAC子层提供三种不同类型的服务：</p>
+<h3 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h3><h3 id="SMTP"><a href="#SMTP" class="headerlink" title="SMTP"></a>SMTP</h3><h2 id="局域网"><a href="#局域网" class="headerlink" title="局域网"></a>局域网</h2><p>IEEE802标准</p>
+<pre><code>=======+======+===============
+链路层 + LLC  +    802.2
+       +------+===============
+       + MAC  + 802.3/802.4
+-------+======+ 802.5/802.11
+物理层 +      + .......
+=======+======+===============
+</code></pre><p>LLC是独立于通信介质的<br>LLC子层为MAC子层提供三种不同类型的服务：</p>
 <ul>
 <li>无确认连接</li>
 <li>有确认无连接</li>
@@ -771,9 +785,11 @@
 <li>介质访问控制(CSMA/CD)</li>
 <li>物理层规范</li>
 </ul>
-<p>CSMA/CD<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[PA | DA | SA | L | LLC帧 | PAD | FCS]</div></pre></td></tr></table></figure></p>
-<p>LLC<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[DSAP | SSAP | 控制 | 数据]</div></pre></td></tr></table></figure></p>
-
+<p>CSMA/CD</p>
+<pre><code>[PA | DA | SA | L | LLC帧 | PAD | FCS]
+</code></pre><p>LLC</p>
+<pre><code>[DSAP | SSAP | 控制 | 数据]
+</code></pre>
         
     
 

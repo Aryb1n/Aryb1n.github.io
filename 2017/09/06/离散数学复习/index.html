@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -524,8 +525,10 @@
 <p>例子<br>有4只不同颜色 (红，黄，蓝，绿)的球，允许在4只球中重复取出r次，并且要求满足：其中的红球至多取到2次、黄球至多取到3次、蓝球和绿球都至多取到1次, 问有多少种取法…?</p>
 <p>取不同颜色的球, 积事件<br>取同一颜色的球, 或者不取或者逐渐增加至上限值, 和事件</p>
 <p>所以<br>用多项式(1+x+x^2)来表示最多取到两次红球事件…其他类似</p>
-<p>则<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">G(x) = (1 + x + x^2) * (1 + x + x^2 + x^3) * (1 + x) * (1 + x)</div><div class="line">     = 1 + 4x + 8x^2 + 11x^3 + 8x^5 + 4x^6 + x^7</div></pre></td></tr></table></figure></p>
-<p>X^6的系数4代表的是…选6次…满足条件的选法有4种..恩, 我觉得OK</p>
+<p>则</p>
+<pre><code>G(x) = (1 + x + x^2) * (1 + x + x^2 + x^3) * (1 + x) * (1 + x)
+     = 1 + 4x + 8x^2 + 11x^3 + 8x^5 + 4x^6 + x^7
+</code></pre><p>X^6的系数4代表的是…选6次…满足条件的选法有4种..恩, 我觉得OK</p>
 <h2 id="关系"><a href="#关系" class="headerlink" title="关系"></a>关系</h2><p>关系就是有序元祖的集合..</p>
 <p>序偶: 由两个对象(但并不一定是简单元素) x 和 y组成的序列叫做序偶</p>
 <p>有序n元组: <code>&lt;&lt;x1, x2, x3, ..., xn-1&gt;, xn&gt;</code>叫做有序n元组, 第一个元素是一个有序n-1元祖<br>并且能够简单记为<code>&lt;x1, x2, x3, ..., xn&gt;</code></p>

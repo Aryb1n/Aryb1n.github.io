@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -493,10 +494,19 @@
     - http://www.cnblogs.com/mengdd/archive/2013/05/28/3102893.html
 3. DTD详解
 </code></pre><h3 id="XXE"><a href="#XXE" class="headerlink" title="XXE"></a>XXE</h3><p>然后好蠢…终于知道XXE是<code>引入外部实体</code></p>
-<h4 id="外部实体语法"><a href="#外部实体语法" class="headerlink" title="外部实体语法"></a>外部实体语法</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">!ENTITY</span> 实体名 <span class="attr">SYSTEM</span> "<span class="attr">URI</span>/<span class="attr">URL</span>"&gt;</span></div></pre></td></tr></table></figure>
-<p>DTD<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">!ENTITY</span> <span class="attr">writer</span> <span class="attr">SYSTEM</span> "<span class="attr">http:</span>//<span class="attr">www.baidu.com</span>/<span class="attr">index.php</span>?<span class="attr">tn</span>=<span class="string">coralqq</span>"&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">!ENTITY</span> <span class="attr">copyright</span> <span class="attr">SYSTEM</span> "<span class="attr">http:</span>//<span class="attr">www.baidu.com</span>/<span class="attr">index.php</span>?<span class="attr">tn</span>=<span class="string">coralqq</span>"&gt;</span></div></pre></td></tr></table></figure></p>
-<p>XML<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">author</span>&gt;</span>&amp;writer;&amp;copyright;<span class="tag">&lt;/<span class="name">author</span>&gt;</span></div></pre></td></tr></table></figure></p>
-<h4 id="XXE-例子"><a href="#XXE-例子" class="headerlink" title="XXE 例子"></a>XXE 例子</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">!ENTITY</span> <span class="attr">file</span> <span class="attr">SYSTEM</span> “<span class="attr">file:</span>///<span class="attr">etc</span>/<span class="attr">passwd</span>”&gt;</span>  </div><div class="line"><span class="tag">&lt;<span class="name">username</span>&gt;</span>&amp;file;<span class="tag">&lt;/<span class="name">username</span>&gt;</span></div></pre></td></tr></table></figure>
+<h4 id="外部实体语法"><a href="#外部实体语法" class="headerlink" title="外部实体语法"></a>外部实体语法</h4><pre class="line-numbers language-xml"><code class="language-xml">&lt;!ENTITY 实体名 SYSTEM "URI/URL">
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>DTD</p>
+<pre class="line-numbers language-xml"><code class="language-xml">&lt;!ENTITY writer SYSTEM "http://www.baidu.com/index.php?tn=coralqq">
+
+&lt;!ENTITY copyright SYSTEM "http://www.baidu.com/index.php?tn=coralqq">
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>XML</p>
+<pre class="line-numbers language-XML"><code class="language-XML"><author>&writer;&copyright;</author>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="XXE-例子"><a href="#XXE-例子" class="headerlink" title="XXE 例子"></a>XXE 例子</h4><pre class="line-numbers language-xml"><code class="language-xml">&lt;!ENTITY file SYSTEM “file:///etc/passwd”>  
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>username</span><span class="token punctuation">></span></span><span class="token entity" title="&file;">&amp;file;</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>username</span><span class="token punctuation">></span></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>附上学习blog<br><a href="http://blog.csdn.net/qq_19876131/article/details/51831522" target="_blank" rel="external">http://blog.csdn.net/qq_19876131/article/details/51831522</a></p>
 <h2 id="XEE"><a href="#XEE" class="headerlink" title="XEE"></a>XEE</h2><p><a href="http://www.secpulse.com/archives/850.html" target="_blank" rel="external">http://www.secpulse.com/archives/850.html</a><br><a href="http://www.secpulse.com/archives/6256.html" target="_blank" rel="external">http://www.secpulse.com/archives/6256.html</a><br><a href="https://www.secpulse.com/archives/6392.html" target="_blank" rel="external">https://www.secpulse.com/archives/6392.html</a></p>
 

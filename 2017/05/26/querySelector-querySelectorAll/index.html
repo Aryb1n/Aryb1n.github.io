@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -486,7 +487,10 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p>关于这个我倒是没有很大疑问<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">document</span>.querySelector(<span class="string">'.class'</span>)</div><div class="line"><span class="built_in">document</span>.querySelectorAll(<span class="string">'.class'</span>)</div></pre></td></tr></table></figure></p>
+        <p>关于这个我倒是没有很大疑问</p>
+<pre class="line-numbers language-javascript"><code class="language-javascript">document<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">'.class'</span><span class="token punctuation">)</span>
+document<span class="token punctuation">.</span><span class="token function">querySelectorAll</span><span class="token punctuation">(</span><span class="token string">'.class'</span><span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>但,我们有了这个,为什么还要用jQuery呢<br>是因为效率还是因为有什么问题吗</p>
 <p>另外只选择id的话不要用这个…和<code>getElementById</code>还是有性能差异的<br>直接乖乖用<code>getElementById</code>就阔以了</p>
 <h2 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h2><p><a href="http://www.cnblogs.com/Wayou/p/html5_web_api_queryselector.html" target="_blank" rel="external">http://www.cnblogs.com/Wayou/p/html5_web_api_queryselector.html</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Document/querySelector" target="_blank" rel="external">https://developer.mozilla.org/zh-CN/docs/Web/API/Document/querySelector</a><br><a href="http://www.iteye.com/news/28503" target="_blank" rel="external">http://www.iteye.com/news/28503</a></p>

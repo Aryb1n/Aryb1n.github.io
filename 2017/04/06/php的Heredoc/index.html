@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -492,11 +493,42 @@
 <li>单引号 (一切原样输出)</li>
 <li>双引号</li>
 <li><p>heredoc 句法结构：<code>&lt;&lt;&lt;</code><br> 特别注意的是结束标志不能缩进</p>
- <figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">$str = <span class="string">&lt;&lt;&lt;EOD</span></div><div class="line"><span class="string">Example of string</span></div><div class="line"><span class="string">spanning multiple lines</span></div><div class="line"><span class="string">using heredoc syntax.</span></div><div class="line"><span class="string">EOD;</span></div><div class="line"></div><div class="line"><span class="comment">/* 含有变量的更复杂示例 */</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">foo</span></span></div><div class="line"><span class="class"></span>&#123;</div><div class="line">    <span class="keyword">var</span> $foo;</div><div class="line">    <span class="keyword">var</span> $bar;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span></span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        <span class="keyword">$this</span>-&gt;foo = <span class="string">'Foo'</span>;</div><div class="line">        <span class="keyword">$this</span>-&gt;bar = <span class="keyword">array</span>(<span class="string">'Bar1'</span>, <span class="string">'Bar2'</span>, <span class="string">'Bar3'</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$foo = <span class="keyword">new</span> foo();</div><div class="line">$name = <span class="string">'MyName'</span>;</div><div class="line"></div><div class="line"><span class="keyword">echo</span> <span class="string">&lt;&lt;&lt;EOT</span></div><div class="line"><span class="string">My name is "<span class="subst">$name</span>". I am printing some <span class="subst">$foo</span>-&gt;foo.</span></div><div class="line"><span class="string">Now, I am printing some <span class="subst">&#123;$foo-&gt;bar[1]&#125;</span>.</span></div><div class="line"><span class="string">This should print a capital 'A': \x41</span></div><div class="line"><span class="string">EOT;</span></div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
- <figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">My name is <span class="string">"MyName"</span>. I am printing some Foo.</div><div class="line">Now, I am printing some Bar2.</div><div class="line">This should <span class="keyword">print</span> a capital <span class="string">'A'</span>: A</div></pre></td></tr></table></figure>
+<pre class="line-numbers language-php"><code class="language-php"> <span class="token delimiter">&lt;?php</span>
+ <span class="token variable">$str</span> <span class="token operator">=</span> <span class="token operator">&lt;</span><span class="token operator">&lt;</span><span class="token operator">&lt;</span><span class="token constant">EOD</span>
+ Example of string
+ spanning multiple lines
+ using heredoc syntax<span class="token punctuation">.</span>
+ <span class="token constant">EOD</span><span class="token punctuation">;</span>
+
+ <span class="token comment" spellcheck="true">/* 含有变量的更复杂示例 */</span>
+ <span class="token keyword">class</span> <span class="token class-name">foo</span>
+ <span class="token punctuation">{</span>
+     <span class="token keyword">var</span> <span class="token variable">$foo</span><span class="token punctuation">;</span>
+     <span class="token keyword">var</span> <span class="token variable">$bar</span><span class="token punctuation">;</span>
+
+     <span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+     <span class="token punctuation">{</span>
+         <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">foo</span> <span class="token operator">=</span> <span class="token string">'Foo'</span><span class="token punctuation">;</span>
+         <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">bar</span> <span class="token operator">=</span> <span class="token keyword">array</span><span class="token punctuation">(</span><span class="token string">'Bar1'</span><span class="token punctuation">,</span> <span class="token string">'Bar2'</span><span class="token punctuation">,</span> <span class="token string">'Bar3'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token punctuation">}</span>
+ <span class="token punctuation">}</span>
+
+ <span class="token variable">$foo</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token variable">$name</span> <span class="token operator">=</span> <span class="token string">'MyName'</span><span class="token punctuation">;</span>
+
+ <span class="token keyword">echo</span> <span class="token operator">&lt;</span><span class="token operator">&lt;</span><span class="token operator">&lt;</span><span class="token constant">EOT</span>
+ My name is <span class="token string">"$name"</span><span class="token punctuation">.</span> I am printing some <span class="token variable">$foo</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">foo</span><span class="token punctuation">.</span>
+ Now<span class="token punctuation">,</span> I am printing some <span class="token punctuation">{</span><span class="token variable">$foo</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">bar</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">}</span><span class="token punctuation">.</span>
+ This should <span class="token keyword">print</span> a capital <span class="token string">'A'</span><span class="token punctuation">:</span> \<span class="token package">x41</span>
+ <span class="token constant">EOT</span><span class="token punctuation">;</span>
+ <span class="token delimiter">?></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-php"><code class="language-php"> My name is <span class="token string">"MyName"</span><span class="token punctuation">.</span> I am printing some Foo<span class="token punctuation">.</span>
+ Now<span class="token punctuation">,</span> I am printing some Bar2<span class="token punctuation">.</span>
+ This should <span class="token keyword">print</span> a capital <span class="token string">'A'</span><span class="token punctuation">:</span> A
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 </li>
-<li><p>nowdoc, 类似heredoc</p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ol>
+<li>nowdoc, 类似heredoc<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ol>
 <li><a href="http://php.net/manual/zh/language.types.string.php" target="_blank" rel="external">http://php.net/manual/zh/language.types.string.php</a></li>
 </ol>
 </li>

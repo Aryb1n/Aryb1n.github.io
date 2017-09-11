@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -480,11 +481,12 @@
         <p>有的时候啊，这个搜狗输入法，他就莫名只显示当前输入的字母，然后并没有侯选框给你选汉字，太坑了，是不是因为我用<code>Ubuntu 16.04</code>的原因</p>
 <a id="more"></a>
 <h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><ol>
-<li><p>删掉这几个文件夹</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">rm -rf ~/.config/sogou-qimpanel</div><div class="line">rm -rf ~/.config/SogouPY</div><div class="line">rm -rf ~/.config/SogouPY.users</div></pre></td></tr></table></figure>
+<li>删掉这几个文件夹<pre class="line-numbers language-bash"><code class="language-bash"> <span class="token function">rm</span> -rf ~/.config/sogou-qimpanel
+ <span class="token function">rm</span> -rf ~/.config/SogouPY
+ <span class="token function">rm</span> -rf ~/.config/SogouPY.users
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 </li>
-<li><p>重装sogou</p>
-<ul>
+<li>重装sogou<ul>
 <li>实测可以不需要先卸载，阔以直接装</li>
 </ul>
 </li>

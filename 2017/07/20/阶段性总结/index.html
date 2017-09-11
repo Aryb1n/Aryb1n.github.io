@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -592,7 +593,14 @@
 </ul>
 <p>一堆截断方式,%00,./这些在新版本里都不能用了</p>
 <h2 id="CSRF"><a href="#CSRF" class="headerlink" title="CSRF"></a>CSRF</h2><p>加入csrf_token<br>加入<code>Referer</code>的验证</p>
-<p>CSRF一般是构造表单<br>然后自动提交<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></div><div class="line"><span class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">csrf_attack</span>(<span class="params"></span>) </span>&#123;</span></div><div class="line"><span class="javascript">    <span class="built_in">document</span>.getElementById(<span class="string">'csrf_submit'</span>).click();</span></div><div class="line"><span class="undefined">&#125;</span></div><div class="line"><span class="javascript"><span class="built_in">window</span>.onload = csrf_attack;</span></div><div class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>CSRF一般是构造表单<br>然后自动提交</p>
+<pre class="line-numbers language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span>
+function csrf_attack() {
+    document.getElementById('csrf_submit').click();
+}
+window.onload = csrf_attack;
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>在添加点样式啥的比如<code>display:none</code></p>
 <h3 id="CSRF-和-XSS区别"><a href="#CSRF-和-XSS区别" class="headerlink" title="CSRF 和 XSS区别"></a>CSRF 和 XSS区别</h3><p>XSS漏洞通过xss代码获取受害者Cookie，之后通过设置Cookie可以冒充受害者，比如管理员<br>CSRF漏洞只受害者浏览了恶意网站相当于自己触动了操作</p>
 <h3 id="CSRF结合XSS"><a href="#CSRF结合XSS" class="headerlink" title="CSRF结合XSS"></a>CSRF结合XSS</h3><h2 id="SSRF"><a href="#SSRF" class="headerlink" title="SSRF"></a>SSRF</h2><p>bypass</p>

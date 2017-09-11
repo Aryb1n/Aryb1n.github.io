@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -480,24 +481,54 @@
         <p>docker没搞好,所以安装了一下arch,安装的速度炒鸡快,感觉以后临时用可以用它<br>是在我ubuntu下的VMware下装的,没空间了,只划了两个G,装完占用1.5G左右<br>而且整个都是mbr传统启动方式</p>
 <h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>准备当然是ustc的mirror那里download了一张x86_64的arch的iso<br>丢到虚拟机里,启动,等待</p>
 <h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h3><p>由于虚拟机,我直接开了NAT,所以直接有网,不过还是执行了下<code>dhcpcd</code>,忘了看不跑着一条,能不能自己获取到ip</p>
-<h3 id="分区"><a href="#分区" class="headerlink" title="分区"></a>分区</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fdisk /dev/sda</div></pre></td></tr></table></figure>
-<p>进入交互环境<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">o 新建分区表</div><div class="line">n 建立新分区</div><div class="line">然后一路回车</div><div class="line">最后</div><div class="line">w 把更改写入磁盘</div></pre></td></tr></table></figure></p>
-<h3 id="格式化"><a href="#格式化" class="headerlink" title="格式化"></a>格式化</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mkfs.ext4 /dev/sda</div></pre></td></tr></table></figure>
-<h3 id="挂载分区"><a href="#挂载分区" class="headerlink" title="挂载分区"></a>挂载分区</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mount /dev/sda /mnt</div></pre></td></tr></table></figure>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>先把ustc的源加到最前面<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">vim /etc/pacman.d/mirrorlist</div><div class="line"></div><div class="line"><span class="comment">## China</span></div><div class="line">Server = http://mirrors.ustc.edu.cn/archlinux/<span class="variable">$repo</span>/os/<span class="variable">$arch</span></div></pre></td></tr></table></figure></p>
-<p>然后安装安装<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pacstrap /mnt base base-devel</div></pre></td></tr></table></figure></p>
+<h3 id="分区"><a href="#分区" class="headerlink" title="分区"></a>分区</h3><pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">fdisk</span> /dev/sda
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>进入交互环境</p>
+<pre class="line-numbers language-bash"><code class="language-bash">o 新建分区表
+n 建立新分区
+然后一路回车
+最后
+w 把更改写入磁盘
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="格式化"><a href="#格式化" class="headerlink" title="格式化"></a>格式化</h3><pre class="line-numbers language-bash"><code class="language-bash">mkfs.ext4 /dev/sda
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="挂载分区"><a href="#挂载分区" class="headerlink" title="挂载分区"></a>挂载分区</h3><pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">mount</span> /dev/sda /mnt
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>先把ustc的源加到最前面</p>
+<pre class="line-numbers language-bash"><code class="language-bash">vim /etc/pacman.d/mirrorlist
+
+<span class="token comment" spellcheck="true">## China</span>
+Server <span class="token operator">=</span> http://mirrors.ustc.edu.cn/archlinux/<span class="token variable">$repo</span>/os/<span class="token variable">$arch</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>然后安装安装</p>
+<pre class="line-numbers language-bash"><code class="language-bash">pacstrap /mnt base base-devel
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>安装完之后看看我们的<code>/mnt</code>多了很多东西</p>
-<h3 id="自动挂载"><a href="#自动挂载" class="headerlink" title="自动挂载"></a>自动挂载</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">genfstab -L /mnt &gt;&gt; /mnt/etc/fstab</div></pre></td></tr></table></figure>
+<h3 id="自动挂载"><a href="#自动挂载" class="headerlink" title="自动挂载"></a>自动挂载</h3><pre class="line-numbers language-bash"><code class="language-bash">genfstab -L /mnt <span class="token operator">>></span> /mnt/etc/fstab
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>这个我不太懂,大概就是下次不需要手动挂载了</p>
-<h3 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">arch-chroot /mnt</div></pre></td></tr></table></figure>
+<h3 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h3><pre class="line-numbers language-bash"><code class="language-bash">arch-chroot /mnt
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>这个是把原来的<code>/mnt</code>变成了根目录</p>
-<p>安装grub2<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pacman -S grub</div></pre></td></tr></table></figure></p>
-<p>把grub安装到硬盘<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">grub-install --target=i386-pc /dev/sda --force</div></pre></td></tr></table></figure></p>
+<p>安装grub2</p>
+<pre class="line-numbers language-bash"><code class="language-bash">pacman -S grub
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>把grub安装到硬盘</p>
+<pre class="line-numbers language-bash"><code class="language-bash">grub-install --target<span class="token operator">=</span>i386-pc /dev/sda --force
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>这里<code>i386-pc</code>是说传统mbr启动,不是UEFI</p>
-<p>生成配置文件<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">grub-mkconfig -o /boot/grub/grub.cfg</div></pre></td></tr></table></figure></p>
-<h3 id="设置root密码"><a href="#设置root密码" class="headerlink" title="设置root密码"></a>设置root密码</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">passwd</div></pre></td></tr></table></figure>
-<h3 id="好了-重启重启"><a href="#好了-重启重启" class="headerlink" title="好了,重启重启"></a>好了,重启重启</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">reboot</div></pre></td></tr></table></figure>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">pacman -S net-tools  <span class="comment"># ifconfig route</span></div><div class="line">pacman -S dnsutils  <span class="comment"># dig nslookup </span></div><div class="line">pacman -S netcat</div><div class="line">pacman -S socat</div></pre></td></tr></table></figure>
+<p>生成配置文件</p>
+<pre class="line-numbers language-bash"><code class="language-bash">grub-mkconfig -o /boot/grub/grub.cfg
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="设置root密码"><a href="#设置root密码" class="headerlink" title="设置root密码"></a>设置root密码</h3><pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">passwd</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="好了-重启重启"><a href="#好了-重启重启" class="headerlink" title="好了,重启重启"></a>好了,重启重启</h3><pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">reboot</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><pre class="line-numbers language-bash"><code class="language-bash">pacman -S net-tools  <span class="token comment" spellcheck="true"># ifconfig route</span>
+pacman -S dnsutils  <span class="token comment" spellcheck="true"># dig nslookup </span>
+pacman -S netcat
+pacman -S socat
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
         
     

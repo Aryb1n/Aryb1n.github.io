@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -468,7 +469,12 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p>经常看到别人pwn题解里的shellcode直接都是<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">shellcode = <span class="string">""</span></div><div class="line">shellcode += <span class="string">"some_binary_code"</span></div><div class="line">shellcode += <span class="string">"some_binary_code"</span></div><div class="line">...</div></pre></td></tr></table></figure></p>
+        <p>经常看到别人pwn题解里的shellcode直接都是</p>
+<pre class="line-numbers language-python"><code class="language-python">shellcode <span class="token operator">=</span> <span class="token string">""</span>
+shellcode <span class="token operator">+=</span> <span class="token string">"some_binary_code"</span>
+shellcode <span class="token operator">+=</span> <span class="token string">"some_binary_code"</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p>然后还是想过他们是手敲上去的???</p>
 <p>我的天,我真的是好蠢<br>后来发现好像是有两种方式</p>
 <ol>

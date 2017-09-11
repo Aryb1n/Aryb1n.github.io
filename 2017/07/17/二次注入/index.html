@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -478,8 +479,18 @@
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
         <p>续<code>sql注入从入门到入门</code><br>因为这个二次注入，听说过，也见师傅注过<br>但还是不太知道这个二次是个什么意思</p>
-<h2 id="二次"><a href="#二次" class="headerlink" title="二次"></a>二次</h2><p>以前听到的都是关于引号的转义<br>大意是注册的时候,由于GPC或者其他，我们输入的payload里的单引号被转义了<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">?username=akak'</div></pre></td></tr></table></figure></p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">mysql&gt; insert into user(uname) vaules ('akak\'');</div><div class="line">mysql&gt; select * from user;</div><div class="line"></div><div class="line">+<span class="comment">----+-----------+</span></div><div class="line">| id | uname     |</div><div class="line">+<span class="comment">----+-----------+</span></div><div class="line">|   1|akak'      |</div><div class="line">+<span class="comment">----+-----------+</span></div></pre></td></tr></table></figure>
+<h2 id="二次"><a href="#二次" class="headerlink" title="二次"></a>二次</h2><p>以前听到的都是关于引号的转义<br>大意是注册的时候,由于GPC或者其他，我们输入的payload里的单引号被转义了</p>
+<pre class="line-numbers language-sql"><code class="language-sql">?username<span class="token operator">=</span>akak'
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-sql"><code class="language-sql">mysql<span class="token operator">></span> <span class="token keyword">insert</span> <span class="token keyword">into</span> <span class="token keyword">user</span><span class="token punctuation">(</span>uname<span class="token punctuation">)</span> vaules <span class="token punctuation">(</span><span class="token string">'akak\''</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> <span class="token keyword">user</span><span class="token punctuation">;</span>
+
+<span class="token operator">+</span><span class="token comment" spellcheck="true">----+-----------+</span>
+<span class="token operator">|</span> id <span class="token operator">|</span> uname     <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment" spellcheck="true">----+-----------+</span>
+<span class="token operator">|</span>   <span class="token number">1</span><span class="token operator">|</span>akak'      <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment" spellcheck="true">----+-----------+</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这个单引号就进去了，再取出来的时候，就引入了单引号<br>是不是说这里如果开了<code>magic_qutoes_runtime</code>就可以防止二次注入了???</p>
 <p>所以这个二次指的就是第一次不会直接造成危害<br>再第二次用的时候实现了注入</p>
 <h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>上面就是正文哈哈哈哈<br>这次<code>某春秋全国大学生交换flag大赛</code>里有这样的一个题目叫 <code>flag bending machine</code><br>是一道二次注入,不过和单引号bypass没有什么关系</p>
@@ -493,11 +504,30 @@
 <li>常常存在漏洞类型的转换</li>
 <li>常常存在变量中转</li>
 </ul>
-<p>类型1 文件系统函数漏洞转换<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?</span> </div><div class="line">    <span class="comment">// vul1.php</span></div><div class="line">    unlink($a);</div><div class="line"><span class="meta">?&gt;</span></div><div class="line"></div><div class="line"><span class="meta">&lt;?</span> </div><div class="line">    <span class="comment">//config.php</span></div><div class="line">    $include = <span class="string">'../'</span>;</div><div class="line"><span class="meta">?&gt;</span></div><div class="line"></div><div class="line"><span class="meta">&lt;?</span> </div><div class="line">    <span class="comment">//vul2.php</span></div><div class="line">    <span class="keyword">include</span> <span class="string">'$include/common.php'</span>;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure></p>
+<p>类型1 文件系统函数漏洞转换</p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token delimiter">&lt;?</span> 
+    <span class="token comment" spellcheck="true">// vul1.php</span>
+    <span class="token function">unlink</span><span class="token punctuation">(</span><span class="token variable">$a</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token delimiter">?></span>
+
+<span class="token delimiter">&lt;?</span> 
+    <span class="token comment" spellcheck="true">//config.php</span>
+    <span class="token variable">$include</span> <span class="token operator">=</span> <span class="token string">'../'</span><span class="token punctuation">;</span>
+<span class="token delimiter">?></span>
+
+<span class="token delimiter">&lt;?</span> 
+    <span class="token comment" spellcheck="true">//vul2.php</span>
+    <span class="token keyword">include</span> <span class="token string">'$include/common.php'</span><span class="token punctuation">;</span>
+<span class="token delimiter">?></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>我们用<code>vul1.php</code>把<code>config.php</code>删掉,这样子在<code>register_globals=On</code>的情况下就能用<code>vul2.php</code>包含任意文件了</p>
-<p>类型2 SQL注入漏洞转换<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">SQL注入 =&gt; Update/Insert =&gt; 数据库</div><div class="line">数据库 =&gt; Select =&gt; 其它函数</div></pre></td></tr></table></figure></p>
-<p>这个漏洞在第二阶段取出来丢到其他函数的时候触发<br>举的例子就是先update了一波，但经过escape,防了一波SQL注入<br>但没有过滤<code>../</code>这些<br>后来又给select出来了丢到include里，这个时候利用了一波</p>
-<p>类型3 preg_replace<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mixed preg_replace ( mixed $pattern , mixed $replacement , mixed $subject)</div></pre></td></tr></table></figure></p>
+<p>类型2 SQL注入漏洞转换</p>
+<pre><code>SQL注入 =&gt; Update/Insert =&gt; 数据库
+数据库 =&gt; Select =&gt; 其它函数
+</code></pre><p>这个漏洞在第二阶段取出来丢到其他函数的时候触发<br>举的例子就是先update了一波，但经过escape,防了一波SQL注入<br>但没有过滤<code>../</code>这些<br>后来又给select出来了丢到include里，这个时候利用了一波</p>
+<p>类型3 preg_replace</p>
+<pre class="line-numbers language-php"><code class="language-php">mixed <span class="token function">preg_replace</span> <span class="token punctuation">(</span> mixed <span class="token variable">$pattern</span> <span class="token punctuation">,</span> mixed <span class="token variable">$replacement</span> <span class="token punctuation">,</span> mixed <span class="token variable">$subject</span><span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>$subject 是要替换的母串<br>$pattern 是模式<br>$replacement 是要替换成的</p>
 <p>第一个参数加了修饰符号<code>/e</code>的时候,第二个参数会被当做命令来执行<br>有些没看懂<br>另外<code>preg_replace</code>里存在%00截断(是不是现在已经被修复了???)</p>
 <p>类型4 编码/解码<br>就是讲了<code>二次编码</code>造成的洞</p>

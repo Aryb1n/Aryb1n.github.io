@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -469,15 +470,40 @@
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
         <p>发现自己不会py里的这些十六进制,ascii转换什么的好尴尬</p>
-<p>这样子..拿到了hbctf的一道题目,做到这一步,得到一个字符串<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>s = <span class="number">6E3</span>A37333036393838363737313632353634323830373433353738333636313031343036323630343236343736383438313733353134353837333530383834363932353733353532313639353135390A653A36353533370A633A3135313136373137373034353031363233303238393033393138313331353035353130353830353939353631333537333837343331323935323839303132313933393830353534303132383131</div></pre></td></tr></table></figure></p>
-<p>然后要把每两位看成<code>字符的ascii的十六进制形式的话</code>,把这串字符串转换成<code>原来的字符的话</code><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> s.decode(<span class="string">'hex'</span>)</div><div class="line">n:<span class="number">73069886771625642807435783661014062604264768481735145873508846925735521695159</span></div><div class="line">e:<span class="number">65537</span></div><div class="line">c:<span class="number">15116717704501623028903918131505510580599561357387431295289012193980554012811</span></div></pre></td></tr></table></figure></p>
-<p>这里是一个RSA,这里的c是密文,e是公钥<br>这里要把n分解可以得到p * q<br>上这个网站 <a href="http://factordb.com/index.php" target="_blank" rel="external">http://factordb.com/index.php</a> ,分解一下得到两个因子<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>p = <span class="number">189239861511125143212536989589123569301</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>q = <span class="number">386123125371923651191219869811293586459</span></div></pre></td></tr></table></figure></p>
-<p>RSA 的常见攻击方法看这一篇 <a href="http://bobao.360.cn/learning/detail/3058.html" target="_blank" rel="external">http://bobao.360.cn/learning/detail/3058.html</a><br>这个时候由公钥<code>e</code>和<code>p</code>,<code>q</code>可以解出来私钥<code>d</code><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">d =  <span class="number">30854876581442056228588093398155288897790570329196285069001545119486056472273</span></div></pre></td></tr></table></figure></p>
-<p>有个私钥d, 明文c和模数n就能得到最后的密文m<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">m = pow(c, d, n)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>m</div><div class="line"><span class="number">630199562897691744494569524488740813666979952696</span></div></pre></td></tr></table></figure></p>
-<p>这个m这次看起来是个十进制<br>把它变成16进制<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>hex(m)</div><div class="line"><span class="string">'0x6e63203131392e32382e31352e33342038383838'</span></div></pre></td></tr></table></figure></p>
-<p>还原成字符,要把前面的0x去掉<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>hex(m)[<span class="number">2</span>:].decode(<span class="string">'hex'</span>)</div><div class="line"><span class="string">'nc 119.28.15.34 8888'</span></div></pre></td></tr></table></figure></p>
-<p>就这样子..感觉是不是有些地方有点笨<br>大佬说可以用<code>libnum</code>,emmmmmmmmm<br>试了下果然可以,十进制也能直接变过来<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; import libnum</div><div class="line">&gt;&gt;&gt; libnum.n2s(m)</div><div class="line">&apos;nc 119.28.15.34 8888&apos;</div></pre></td></tr></table></figure></p>
-<p>前面的decode,encode操作对象是字符串,,,而且不带<code>0x</code><br>后面这个操作对象是数字</p>
+<p>这样子..拿到了hbctf的一道题目,做到这一步,得到一个字符串</p>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token operator">>></span><span class="token operator">></span> s <span class="token operator">=</span> <span class="token number">6E3A37333036393838363737313632353634323830373433353738333636313031343036323630343236343736383438313733353134353837333530383834363932353733353532313639353135390A653A36353533370A633A3135313136373137373034353031363233303238393033393138313331353035353130353830353939353631333537333837343331323935323839303132313933393830353534303132383131</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>然后要把每两位看成<code>字符的ascii的十六进制形式的话</code>,把这串字符串转换成<code>原来的字符的话</code></p>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token operator">>></span><span class="token operator">></span> <span class="token keyword">print</span> s<span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token string">'hex'</span><span class="token punctuation">)</span>
+n<span class="token punctuation">:</span><span class="token number">73069886771625642807435783661014062604264768481735145873508846925735521695159</span>
+e<span class="token punctuation">:</span><span class="token number">65537</span>
+c<span class="token punctuation">:</span><span class="token number">15116717704501623028903918131505510580599561357387431295289012193980554012811</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这里是一个RSA,这里的c是密文,e是公钥<br>这里要把n分解可以得到p * q<br>上这个网站 <a href="http://factordb.com/index.php" target="_blank" rel="external">http://factordb.com/index.php</a> ,分解一下得到两个因子</p>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token operator">>></span><span class="token operator">></span> p <span class="token operator">=</span> <span class="token number">189239861511125143212536989589123569301</span>
+<span class="token operator">>></span><span class="token operator">></span> q <span class="token operator">=</span> <span class="token number">386123125371923651191219869811293586459</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>RSA 的常见攻击方法看这一篇 <a href="http://bobao.360.cn/learning/detail/3058.html" target="_blank" rel="external">http://bobao.360.cn/learning/detail/3058.html</a><br>这个时候由公钥<code>e</code>和<code>p</code>,<code>q</code>可以解出来私钥<code>d</code></p>
+<pre class="line-numbers language-python"><code class="language-python">d <span class="token operator">=</span>  <span class="token number">30854876581442056228588093398155288897790570329196285069001545119486056472273</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>有个私钥d, 明文c和模数n就能得到最后的密文m</p>
+<pre class="line-numbers language-python"><code class="language-python">m <span class="token operator">=</span> pow<span class="token punctuation">(</span>c<span class="token punctuation">,</span> d<span class="token punctuation">,</span> n<span class="token punctuation">)</span>
+<span class="token operator">>></span><span class="token operator">></span> m
+<span class="token number">630199562897691744494569524488740813666979952696</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>这个m这次看起来是个十进制<br>把它变成16进制</p>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token operator">>></span><span class="token operator">></span> hex<span class="token punctuation">(</span>m<span class="token punctuation">)</span>
+<span class="token string">'0x6e63203131392e32382e31352e33342038383838'</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>还原成字符,要把前面的0x去掉</p>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token operator">>></span><span class="token operator">></span> hex<span class="token punctuation">(</span>m<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token string">'hex'</span><span class="token punctuation">)</span>
+<span class="token string">'nc 119.28.15.34 8888'</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>就这样子..感觉是不是有些地方有点笨<br>大佬说可以用<code>libnum</code>,emmmmmmmmm<br>试了下果然可以,十进制也能直接变过来</p>
+<pre><code>&gt;&gt;&gt; import libnum
+&gt;&gt;&gt; libnum.n2s(m)
+&#39;nc 119.28.15.34 8888&#39;
+</code></pre><p>前面的decode,encode操作对象是字符串,,,而且不带<code>0x</code><br>后面这个操作对象是数字</p>
 
         
     

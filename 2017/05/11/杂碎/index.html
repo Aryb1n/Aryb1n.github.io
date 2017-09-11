@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -478,9 +479,14 @@
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
         <h2 id="leave"><a href="#leave" class="headerlink" title="leave"></a>leave</h2><p>pop, push<br>call, ret, leave</p>
-<p>这个leave的意思查查是等效做<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">movl %ebp, %esp</div><div class="line">popl %ebp</div></pre></td></tr></table></figure></p>
-<p>这个<code>movl %ebp, %esp</code>…在做毛线<br>是在恢复栈顶指针<br>后来有文章提到，如果没有用到栈，就可以不恢复，直接用<code>popl %ebp</code><br>比如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">int main() &#123;</div><div class="line">    return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<blockquote>
+<p>这个leave的意思查查是等效做</p>
+<pre><code>movl %ebp, %esp
+popl %ebp
+</code></pre><p>这个<code>movl %ebp, %esp</code>…在做毛线<br>是在恢复栈顶指针<br>后来有文章提到，如果没有用到栈，就可以不恢复，直接用<code>popl %ebp</code><br>比如</p>
+<pre><code>int main() {
+    return 0;
+}
+</code></pre><blockquote>
 <p>在intel的官方文档中使用intel语法，Windows也使用intel语法，而UNIX平台的汇编器一直使用AT&amp;T语法</p>
 </blockquote>
 <p>我的天哪，，我们一直学的是Intel语法，这里的leave是<code>AT&amp;T</code>语法</p>

@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -488,7 +489,13 @@
     
         <h2 id="静态全局变量-amp-静态局部变量"><a href="#静态全局变量-amp-静态局部变量" class="headerlink" title="静态全局变量 &amp; 静态局部变量"></a>静态全局变量 &amp; 静态局部变量</h2><p>相同点就是, 静态的话, 就是放在数据段(bss or data)了, 不放在栈上边, 所以生存周期就是很长对吧</p>
 <h3 id="静态全局变量"><a href="#静态全局变量" class="headerlink" title="静态全局变量"></a>静态全局变量</h3><p>全局变量就算是不静态, 也放在数据段, 对不对, 所以, 静态的全局变量这个静态要达到的效果是, <em>该变量只在本文件中可见</em>, 不能extern到其他文件里</p>
-<h3 id="静态局部变量"><a href="#静态局部变量" class="headerlink" title="静态局部变量"></a>静态局部变量</h3><p>既然是局部变量, 这个静态其实就像js里函数闭包一样, 想要维持一种状态, 利用了, <em>静态变量只初始化一次</em>, 其实想一想, 我们通常说的静态就是编译时, 动态是运行时, 这里的只初始化一次, 大概就是这样子???一次性语句….<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">count</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">static</span> <span class="keyword">int</span> num = <span class="number">0</span>;</div><div class="line">    num++;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, num);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="静态局部变量"><a href="#静态局部变量" class="headerlink" title="静态局部变量"></a>静态局部变量</h3><p>既然是局部变量, 这个静态其实就像js里函数闭包一样, 想要维持一种状态, 利用了, <em>静态变量只初始化一次</em>, 其实想一想, 我们通常说的静态就是编译时, 动态是运行时, 这里的只初始化一次, 大概就是这样子???一次性语句….</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">static</span> <span class="token keyword">int</span> num <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    num<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\n"</span><span class="token punctuation">,</span> num<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="静态成员方法-amp-静态成员变量-OOP"><a href="#静态成员方法-amp-静态成员变量-OOP" class="headerlink" title="静态成员方法 &amp; 静态成员变量 (OOP)"></a>静态成员方法 &amp; 静态成员变量 (OOP)</h2><p>静态方法可以认为是, 类方法…<br>静态方法不能访问不静态的成员变量, 因为传参的时候不会把this指针传给他</p>
 <p>同理, 静态成员变量可以认为是类变量, 用来存储类级别的一些内容, 比如实例个数</p>
 <p>这些, 类级的变量可以直接通过类名而无需通过实例来访问</p>

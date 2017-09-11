@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -490,7 +491,10 @@
 <p>不要和<code>float</code>混在一起,float之后应该是不能这样子居中的吧<br>因为<code>float</code>之后脱离文档流了咩</p>
 <h4 id="和-text-align-center-相比"><a href="#和-text-align-center-相比" class="headerlink" title="和 text-align:center 相比"></a>和 text-align:center 相比</h4><p>这样子的话，对于一些内联元素(没办法设置<code>margin</code>)的可以采用<br>给内联元素的父元素设置<code>text-align:center</code>的方式</p>
 <p>比如<code>img</code>的居中，或者把他转换成<code>block</code>，然后使用<code>margin: 0 auto</code><br>或者给<code>img</code>的父元素设置<code>text-align:center</code></p>
-<h3 id="两栏布局"><a href="#两栏布局" class="headerlink" title="两栏布局"></a>两栏布局</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">|------------|----|</div><div class="line">|---main-----|side|</div><div class="line">|------------|----|</div></pre></td></tr></table></figure>
+<h3 id="两栏布局"><a href="#两栏布局" class="headerlink" title="两栏布局"></a>两栏布局</h3><pre class="line-numbers language-html"><code class="language-html">|------------|----|
+|---main-----|side|
+|------------|----|
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p>就是这样子的，整个由一个container构成，包裹着<code>main</code>和<code>side</code>,而<code>main</code>的话是设置<code>margin-right</code>为略大于<code>side</code>的<code>width</code>来控制自己不跑到<code>side</code>那边去<br>看到有些人是这样子做的，那为什么不直接给<code>main</code>一个<code>width</code>呢</p>
 <h2 id="position"><a href="#position" class="headerlink" title="position"></a>position</h2><h3 id="absolute"><a href="#absolute" class="headerlink" title="absolute"></a>absolute</h3><p><code>position:absolute</code>会让元素<code>inline-block</code>化,然后是常常相对于一个不偏移的<code>position:relative</code>的父元素来偏移，这样子的话，可以很容易做一个透明层上去，或者各种浮层，比如鼠标移动上去就会显示的那种浮层，其实一直想知道<code>position:absolute</code>这种很危险的属性到底是为了实现什么效果的时候才不得不用???是这种浮层效果嘛<br>或者是一些框框上面的的关闭按钮之类的，额，也其实还是浮动层，那么问题来了，还有其他很常见的应用场景吗</p>
 <h2 id="background"><a href="#background" class="headerlink" title="background"></a>background</h2><h3 id="backgroud-position"><a href="#backgroud-position" class="headerlink" title="backgroud-position"></a>backgroud-position</h3><p>传说中的切图，就是一张图上有好多东西，不需要把这样子一张大图切成小图，把图片设置成元素的背景，这个时候只需要控制图片在显示的部分，因为图比较大，所以只是露出来一部分，记得设置元素的宽和高正好等于你需要的显示出来的图片的大小，这这样子才能正好的遮盖<br>具体参考<a href="http://www.cnblogs.com/zgqys1980/p/4308434.html" target="_blank" rel="external">这里</a></p>

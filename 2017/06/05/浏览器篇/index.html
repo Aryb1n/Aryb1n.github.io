@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -498,7 +499,9 @@
 <h3 id="SOP"><a href="#SOP" class="headerlink" title="SOP"></a>SOP</h3><p>SOP 同源策略, 要主机名,协议,端口号都相同</p>
 <p>有的时候我们要在同一根域名下不同主机间通信<br><code>store.xxx.com</code>可能要通过<code>login.xxx.com</code>来验证登录<br>这个时候可以使用这种操作<br>给两个子域都设置<code>document.domain = xxx.com</code>, 但注意这之后再改回<code>store.xxx.com</code>就会报错</p>
 <h3 id="CORS"><a href="#CORS" class="headerlink" title="CORS"></a>CORS</h3><p>情景描述: 默认情况下,如果<code>*.xxx.com</code>使用XHR想不同来源比如<code>hacker.com</code>发送请求,那你就会读不到响应.但是请求还是会到达目标网站 (这个情景描述的很清楚,我喜欢)</p>
-<p>解决方式就是在目标服务器<code>hacker.com</code>上返回下面的http响应头部<br><figure class="highlight http"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">Access-Control-Allow-Origin</span>: *.xxx.com</div></pre></td></tr></table></figure></p>
+<p>解决方式就是在目标服务器<code>hacker.com</code>上返回下面的http响应头部</p>
+<pre class="line-numbers language-http"><code class="language-http"><span class="token header-name keyword">Access-Control-Allow-Origin:</span> *.xxx.com
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>这一章讲了许多针对性的<code>sop</code>绕过,比如针对各大浏览器(可能已经修复了),Flash,等等</p>
 <p>然后讲了一下</p>
 <ul>

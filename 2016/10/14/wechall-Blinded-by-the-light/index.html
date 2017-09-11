@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -468,8 +469,25 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p>hack点<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">blightVuln</span><span class="params">($password)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">        <span class="comment"># Do not mess with other sessions!</span></div><div class="line">        <span class="keyword">if</span> ( (strpos($password, <span class="string">'/*'</span>) !== <span class="keyword">false</span>) || (stripos($password, <span class="string">'blight'</span>) !== <span class="keyword">false</span>) )</div><div class="line">        &#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        $db = blightDB();</div><div class="line">        $sessid = GWF_Session::getSession()-&gt;getID();</div><div class="line">        $query = <span class="string">"SELECT 1 FROM (SELECT password FROM blight WHERE sessid=$sessid) b WHERE password='$password'"</span>;</div><div class="line">        <span class="keyword">return</span> $db-&gt;queryFirst($query) !== <span class="keyword">false</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>这一句<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">"<span class="keyword">SELECT</span> <span class="number">1</span> <span class="keyword">FROM</span> (<span class="keyword">SELECT</span> <span class="keyword">password</span> <span class="keyword">FROM</span> blight <span class="keyword">WHERE</span> sessid=$sessid) b <span class="keyword">WHERE</span> <span class="keyword">password</span>=<span class="string">'$password'</span><span class="string">";</span></div><div class="line"><span class="string">"</span>)<span class="string">"</span></div></pre></td></tr></table></figure></p>
+        <p>hack点</p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token keyword">function</span> <span class="token function">blightVuln</span><span class="token punctuation">(</span><span class="token variable">$password</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+        <span class="token shell-comment comment"># Do not mess with other sessions!</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span> <span class="token punctuation">(</span><span class="token function">strpos</span><span class="token punctuation">(</span><span class="token variable">$password</span><span class="token punctuation">,</span> <span class="token string">'/*'</span><span class="token punctuation">)</span> <span class="token operator">!==</span> <span class="token boolean">false</span><span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token punctuation">(</span><span class="token function">stripos</span><span class="token punctuation">(</span><span class="token variable">$password</span><span class="token punctuation">,</span> <span class="token string">'blight'</span><span class="token punctuation">)</span> <span class="token operator">!==</span> <span class="token boolean">false</span><span class="token punctuation">)</span> <span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+                <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token variable">$db</span> <span class="token operator">=</span> <span class="token function">blightDB</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$sessid</span> <span class="token operator">=</span> GWF_Session<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">getSession</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">getID</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$query</span> <span class="token operator">=</span> <span class="token string">"SELECT 1 FROM (SELECT password FROM blight WHERE sessid=$sessid) b WHERE password='$password'"</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token variable">$db</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">queryFirst</span><span class="token punctuation">(</span><span class="token variable">$query</span><span class="token punctuation">)</span> <span class="token operator">!==</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这一句</p>
+<pre class="line-numbers language-sql"><code class="language-sql"><span class="token string">"SELECT 1 FROM (SELECT password FROM blight WHERE sessid=$sessid) b WHERE password='$password'"</span><span class="token punctuation">;</span>
+<span class="token string">")"</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>开始不理解 b的意思<br>后来反应过来是前面的临时表(SELECT password FROM blight WHERE sessid=$sessid)的别名 省去了 AS<br>不加这个的话 就会报错:<br> Every derived table must have its own alias   </p>
 <p>另外 此题不会做<br>题解:<br><a href="http://1176518111.blog.51cto.com/9678787/1693484/" target="_blank" rel="external">题解～～～</a></p>
 

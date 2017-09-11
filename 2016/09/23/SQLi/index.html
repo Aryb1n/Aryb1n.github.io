@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -504,24 +505,22 @@
 </tbody>
 </table>
 <ol>
-<li><p>基于时间的注入(感觉速度会很慢？)</p>
-<ul>
-<li>如果满足条件就延迟5s(或其他时间)<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">IF (system_user = 'sa') WAITFOR DELAY '0:0:5'</div><div class="line">IF (substring((<span class="keyword">select</span> @@<span class="keyword">version</span>), <span class="number">25</span>, <span class="number">1</span>) = <span class="number">5</span>) WAITFOR DELAY <span class="string">'0:0:5'</span></div></pre></td></tr></table></figure>
+<li>基于时间的注入(感觉速度会很慢？)<ul>
+<li>如果满足条件就延迟5s(或其他时间)<pre class="line-numbers language-sql"><code class="language-sql"><span class="token keyword">IF</span> <span class="token punctuation">(</span><span class="token keyword">system_user</span> <span class="token operator">=</span> <span class="token string">'sa'</span><span class="token punctuation">)</span> <span class="token keyword">WAITFOR</span> DELAY <span class="token string">'0:0:5'</span>
+<span class="token keyword">IF</span> <span class="token punctuation">(</span>substring<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">select</span> @<span class="token variable">@version</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">25</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">)</span> <span class="token keyword">WAITFOR</span> DELAY <span class="token string">'0:0:5'</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 </li>
 </ul>
 </li>
-<li><p>基于错误的注入</p>
-<ul>
-<li>比如除0<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">?id=12 / is_srvrolemember(&apos;sysadmin&apos;)</div></pre></td></tr></table></figure>
-</li>
+<li>基于错误的注入<ul>
+<li>比如除0<pre><code>  ?id=12 / is_srvrolemember(&#39;sysadmin&#39;)
+</code></pre></li>
 </ul>
 </li>
-<li><p>基于内容的注入</p>
-<ul>
-<li><p>比如</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">porducts.asp?id = 12 + (case when (system_user = &apos;sa&apos;) then 1 else 0 end)</div></pre></td></tr></table></figure>
-<p>  条件成功返回id=13的商品, 否则返回id=12的</p>
-</li>
+<li>基于内容的注入<ul>
+<li>比如<pre class="line-numbers language-url"><code class="language-url">  porducts.asp?id = 12 + (case when (system_user = 'sa') then 1 else 0 end)
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+  条件成功返回id=13的商品, 否则返回id=12的</li>
 </ul>
 </li>
 </ol>

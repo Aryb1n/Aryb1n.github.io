@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -480,7 +481,20 @@
         <blockquote>
 <p>Underscore is a JavaScript library that provides a whole mess of useful functional programming helpers without extending any built-in objects.</p>
 </blockquote>
-<p>node 里 这样 用就行啦<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//example.js</span></div><div class="line"><span class="keyword">var</span> _ = <span class="built_in">require</span>(<span class="string">'../underscore'</span>);</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">unsplat</span>(<span class="params">fun</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> fun.call(<span class="literal">null</span>, _.toArray(<span class="built_in">arguments</span>));</div><div class="line">  &#125;;</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> joinElement = unsplat(<span class="function"><span class="keyword">function</span>(<span class="params">array</span>) </span>&#123;<span class="keyword">return</span> array.join(<span class="string">' '</span>)&#125;);</div><div class="line"></div><div class="line"><span class="keyword">var</span> res = joinElement(<span class="number">1</span>, <span class="number">2</span>);</div><div class="line"><span class="built_in">console</span>.log(res);</div><div class="line"><span class="comment">//=&gt;"1 2"</span></div></pre></td></tr></table></figure></p>
+<p>node 里 这样 用就行啦</p>
+<pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token comment" spellcheck="true">//example.js</span>
+<span class="token keyword">var</span> _ <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'../underscore'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">function</span> <span class="token function">unsplat</span><span class="token punctuation">(</span>fun<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> fun<span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">,</span> _<span class="token punctuation">.</span><span class="token function">toArray</span><span class="token punctuation">(</span>arguments<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">var</span> joinElement <span class="token operator">=</span> <span class="token function">unsplat</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>array<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token keyword">return</span> array<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">' '</span><span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">var</span> res <span class="token operator">=</span> <span class="token function">joinElement</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>res<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//=>"1 2"</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         
     

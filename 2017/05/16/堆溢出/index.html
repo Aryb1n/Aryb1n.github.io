@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -486,15 +487,42 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">malloc_chunk</span> &#123;</span></div><div class="line">  INTERNAL_SIZE_T      prev_size;  <span class="comment">/* Size of previous chunk (if free).  */</span></div><div class="line">  INTERNAL_SIZE_T      size;       <span class="comment">/* Size in bytes, including overhead. */</span></div><div class="line"></div><div class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">malloc_chunk</span>* <span class="title">fd</span>;</span>         <span class="comment">/* double links -- used only if free. */</span></div><div class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">malloc_chunk</span>* <span class="title">bk</span>;</span></div><div class="line"></div><div class="line">  <span class="comment">/* Only used for large blocks: pointer to next larger size.  */</span></div><div class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">malloc_chunk</span>* <span class="title">fd_nextsize</span>;</span> <span class="comment">/* double links -- used only if free. */</span></div><div class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">malloc_chunk</span>* <span class="title">bk_nextsize</span>;</span></div><div class="line"></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+        <pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">struct</span> malloc_chunk <span class="token punctuation">{</span>
+  INTERNAL_SIZE_T      prev_size<span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">/* Size of previous chunk (if free).  */</span>
+  INTERNAL_SIZE_T      size<span class="token punctuation">;</span>       <span class="token comment" spellcheck="true">/* Size in bytes, including overhead. */</span>
+
+  <span class="token keyword">struct</span> malloc_chunk<span class="token operator">*</span> fd<span class="token punctuation">;</span>         <span class="token comment" spellcheck="true">/* double links -- used only if free. */</span>
+  <span class="token keyword">struct</span> malloc_chunk<span class="token operator">*</span> bk<span class="token punctuation">;</span>
+
+  <span class="token comment" spellcheck="true">/* Only used for large blocks: pointer to next larger size.  */</span>
+  <span class="token keyword">struct</span> malloc_chunk<span class="token operator">*</span> fd_nextsize<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">/* double links -- used only if free. */</span>
+  <span class="token keyword">struct</span> malloc_chunk<span class="token operator">*</span> bk_nextsize<span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>未释放(分配)的堆块只使用<code>prev_size</code>和<code>size</code><br>已经释放的堆块还会使用<code>fd</code>和<code>bk</code>字段，作为<code>漏洞利用字段</code></p>
 <p>所以我们可以画个图</p>
 <blockquote>
-<p>使用中的堆<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">+-----+-----+</div><div class="line">|prev_size  |</div><div class="line">+-----------+</div><div class="line">|size    | p|</div><div class="line">+-----+-----+</div><div class="line">|chunk(data)|</div><div class="line">+-----+-----+</div></pre></td></tr></table></figure></p>
-<p>free掉的堆</p>
+<p>使用中的堆</p>
+<pre><code>+-----+-----+
+|prev_size  |
++-----------+
+|size    | p|
++-----+-----+
+|chunk(data)|
++-----+-----+
+</code></pre><p>free掉的堆</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">+--------+--------+</div><div class="line">|prev_size        |</div><div class="line">+-----------------+</div><div class="line">|size    |    p   |</div><div class="line">+--------+--------+</div><div class="line">|fd(next)|bk(prev)|</div><div class="line">+--------+--------+</div><div class="line">|chunk(data)      |</div><div class="line">+--------+--------+</div></pre></td></tr></table></figure>
-<p>在glibc堆块中是8字节对齐的。为了简化内存的管理，堆块的大小总是8字节的倍数。这就表示size的最后3位可以是其他用途（正常情况下总是置0）。只有第一位对我们很重要(我们把后三位叫做p,那么这个很重要的就是p的最低位了)。如果这位置1，就表示前面的堆块在使用。如果没有置1，表示 <em>前面</em> 的堆块没有被使用。如果相关的内存被释放了，堆块就不会被使用（通过调用函数去释放）。</p>
+<pre><code>+--------+--------+
+|prev_size        |
++-----------------+
+|size    |    p   |
++--------+--------+
+|fd(next)|bk(prev)|
++--------+--------+
+|chunk(data)      |
++--------+--------+
+</code></pre><p>在glibc堆块中是8字节对齐的。为了简化内存的管理，堆块的大小总是8字节的倍数。这就表示size的最后3位可以是其他用途（正常情况下总是置0）。只有第一位对我们很重要(我们把后三位叫做p,那么这个很重要的就是p的最低位了)。如果这位置1，就表示前面的堆块在使用。如果没有置1，表示 <em>前面</em> 的堆块没有被使用。如果相关的内存被释放了，堆块就不会被使用（通过调用函数去释放）。</p>
 <p>这个<br>注意是前面的堆块<br>所以要知道本堆块是否在使用，需要顺着指针找到下一堆块，看下一堆块size的标志位(不是prev_size)</p>
 <p><code>prev_size</code> 表示前一个chunk的size, 那么可以使用这个值来找到前一个chunk的开始</p>
 <blockquote>
@@ -502,8 +530,15 @@
 </blockquote>
 <p>当前堆块释放后，下一堆块的size字段关键位会被清零。此外，prev_size字段会被设置为堆块释放状态(但好像是当p=0,这个prev_size才有意义)</p>
 <p>被释放的堆块通过<code>fd</code>和<code>bk</code>连入一个双向链表中(据说还是一个环形的，首尾相接的链表,是的,这个在<code>0day安全里看到了</code>)<br>大概长这个样子,这个表win下他叫空表[FreeList],0day安全里面这样子叫他(下面来自win)</p>
-<h3 id="这部分内容切到Windows"><a href="#这部分内容切到Windows" class="headerlink" title="这部分内容切到Windows"></a>这部分内容切到Windows</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Free|0]   -&gt; ... 这个Free[0]比较特殊,连了介于1~512KB的空闲堆块,大小升序连接</div><div class="line">Free|0]   &lt;- ... 其他的连接的堆块连接的堆块大小为`Index * 8` byte</div><div class="line"></div><div class="line">Free|1]   -&gt; [8    ] -&gt; [8    ]  -&gt; [8    ] -&gt; [8    ] -&gt; Free[1]开头</div><div class="line">Free|1]   &lt;- [bytes] &lt;- [bytes]  &lt;- [bytes] &lt;- [bytes] &lt;- 来自Free[1]开头</div><div class="line">...</div><div class="line">Free|127] -&gt; [1016 ] -&gt; [1016 ] -&gt; [1016 ] -&gt; [1016 ] -&gt; Free[127]开头</div><div class="line">Free|127] &lt;- [bytes] &lt;- [bytes] &lt;- [bytes] &lt;- [bytes] &lt;- 来自Free[127]开头</div></pre></td></tr></table></figure>
-<p>同时提到<code>快表</code><br>这是windows为了加快堆的分配而采用的一种堆表,这类单向链表不会发生堆合并(其中空闲块块首被设置为占用)<br>也是有128条,只是其中的堆块采用单链表组织,其他和普通空表类似</p>
+<h3 id="这部分内容切到Windows"><a href="#这部分内容切到Windows" class="headerlink" title="这部分内容切到Windows"></a>这部分内容切到Windows</h3><pre><code>Free|0]   -&gt; ... 这个Free[0]比较特殊,连了介于1~512KB的空闲堆块,大小升序连接
+Free|0]   &lt;- ... 其他的连接的堆块连接的堆块大小为`Index * 8` byte
+
+Free|1]   -&gt; [8    ] -&gt; [8    ]  -&gt; [8    ] -&gt; [8    ] -&gt; Free[1]开头
+Free|1]   &lt;- [bytes] &lt;- [bytes]  &lt;- [bytes] &lt;- [bytes] &lt;- 来自Free[1]开头
+...
+Free|127] -&gt; [1016 ] -&gt; [1016 ] -&gt; [1016 ] -&gt; [1016 ] -&gt; Free[127]开头
+Free|127] &lt;- [bytes] &lt;- [bytes] &lt;- [bytes] &lt;- [bytes] &lt;- 来自Free[127]开头
+</code></pre><p>同时提到<code>快表</code><br>这是windows为了加快堆的分配而采用的一种堆表,这类单向链表不会发生堆合并(其中空闲块块首被设置为占用)<br>也是有128条,只是其中的堆块采用单链表组织,其他和普通空表类似</p>
 <p>对于堆块的分配,对于大小不同的块,有不同分配方式</p>
 <ul>
 <li>小块: 快表分配 -&gt; 普通空表分配 -&gt; 堆缓存(我也不知道这个是啥)分配 -&gt; 零号空表分配 -&gt; NULL</li>
@@ -539,7 +574,14 @@
 <p>当一个堆块释放了（通过调用free函数），它会检查之前的堆块是否被释放了。如果之前的堆块没有在使用，那么就会和当前的堆块合并。这样就会增加堆块的大小。结果就是这个堆块需要被放置在不同的链表中。这样的话，之前释放的堆块就需要首先从原来的空闲链表中删除(执行unlink操作),这个时候会改变bk,fd指针,就是利用的时候，接着再和当前堆块合并到另一个合适的链表中。从一个链表中删除一个堆块的代码如下：</p>
 </blockquote>
 <p>这个前后大概是说<code>在空间上chunk和chunk相邻的关系吧</code>,这个和链表中的前后关系无关</p>
-<p>据说这是老版本glic里的<code>unlink</code><br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">unlink</span><span class="params">(malloc_chunk * P, malloc_chunk * BK, malloc_chunk * FD)</span> </span>&#123;</div><div class="line">    FD = P -&gt; fd;</div><div class="line">    BK = P -&gt; bk;</div><div class="line">    FD -&gt; bk = BK;</div><div class="line">    BK -&gt; fd = FD;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>据说这是老版本glic里的<code>unlink</code></p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">unlink</span><span class="token punctuation">(</span>malloc_chunk <span class="token operator">*</span> P<span class="token punctuation">,</span> malloc_chunk <span class="token operator">*</span> BK<span class="token punctuation">,</span> malloc_chunk <span class="token operator">*</span> FD<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    FD <span class="token operator">=</span> P <span class="token operator">-></span> fd<span class="token punctuation">;</span>
+    BK <span class="token operator">=</span> P <span class="token operator">-></span> bk<span class="token punctuation">;</span>
+    FD <span class="token operator">-></span> bk <span class="token operator">=</span> BK<span class="token punctuation">;</span>
+    BK <span class="token operator">-></span> fd <span class="token operator">=</span> FD<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="学习中"><a href="#学习中" class="headerlink" title="学习中"></a>学习中</h2><p>我的天，并没有学会TAT</p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="http://www.tuicool.com/articles/E3Ezu2u" target="_blank" rel="external">http://www.tuicool.com/articles/E3Ezu2u</a> (包含了老版本的unlink和新版的)<br><a href="http://blog.csdn.net/heiyeshuwu/article/details/27325719" target="_blank" rel="external">http://blog.csdn.net/heiyeshuwu/article/details/27325719</a><br><a href="http://www.ms509.com/?p=49" target="_blank" rel="external">http://www.ms509.com/?p=49</a> (后来看到的)<br><a href="http://www.cnblogs.com/0xJDchen/category/885258.html" target="_blank" rel="external">http://www.cnblogs.com/0xJDchen/category/885258.html</a></p>
 

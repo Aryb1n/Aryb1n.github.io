@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -489,7 +490,8 @@
         <h2 id="前"><a href="#前" class="headerlink" title="前"></a>前</h2><p>看ph牛的这篇文章</p>
 <p><a href="https://www.leavesongs.com/PHP/php-bypass-open-basedir-list-directory.html" target="_blank" rel="external">https://www.leavesongs.com/PHP/php-bypass-open-basedir-list-directory.html</a></p>
 <p>然后看到了提到了 <code>Glob</code> , 然后回忆起来,,yi好熟悉啊<br>翻了翻自己在 <code>2017/04/06</code> 记得一篇日记…<br>里面有写到</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span> <span class="keyword">foreach</span>(glob(<span class="string">"./*"</span>) <span class="keyword">as</span> $bdw)&#123; <span class="keyword">echo</span> $bdw.<span class="string">"&lt;br&gt;"</span>; &#125;<span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span> <span class="token keyword">foreach</span><span class="token punctuation">(</span><span class="token function">glob</span><span class="token punctuation">(</span><span class="token string">"./*"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> <span class="token variable">$bdw</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">echo</span> <span class="token variable">$bdw</span><span class="token punctuation">.</span><span class="token string">"&lt;br>"</span><span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token delimiter">?></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>##<br>好吧,人家文章里说的是一个<code>glob://</code></p>
 <h2 id="文章写得超赞…"><a href="#文章写得超赞…" class="headerlink" title="文章写得超赞…"></a>文章写得超赞…</h2><p>尤其是利用Windows下两个特殊的通配符：&lt;、&gt; + realpath 来暴力枚举的</p>
 

@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -477,12 +478,14 @@
 <li><p>模式<br>回车在纯文本模式(i.e. a.txt)和在混合文本模式中表现不同</p>
 <blockquote>
 <p>我理解view-source 也算是纯文本模式<br>混合文本模式下回车只会被当做一个空格</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">123</div><div class="line">456</div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div></pre></td></tr></table></figure>
+<pre class="line-numbers language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
+123
+456
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>渲染出来后 123 456 在同一行</p>
 </blockquote>
 </li>
-</ol>
-<p>渲染出来后 123 456 在同一行</p>
-<ol>
 <li><p>空白字符<br>chrome: 空格(0x20), 缩进(0x09), 回车(0x0a), 换行(0x0c), 0x00<br>IE: 空格和ASCII为9~12(缩进, 换行, 垂直制表, 换页)的字符以及回车(ASCII 13)</p>
 </li>
 <li><p>浏览器在解析html的时候将html实体就转化了</p>

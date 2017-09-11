@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -482,7 +483,9 @@
 <li>IDA View<br>空格可以切换Graph视图和正常视图<br>Graph其实很少用,所以可以在<br>Options - General - Graph里可以把<code>use graph view by default</code>勾掉</li>
 </ol>
 <ol>
-<li>交叉引用<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">some asm code   ; CODE XREF: some location</div><div class="line">some asm code   ; DATA XREF: some location</div></pre></td></tr></table></figure>
+<li>交叉引用<pre class="line-numbers language-asm"><code class="language-asm">some asm code   ; CODE XREF: some location
+some asm code   ; DATA XREF: some location
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 </li>
 </ol>
 <ul>
@@ -499,10 +502,25 @@
 <li><p>重命名<br>N</p>
 </li>
 <li><p>举了一个cdecl不需要清理参数的例子<br>正常情况</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">; demo_call(1, 2, 3, 4)</div><div class="line">push 4</div><div class="line">push 3</div><div class="line">push 2</div><div class="line">push 1</div><div class="line">call demo_call</div><div class="line">add  esp, 16    ; 调用者清理参数</div></pre></td></tr></table></figure>
+<pre class="line-numbers language-asm"><code class="language-asm">; demo_call(1, 2, 3, 4)
+push 4
+push 3
+push 2
+push 1
+call demo_call
+add  esp, 16    ; 调用者清理参数
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
 </ol>
-<p>有的时候, 没有采用push的方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">; demo_call(1, 2, 3, 4)</div><div class="line">mov [esp+12], 4</div><div class="line">mov [esp+8], 3</div><div class="line">mov [esp+4], 2</div><div class="line">mov [esp], 1</div><div class="line">call demo_call</div><div class="line">; 不需要调用方清理参数</div></pre></td></tr></table></figure></p>
+<p>有的时候, 没有采用push的方法</p>
+<pre class="line-numbers language-asm"><code class="language-asm">; demo_call(1, 2, 3, 4)
+mov [esp+12], 4
+mov [esp+8], 3
+mov [esp+4], 2
+mov [esp], 1
+call demo_call
+; 不需要调用方清理参数
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ol>
 <li><p>搜索<br>ALT + T 文本搜索<br>ALT + B 二进制搜索</p>
 </li>
@@ -526,7 +544,27 @@
 <li><p>虚函数 虚表<br><code>包含虚函数的类</code>的第一个数据成员是一个指针,叫做虚表指针(vtable pointer), 指向他的虚表<br>虚表是一个包含类中<code>指向每一个虚函数的指针</code>的表</p>
 </li>
 </ol>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaseCalss</span> &#123;</span></div><div class="line">    <span class="keyword">public</span>: </div><div class="line">        BaseClass();</div><div class="line">        <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">vfunc1</span><span class="params">()</span> </span>= <span class="number">0</span>;</div><div class="line">        <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">vfunc2</span><span class="params">()</span></span>;</div><div class="line">        <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">vfunc3</span><span class="params">()</span></span>;</div><div class="line">        <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">vfunc4</span><span class="params">()</span></span>;</div><div class="line">    <span class="keyword">private</span>:</div><div class="line">        <span class="keyword">int</span> x, y;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SubClass</span>:</span> <span class="keyword">public</span> BaseCalss &#123;</div><div class="line">    <span class="keyword">public</span>: </div><div class="line">        SubClass();</div><div class="line">        <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">vfunc1</span><span class="params">()</span></span>;</div><div class="line">        <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">vfunc3</span><span class="params">()</span></span>;</div><div class="line">        <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">vfunc5</span><span class="params">()</span></span>;</div><div class="line">    <span class="keyword">private</span>:</div><div class="line">        <span class="keyword">int</span> z;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">BaseCalss</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span><span class="token operator">:</span> 
+        <span class="token function">BaseClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">vfunc1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">vfunc2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">vfunc3</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">vfunc4</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span><span class="token operator">:</span>
+        <span class="token keyword">int</span> x<span class="token punctuation">,</span> y<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">SubClass</span><span class="token operator">:</span> <span class="token keyword">public</span> BaseCalss <span class="token punctuation">{</span>
+    <span class="token keyword">public</span><span class="token operator">:</span> 
+        <span class="token function">SubClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">vfunc1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">vfunc3</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">vfunc5</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span><span class="token operator">:</span>
+        <span class="token keyword">int</span> z<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>BaseClass含有 4个虚函数 + 3个数据成员(vtable pointer, x, y)<br>SubClass含有 5个虚函数 + 4个数据成员(vtable pointer, x, y, z)</p>
 <p>我照着抄写的例子怎么通不过…好气啊…</p>
 <p>vtable是放在rodata段的…那么就不能hack了是吗…<br>emmm,好像不需要hack这个表…我们的hack点在于把对象中指向vtable的指针的指向改变…</p>
@@ -547,15 +585,58 @@
 <li>File &gt; Python Command</li>
 </ol>
 <p>这一块没怎么学..略过了</p>
-<h2 id="反静态分析"><a href="#反静态分析" class="headerlink" title="反静态分析"></a>反静态分析</h2><p>例子1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">start_:</div><div class="line">    xor eax, eax</div><div class="line">    test eax, eax</div><div class="line">    jz label1</div><div class="line">    jnz label1</div><div class="line">    db 0E8H ; call</div><div class="line"></div><div class="line">label1:</div><div class="line">    xor eax, 3</div><div class="line">    add eax, 4</div><div class="line">    ret</div></pre></td></tr></table></figure></p>
-<p>看这里的<code>db 0E8H</code>就是junk code, 这里其实不会被执行到, 但对他编译, 再反汇编之后…会起到混淆作用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">xor eax, eax</div><div class="line">test eax, eax</div><div class="line">je xxxxxx</div><div class="line">jne xxxxxx</div><div class="line">call yyyyyyy ; 看这里这个junk code</div></pre></td></tr></table></figure></p>
+<h2 id="反静态分析"><a href="#反静态分析" class="headerlink" title="反静态分析"></a>反静态分析</h2><p>例子1</p>
+<pre class="line-numbers language-asm"><code class="language-asm">start_:
+    xor eax, eax
+    test eax, eax
+    jz label1
+    jnz label1
+    db 0E8H ; call
+
+label1:
+    xor eax, 3
+    add eax, 4
+    ret
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>看这里的<code>db 0E8H</code>就是junk code, 这里其实不会被执行到, 但对他编译, 再反汇编之后…会起到混淆作用</p>
+<pre class="line-numbers language-asm"><code class="language-asm">xor eax, eax
+test eax, eax
+je xxxxxx
+jne xxxxxx
+call yyyyyyy ; 看这里这个junk code
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这个时候需要把<code>call yyyyyy</code>这里<code>Unfined</code>, 按一下<code>U</code><br>然后再在要跳转到的<code>xxxxxx</code>这个位置<code>Code</code>, 即按一下<code>C</code><br>emmmmmmmm, 这样子</p>
-<p>例子2<br>反汇编代码(修复后)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">    call loc_A04B0D7</div><div class="line">    db   0C7h   ; 0x0A04B0D6</div><div class="line">loc_A04B0D7:</div><div class="line">    pop eax     ; (eax) = 0x0A04B0D6</div><div class="line">    lea eax, [eax + 0Ah]    ; (eax) = 0x0A04B0E0</div><div class="line">    db   0E8h</div><div class="line">    jmp eax</div><div class="line">start endp</div></pre></td></tr></table></figure></p>
+<p>例子2<br>反汇编代码(修复后)</p>
+<pre class="line-numbers language-asm"><code class="language-asm">    call loc_A04B0D7
+    db   0C7h   ; 0x0A04B0D6
+loc_A04B0D7:
+    pop eax     ; (eax) = 0x0A04B0D6
+    lea eax, [eax + 0Ah]    ; (eax) = 0x0A04B0E0
+    db   0E8h
+    jmp eax
+start endp
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这里的call是个假的…<br>就是把返回地址ret给pop出去了, 然后若无其事的继续执行<br>后来的这个<code>jmp eax</code>里<code>eax</code>的值实际上是能确定的, 但IDA不能识别</p>
 <p>这里需要修复两次一个是<code>db 0C7h</code>, 一个是<code>db 0E8h</code>…</p>
-<p>先根据<code>call loc_A04B0D7</code><br>找到<code>loca_A04B0DB</code>这里重新反汇编一下<br>然后在<code>db 0E8h</code>这里原来是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">loc_A04B0DB:</div><div class="line">    jmp short near ptr loc_A04B0DB + 1  ; E8 FF</div><div class="line">start endp</div><div class="line">db 0E0h                                 ; E0</div></pre></td></tr></table></figure></p>
-<p>其实应该是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">db 0E8h     ; E8</div><div class="line">jmp eax     ; FF E0</div><div class="line">start endp</div></pre></td></tr></table></figure></p>
-<p>例子3 动态计算目标地址<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">... ;寄存器之间各种计算</div><div class="line">pop eax</div><div class="line">pop ebx</div><div class="line">... ;恢复现场</div><div class="line">xchg edi, [esp]</div><div class="line">retn</div></pre></td></tr></table></figure></p>
+<p>先根据<code>call loc_A04B0D7</code><br>找到<code>loca_A04B0DB</code>这里重新反汇编一下<br>然后在<code>db 0E8h</code>这里原来是</p>
+<pre class="line-numbers language-asm"><code class="language-asm">loc_A04B0DB:
+    jmp short near ptr loc_A04B0DB + 1  ; E8 FF
+start endp
+db 0E0h                                 ; E0
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>其实应该是</p>
+<pre class="line-numbers language-asm"><code class="language-asm">db 0E8h     ; E8
+jmp eax     ; FF E0
+start endp
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>例子3 动态计算目标地址</p>
+<pre class="line-numbers language-asm"><code class="language-asm">... ;寄存器之间各种计算
+pop eax
+pop ebx
+... ;恢复现场
+xchg edi, [esp]
+retn
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>返回地址是动态计算出来,存到了<code>edi</code>里, 之后存到了栈顶<code>[esp]</code></p>
 <ol>
 <li>加壳…<br>加了壳, 尤其是UPX这样子的壳, 没办法静态分析了就<br>就要先脱壳</li>
@@ -565,12 +646,18 @@
 1. 一个或者多个程序既可以写又可以执行
 1. Functions, Imports, Strins 很少有内容
 </code></pre><ol>
-<li>一般壳用到的API (windows…)<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function">HINSTANCE <span class="title">LoadLibrary</span><span class="params">(LPCTSTR lpLibFileName)</span>    <span class="comment">// 根据名称加载dll, 返回句柄</span></span></div><div class="line"><span class="function">HMODULE   <span class="title">GetModuleHandle</span><span class="params">(LPCTSTR lpModuleName)</span>  <span class="comment">// 获取dll句柄</span></span></div><div class="line"><span class="function">FARPROC   <span class="title">GetProcAddress</span><span class="params">(</span></span></div><div class="line"><span class="function"><span class="params">            HMODULE hModule,    <span class="comment">// DLL模块句柄</span></span></span></div><div class="line"><span class="function"><span class="params">            LPCSTR  lpProcName  <span class="comment">// 函数名</span></span></span></div><div class="line"><span class="function"><span class="params">            )</span></span></div></pre></td></tr></table></figure>
-</li>
-</ol>
+<li><p>一般壳用到的API (windows…)</p>
+<pre class="line-numbers language-c"><code class="language-c">HINSTANCE <span class="token function">LoadLibrary</span><span class="token punctuation">(</span>LPCTSTR lpLibFileName<span class="token punctuation">)</span>    <span class="token comment" spellcheck="true">// 根据名称加载dll, 返回句柄</span>
+HMODULE   <span class="token function">GetModuleHandle</span><span class="token punctuation">(</span>LPCTSTR lpModuleName<span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">// 获取dll句柄</span>
+FARPROC   <span class="token function">GetProcAddress</span><span class="token punctuation">(</span>
+         HMODULE hModule<span class="token punctuation">,</span>    <span class="token comment" spellcheck="true">// DLL模块句柄</span>
+         LPCSTR  lpProcName  <span class="token comment" spellcheck="true">// 函数名</span>
+         <span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>先把dll加载进来, 最后获取函数<br>一般的,可能dll早已经加载进来, 那么直接获取句柄, 然后获取函数就可以了</p>
-<ol>
-<li>有目的的攻击分析工具<br>woc, 这个厉害了…</li>
+</li>
+<li><p>有目的的攻击分析工具<br>woc, 这个厉害了…</p>
+</li>
 </ol>
 <h2 id="反动态分析"><a href="#反动态分析" class="headerlink" title="反动态分析"></a>反动态分析</h2><ol>
 <li>检测是在虚拟机运行还是本机运行</li>
@@ -582,12 +669,56 @@
 <li>ptrace (Linux)<br>这一块收藏过一篇文章, 然后再看一下</li>
 </ul>
 <h2 id="自己学习一丢丢C"><a href="#自己学习一丢丢C" class="headerlink" title="自己学习一丢丢C++"></a>自己学习一丢丢C++</h2><p>c++感觉会push好多东西.导致IDA里看到某些函数参数错误</p>
-<p>就比如我这里的<code>cout &lt;&lt; 2 &lt;&lt; 3</code><br>转化得到的其实是<code>cout &lt;&lt; 2</code>和<code>cout &lt;&lt; 3</code><br>所以<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">sub  esp, 8</div><div class="line">push 2</div><div class="line">push offset _ZSt4cout@@GLIBCXX_3_4</div><div class="line">call __ZNSolsEi</div><div class="line">add  esp, 10h</div><div class="line"></div><div class="line">sub  esp, 8</div><div class="line">push 3</div><div class="line">push offset _ZSt4cout@@GLIBCXX_3_4</div><div class="line">call __ZNSolsEi</div><div class="line">add  esp, 10h</div></pre></td></tr></table></figure></p>
-<p>我其实不太明白…为什么<br>这里是两个参数,只要<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">push 2</div><div class="line">push offset _ZSt4cout@@GLIBCXX_3_4</div><div class="line">call __ZNSolsEi</div><div class="line">add  esp, 8</div></pre></td></tr></table></figure></p>
+<p>就比如我这里的<code>cout &lt;&lt; 2 &lt;&lt; 3</code><br>转化得到的其实是<code>cout &lt;&lt; 2</code>和<code>cout &lt;&lt; 3</code><br>所以</p>
+<pre class="line-numbers language-asm"><code class="language-asm">sub  esp, 8
+push 2
+push offset _ZSt4cout@@GLIBCXX_3_4
+call __ZNSolsEi
+add  esp, 10h
+
+sub  esp, 8
+push 3
+push offset _ZSt4cout@@GLIBCXX_3_4
+call __ZNSolsEi
+add  esp, 10h
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>我其实不太明白…为什么<br>这里是两个参数,只要</p>
+<pre class="line-numbers language-asm"><code class="language-asm">push 2
+push offset _ZSt4cout@@GLIBCXX_3_4
+call __ZNSolsEi
+add  esp, 8
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这样子直接<br>push 8字节参数, 调用函数, <code>add esp, 8</code>就可以了,</p>
 <p>为什么要先<code>sub esp, 8</code>, 然后压参, 调用, 最后算上清理参数的8个字节, 清理的时候就是<code>add esp, 10h</code>了<br>为什么呢 ==!啊啊啊</p>
-<p>这个只有输入输出其实还不太复杂<br>这个string…好复杂啊…<br>就这一小节<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="built_in">string</span> s = <span class="string">"123"</span>;</div><div class="line">    <span class="built_in">string</span> ss = <span class="string">"456"</span>;</div><div class="line">    <span class="built_in">cin</span> &gt;&gt; s;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; s;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="number">2</span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>大概流程是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">..</div><div class="line">call std::allocator&lt;char&gt;::allocator(void)</div><div class="line">call 各种命名空间::basic_string()   ;初始化s</div><div class="line">call std::allocator&lt;char&gt;::~allocator(void)</div><div class="line"></div><div class="line">call std::allocator&lt;char&gt;::allocator(void)</div><div class="line">call 各种命名空间::basic_string()   ;初始化ss</div><div class="line">call std::allocator&lt;char&gt;::~allocator(void)</div><div class="line"></div><div class="line">call &gt;&gt;(offset_cin, )</div><div class="line"></div><div class="line">call &lt;&lt;(offset_cout, )</div><div class="line"></div><div class="line">call &lt;&lt;(offset_cout, 2)</div><div class="line"></div><div class="line">call 各种命名空间::~basic_string()   ;销毁s</div><div class="line">call 各种命名空间::~basic_string()   ;销毁ss</div></pre></td></tr></table></figure></p>
+<p>这个只有输入输出其实还不太复杂<br>这个string…好复杂啊…<br>就这一小节</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    string s <span class="token operator">=</span> <span class="token string">"123"</span><span class="token punctuation">;</span>
+    string ss <span class="token operator">=</span> <span class="token string">"456"</span><span class="token punctuation">;</span>
+    cin <span class="token operator">>></span> s<span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> s<span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token number">2</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>大概流程是</p>
+<pre class="line-numbers language-asm"><code class="language-asm">..
+call std::allocator<char>::allocator(void)
+call 各种命名空间::basic_string()   ;初始化s
+call std::allocator<char>::~allocator(void)
+
+call std::allocator<char>::allocator(void)
+call 各种命名空间::basic_string()   ;初始化ss
+call std::allocator<char>::~allocator(void)
+
+call >>(offset_cin, )
+
+call <<(offset_cout, )
+
+call <<(offset_cout, 2)
+
+call 各种命名空间::~basic_string()   ;销毁s
+call 各种命名空间::~basic_string()   ;销毁ss
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="F5的问题"><a href="#F5的问题" class="headerlink" title="F5的问题"></a>F5的问题</h2><p>第一次要在那个, emmmmm, 要在<code>IDA View</code>窗口 的 图表模式按下F5, 才能起作用<br>如果已经用空格切换到文字模式, 好像按下F5没用…</p>
 <h2 id="defs-h"><a href="#defs-h" class="headerlink" title="defs.h"></a>defs.h</h2><p>我们提取出来的IDA里的c代码, 如果直接编译是通不过的,因为是某些东西未定义</p>
 <p>这个文件,,emmmm,很有用,在IDA的plugins目录下</p>

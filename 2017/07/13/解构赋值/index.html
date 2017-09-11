@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -487,10 +488,28 @@
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
         <p>蠢得很啊啊啊啊</p>
-<p>今天又看到<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> &#123;app, BrowerWindow&#125; = <span class="built_in">require</span>(<span class="string">'electron'</span>);</div></pre></td></tr></table></figure></p>
-<p>这个是对象解构赋值<br>在electron模块里有类似的代码<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">exports.app = &#123;</div><div class="line">    ...</div><div class="line">&#125;</div><div class="line">...</div><div class="line">exports.BrowerWindow = &#123;</div><div class="line">    ...</div><div class="line">&#125;</div><div class="line">...</div></pre></td></tr></table></figure></p>
-<p>上面的<code>require</code>也就是相当于<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> electron = <span class="built_in">require</span>(<span class="string">'electron'</span>);</div><div class="line"><span class="keyword">const</span> app = electron.app;</div><div class="line"><span class="keyword">const</span> BrowerWindow = electron.BrowerWindow;</div></pre></td></tr></table></figure></p>
-<p>那这个和使用<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> &#123;app, BrowerWindow&#125; <span class="keyword">from</span> <span class="string">'electron'</span></div></pre></td></tr></table></figure></p>
+<p>今天又看到</p>
+<pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token keyword">const</span> <span class="token punctuation">{</span>app<span class="token punctuation">,</span> BrowerWindow<span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'electron'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这个是对象解构赋值<br>在electron模块里有类似的代码</p>
+<pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token operator">...</span>
+exports<span class="token punctuation">.</span>app <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token operator">...</span>
+<span class="token punctuation">}</span>
+<span class="token operator">...</span>
+exports<span class="token punctuation">.</span>BrowerWindow <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token operator">...</span>
+<span class="token punctuation">}</span>
+<span class="token operator">...</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>上面的<code>require</code>也就是相当于</p>
+<pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token keyword">const</span> electron <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'electron'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> app <span class="token operator">=</span> electron<span class="token punctuation">.</span>app<span class="token punctuation">;</span>
+<span class="token keyword">const</span> BrowerWindow <span class="token operator">=</span> electron<span class="token punctuation">.</span>BrowerWindow<span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>那这个和使用</p>
+<pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token keyword">import</span> <span class="token punctuation">{</span>app<span class="token punctuation">,</span> BrowerWindow<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'electron'</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>有什么区别呢</p>
 <p>require/exports<br>这个是CommonJS,是Node.js的规范</p>
 <p>import/export<br>这个是ES6的规范，但其实现在没有人支持他，都是由babel转换成为<code>require/exports</code>的，所以现阶段使用的<code>import/export</code>是编译成了<code>require/exports</code><br>在浏览器端使用<code>import</code>的话，只有babel还不行，必须要用<code>webpack</code>+<code>babel</code><br>在nodejs这边的话，我就不用<code>import</code>了<br>不过有个<code>babel-node</code>好像可以直接<code>import</code></p>
@@ -499,14 +518,28 @@
 <ol>
 <li>imports and exports must be at the top level </li>
 </ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(xxx) &#123;</div><div class="line">    <span class="built_in">require</span>(<span class="string">'./a'</span>)</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="built_in">require</span>(<span class="string">'./b'</span>)</div><div class="line">&#125;   <span class="comment">//正确</span></div><div class="line"></div><div class="line"><span class="keyword">if</span>(xxx) &#123;</div><div class="line">    <span class="keyword">import</span> <span class="string">'a'</span></div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">import</span> <span class="string">'b'</span></div><div class="line">&#125;   <span class="comment">//语法错误</span></div></pre></td></tr></table></figure>
+<pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token keyword">if</span><span class="token punctuation">(</span>xxx<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'./a'</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'./b'</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>   <span class="token comment" spellcheck="true">//正确</span>
+
+<span class="token keyword">if</span><span class="token punctuation">(</span>xxx<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">import</span> <span class="token string">'a'</span>
+<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    <span class="token keyword">import</span> <span class="token string">'b'</span>
+<span class="token punctuation">}</span>   <span class="token comment" spellcheck="true">//语法错误</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ol>
 <li>imports are hoisted <blockquote>
 <p>我还查了下，这词啥意思，好像是说import可以变量提升,就是说放哪都行</p>
 </blockquote>
 </li>
 </ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">foo();</div><div class="line">...</div><div class="line"><span class="keyword">import</span> &#123;foo&#125; <span class="keyword">from</span> <span class="string">'some_code'</span>;</div></pre></td></tr></table></figure>
+<pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">...</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span>foo<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'some_code'</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p>实际上编译时import是提升到<code>the beginning of the current scope</code>，所以没错</p>
 <ol>
 <li>Imports are read-only views on exports<br>这个看起来比较，emmmmm~<br>好像是说<code>import</code>进来的是<code>live</code>的,<code>read-only</code>的, 其实就是一个<code>只读</code>的<code>引用</code><br>而<code>require</code>他就是一个,emmmm~,值传递,传进来就和原来的环境没有关系了<br>这个看<a href="http://es6.ruanyifeng.com/#docs/module-loader#ES6-%E6%A8%A1%E5%9D%97%E4%B8%8E-CommonJS-%E6%A8%A1%E5%9D%97%E7%9A%84%E5%B7%AE%E5%BC%82" target="_blank" rel="external">这里吧</a></li>

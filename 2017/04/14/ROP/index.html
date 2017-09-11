@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -488,8 +489,22 @@
     
         <h2 id="人家的文章写的就是好"><a href="#人家的文章写的就是好" class="headerlink" title="人家的文章写的就是好"></a>人家的文章写的就是好</h2><p><a href="http://paper.seebug.org/271/" target="_blank" rel="external">http://paper.seebug.org/271/</a><br><a href="http://paper.seebug.org/272/" target="_blank" rel="external">http://paper.seebug.org/272/</a></p>
 <h2 id="名词"><a href="#名词" class="headerlink" title="名词"></a>名词</h2><p>内存布局随机化(ASLR): 一个会妨碍我们进行攻击的措施，字面意思</p>
-<h2 id="内存布局"><a href="#内存布局" class="headerlink" title="内存布局"></a>内存布局</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">+++++++++++++++++++++++++ high Add</div><div class="line">Return Address                      return to F&apos;s F&apos;s next sentence</div><div class="line">------------------------ 0xA</div><div class="line">Caller&apos;s Caller&apos;s EBP               F&apos;F</div><div class="line">------------------------ 0xB</div><div class="line">some state about Caller             F&apos;s data</div><div class="line">------------------------ 0xC</div><div class="line">Callee&apos;s Arg                        Child&apos;s arg</div><div class="line">------------------------ 0xD</div><div class="line">Return Address                      return to F&apos;s next sentence</div><div class="line">------------------------ 0xE</div><div class="line">Caller&apos;s EBP                        *save Callers&apos;s data basis Adddress, is not now EBP(is this Addr)</div><div class="line">------------------------ 0xF</div><div class="line">Local Var                           Child&apos;s data</div><div class="line">++++++++++++++++++++++++ low Add</div></pre></td></tr></table></figure>
-<p>Caller’s EBP 那个地址<code>0xF</code>存的那个数据<code>0xB</code>是Caller的基地址<br>但那个地址正好是<code>0xF</code>正好是Callee的基地址(也许是<code>0xE</code>???)</p>
+<h2 id="内存布局"><a href="#内存布局" class="headerlink" title="内存布局"></a>内存布局</h2><pre><code>+++++++++++++++++++++++++ high Add
+Return Address                      return to F&#39;s F&#39;s next sentence
+------------------------ 0xA
+Caller&#39;s Caller&#39;s EBP               F&#39;F
+------------------------ 0xB
+some state about Caller             F&#39;s data
+------------------------ 0xC
+Callee&#39;s Arg                        Child&#39;s arg
+------------------------ 0xD
+Return Address                      return to F&#39;s next sentence
+------------------------ 0xE
+Caller&#39;s EBP                        *save Callers&#39;s data basis Adddress, is not now EBP(is this Addr)
+------------------------ 0xF
+Local Var                           Child&#39;s data
+++++++++++++++++++++++++ low Add
+</code></pre><p>Caller’s EBP 那个地址<code>0xF</code>存的那个数据<code>0xB</code>是Caller的基地址<br>但那个地址正好是<code>0xF</code>正好是Callee的基地址(也许是<code>0xE</code>???)</p>
 <h2 id="四种栈溢出利用姿势"><a href="#四种栈溢出利用姿势" class="headerlink" title="四种栈溢出利用姿势"></a>四种<code>栈溢出</code>利用姿势</h2><h3 id="一个注意的点是payload里不要包含0x00，会被截断的"><a href="#一个注意的点是payload里不要包含0x00，会被截断的" class="headerlink" title="一个注意的点是payload里不要包含0x00，会被截断的"></a>一个注意的点是payload里不要包含<code>0x00</code>，会被截断的</h3><ul>
 <li><p>修改返回地址，让其指向溢出数据中的一段指令（shellcode）</p>
 </li>

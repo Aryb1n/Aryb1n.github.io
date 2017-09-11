@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -491,8 +492,83 @@
 <p>从语言层面来看, malloc返回的是<code>void *</code>的类型, 所以在使用的时候要强制类型转换一下</p>
 <p>对了, 实际使用过程中, malloc之后应当检测一下, 结果是不是NULL, 然后再使用(我下面没写)</p>
 <p>free的话就是…emmmmm, 把分出去的chunk给收回来, 放到空闲链表里…其实就是增加了<code>fd</code>, <code>bk</code>, 指针</p>
-<p>我写了一个蹩脚的链表. 然后怀疑人生中<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></div><div class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">node</span> * <span class="title">next</span>;</span></div><div class="line">    <span class="keyword">int</span> val;</div><div class="line">&#125;Node;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    Node * <span class="built_in">list</span> = (Node *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Node));</div><div class="line">    <span class="built_in">list</span> -&gt; val = <span class="number">111</span>;</div><div class="line">    <span class="built_in">list</span> -&gt; next = (Node *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Node));</div><div class="line">    <span class="built_in">list</span> -&gt; next -&gt; val = <span class="number">222</span>;</div><div class="line">    <span class="built_in">list</span> -&gt; next -&gt; next = <span class="literal">NULL</span>;</div><div class="line">    Node * ptr = <span class="built_in">list</span>;</div><div class="line">    <span class="keyword">while</span>(ptr != <span class="literal">NULL</span>) &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, ptr -&gt; val);</div><div class="line">        ptr = ptr -&gt; next;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"print done\n"</span>);</div><div class="line">    ptr = <span class="built_in">list</span>;</div><div class="line">    <span class="keyword">while</span>(ptr != <span class="literal">NULL</span>) &#123;</div><div class="line">        Node * temptr = ptr;</div><div class="line">        ptr = ptr -&gt; next;</div><div class="line">        <span class="built_in">free</span>(temptr);</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"free done\n"</span>);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h2 id="new-amp-delete"><a href="#new-amp-delete" class="headerlink" title="new &amp; delete"></a>new &amp; delete</h2><p>这个其实我不太熟悉, 因为我不太会oop, 所以很少用<br>只知道new是C++的一个操作符…<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdlib&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> &#123;</span></div><div class="line">    <span class="keyword">private</span>:</div><div class="line">        <span class="keyword">static</span> <span class="keyword">int</span> num;</div><div class="line">    <span class="keyword">public</span>:</div><div class="line">        <span class="keyword">int</span> a;</div><div class="line">        A() &#123;num++; <span class="built_in">puts</span>(<span class="string">"num++"</span>);&#125;</div><div class="line">        A(<span class="keyword">int</span> _a):a(_a * _a) &#123;num++; <span class="built_in">puts</span>(<span class="string">"num++"</span>);&#125;</div><div class="line">        <span class="function"><span class="keyword">void</span> <span class="title">b</span><span class="params">()</span> </span>&#123;<span class="built_in">printf</span>(<span class="string">"[*]%d a: %d"</span>, num, a);&#125;</div><div class="line">&#125;;</div><div class="line"><span class="keyword">int</span> A::num = <span class="number">0</span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    A * a1 = <span class="keyword">new</span> A;</div><div class="line">    a1 -&gt; b();</div><div class="line">    <span class="built_in">puts</span>(<span class="string">""</span>);</div><div class="line"></div><div class="line">    A * a2 = <span class="keyword">new</span> A();</div><div class="line">    a2 -&gt; b();</div><div class="line">    <span class="built_in">puts</span>(<span class="string">""</span>);</div><div class="line"></div><div class="line">    A a3;</div><div class="line">    a3.b();</div><div class="line">    <span class="built_in">puts</span>(<span class="string">""</span>);</div><div class="line"></div><div class="line">    A * a4 = (A * )<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(A));</div><div class="line">    a4 -&gt; b();</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">/*</span></div><div class="line"><span class="comment">num++</span></div><div class="line"><span class="comment">[*]1 a: 0</span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment">num++</span></div><div class="line"><span class="comment">[*]2 a: 0</span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment">num++</span></div><div class="line"><span class="comment">[*]3 a: 2</span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment">[*]3 a: 0</span></div><div class="line"><span class="comment">*/</span></div></pre></td></tr></table></figure></p>
+<p>我写了一个蹩脚的链表. 然后怀疑人生中</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;string.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h></span></span>
+<span class="token keyword">typedef</span> <span class="token keyword">struct</span> node <span class="token punctuation">{</span>
+    <span class="token keyword">struct</span> node <span class="token operator">*</span> next<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> val<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>Node<span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    Node <span class="token operator">*</span> list <span class="token operator">=</span> <span class="token punctuation">(</span>Node <span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>Node<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    list <span class="token operator">-></span> val <span class="token operator">=</span> <span class="token number">111</span><span class="token punctuation">;</span>
+    list <span class="token operator">-></span> next <span class="token operator">=</span> <span class="token punctuation">(</span>Node <span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>Node<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    list <span class="token operator">-></span> next <span class="token operator">-></span> val <span class="token operator">=</span> <span class="token number">222</span><span class="token punctuation">;</span>
+    list <span class="token operator">-></span> next <span class="token operator">-></span> next <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+    Node <span class="token operator">*</span> ptr <span class="token operator">=</span> list<span class="token punctuation">;</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span>ptr <span class="token operator">!=</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\n"</span><span class="token punctuation">,</span> ptr <span class="token operator">-></span> val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        ptr <span class="token operator">=</span> ptr <span class="token operator">-></span> next<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"print done\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ptr <span class="token operator">=</span> list<span class="token punctuation">;</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span>ptr <span class="token operator">!=</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        Node <span class="token operator">*</span> temptr <span class="token operator">=</span> ptr<span class="token punctuation">;</span>
+        ptr <span class="token operator">=</span> ptr <span class="token operator">-></span> next<span class="token punctuation">;</span>
+        <span class="token function">free</span><span class="token punctuation">(</span>temptr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"free done\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="new-amp-delete"><a href="#new-amp-delete" class="headerlink" title="new &amp; delete"></a>new &amp; delete</h2><p>这个其实我不太熟悉, 因为我不太会oop, 所以很少用<br>只知道new是C++的一个操作符…</p>
+<pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;cstring></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;cstdio></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;cstdlib></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;algorithm></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span><span class="token operator">:</span>
+        <span class="token keyword">static</span> <span class="token keyword">int</span> num<span class="token punctuation">;</span>
+    <span class="token keyword">public</span><span class="token operator">:</span>
+        <span class="token keyword">int</span> a<span class="token punctuation">;</span>
+        <span class="token function">A</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>num<span class="token operator">++</span><span class="token punctuation">;</span> <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"num++"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">}</span>
+        <span class="token function">A</span><span class="token punctuation">(</span><span class="token keyword">int</span> _a<span class="token punctuation">)</span><span class="token operator">:</span><span class="token function">a</span><span class="token punctuation">(</span>_a <span class="token operator">*</span> _a<span class="token punctuation">)</span> <span class="token punctuation">{</span>num<span class="token operator">++</span><span class="token punctuation">;</span> <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"num++"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">}</span>
+        <span class="token keyword">void</span> <span class="token function">b</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"[*]%d a: %d"</span><span class="token punctuation">,</span> num<span class="token punctuation">,</span> a<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> A<span class="token operator">::</span>num <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    A <span class="token operator">*</span> a1 <span class="token operator">=</span> <span class="token keyword">new</span> A<span class="token punctuation">;</span>
+    a1 <span class="token operator">-</span><span class="token operator">></span> <span class="token function">b</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    A <span class="token operator">*</span> a2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">A</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    a2 <span class="token operator">-</span><span class="token operator">></span> <span class="token function">b</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    A a3<span class="token punctuation">;</span>
+    a3<span class="token punctuation">.</span><span class="token function">b</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    A <span class="token operator">*</span> a4 <span class="token operator">=</span> <span class="token punctuation">(</span>A <span class="token operator">*</span> <span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>A<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    a4 <span class="token operator">-</span><span class="token operator">></span> <span class="token function">b</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/*
+num++
+[*]1 a: 0
+
+num++
+[*]2 a: 0
+
+num++
+[*]3 a: 2
+
+[*]3 a: 0
+*/</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>首先有个重要的问题就是, 类内的静态成员变量要在类外进行定义…不然就会出现未定义的引用..就像我这里写的那个<code>int A::num = 0</code><br>类内部写的静态成员, 相当于是只做了一个申明, 只是有了一个scope, 但要使用(存储)的话必须要在类外定义一下</p>
 <blockquote>
 <p>静态其实是讲与程序有着相同的生命周期…所以静态变量即便是局部的…也只是作用域在局部…但却是一直存在的, 所以也只会经历一次初始化, 从存储上讲的话, 静态变量和全局变量是一样的…未初始化的在bss, 初始化的在data</p>
@@ -507,20 +583,21 @@
 <p>所以相应的delete不光是会回收空间, 可能还会调用析构函数</p>
 <p>据说是new分三个过程</p>
 <ol>
-<li><p>调用operator new(size), 比如 new int, 差不多汇编是这样子</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">push 4</div><div class="line">call operator new(size)</div><div class="line">add esp, 4</div></pre></td></tr></table></figure>
+<li>调用operator new(size), 比如 new int, 差不多汇编是这样子<pre class="line-numbers language-asm"><code class="language-asm">push 4
+call operator new(size)
+add esp, 4
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 </li>
-<li><p>在分配的内存空间上, 调用构造函数(基本类型没有在这个操作)</p>
-</li>
+<li>在分配的内存空间上, 调用构造函数(基本类型没有在这个操作)</li>
 <li>转换指针类型??? (这个我也不太确定)</li>
 </ol>
 <p>这里看到上面四个生成类的方法, 还想讲几点</p>
 <h3 id="有括号和没括号的区别"><a href="#有括号和没括号的区别" class="headerlink" title="有括号和没括号的区别"></a>有括号和没括号的区别</h3><ol>
-<li><p>对于内置类型, 比如int</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> <span class="keyword">int</span> <span class="comment">// 不会初始化</span></div><div class="line"><span class="keyword">new</span> <span class="keyword">int</span>() <span class="comment">//会初始化为0</span></div></pre></td></tr></table></figure>
+<li>对于内置类型, 比如int<pre class="line-numbers language-c"><code class="language-c">new <span class="token keyword">int</span> <span class="token comment" spellcheck="true">// 不会初始化</span>
+new <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//会初始化为0</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 </li>
-<li><p>对于类</p>
-</li>
+<li>对于类</li>
 </ol>
 <ul>
 <li>没括号是默认初始化</li>
@@ -528,7 +605,10 @@
 </ul>
 <p>结论: 我还是加括号吧, 这个我还是不太清楚</p>
 <h3 id="用new和不用new的区别"><a href="#用new和不用new的区别" class="headerlink" title="用new和不用new的区别"></a>用new和不用new的区别</h3><p>new底下调用的是malloc, 是在堆上分配内存<br>不new的话…就是在栈上了呗…</p>
-<p>另外, 不new的话, 也有隐和显两种写法<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">A a = A(<span class="number">2</span>);</div><div class="line"><span class="function">A <span class="title">a</span><span class="params">(<span class="number">2</span>)</span></span>;</div></pre></td></tr></table></figure></p>
+<p>另外, 不new的话, 也有隐和显两种写法</p>
+<pre class="line-numbers language-c"><code class="language-c">A a <span class="token operator">=</span> <span class="token function">A</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+A <span class="token function">a</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>差不多就这样子了</p>
 
         

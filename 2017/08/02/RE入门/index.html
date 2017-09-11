@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -501,19 +502,37 @@
 <li><p>alarm定时,这个我确实在CTF里遇到…当时不知道怎么办…,定时很短时间,到时间就退出,原问提到可以通过<code>设置gdb对signal的处理方式</code>来bypass.</p>
 </li>
 </ol>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">(gdb) i handle SIGALRM <span class="comment">// 查看SIGALRM信号处理方式</span></div><div class="line">Signal        Stop	Print	Pass to program	    Description</div><div class="line">SIGALRM       No	Yes	    Yes		            Alarm clock</div><div class="line"></div><div class="line">(gdb) handle SIGALRM nopass <span class="comment">// 设置不传递</span></div><div class="line">Signal        Stop	Print	Pass to program	    Description</div><div class="line">SIGALRM       No	Yes	    No		            Alarm clock</div></pre></td></tr></table></figure>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> i handle SIGALRM <span class="token comment" spellcheck="true">// 查看SIGALRM信号处理方式</span>
+Signal        Stop    Print    Pass to program        Description
+SIGALRM       No    Yes        Yes                    Alarm <span class="token function">clock</span>
+
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> handle SIGALRM nopass <span class="token comment" spellcheck="true">// 设置不传递</span>
+Signal        Stop    Print    Pass to program        Description
+SIGALRM       No    Yes        No                    Alarm clock
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>参考 <a href="http://www.cppblog.com/fwxjj/archive/2011/12/06/161621.html" target="_blank" rel="external">http://www.cppblog.com/fwxjj/archive/2011/12/06/161621.html</a></p>
-<h2 id="objdump-amp-readelf"><a href="#objdump-amp-readelf" class="headerlink" title="objdump &amp; readelf"></a>objdump &amp; readelf</h2><h3 id="readelf"><a href="#readelf" class="headerlink" title="readelf"></a>readelf</h3><p>readelf 主要是看一些相关信息, 报名哟反汇编的功能, 常用的就是<code>-S</code><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">readelf -h filename elf头部,主要是好看</div></pre></td></tr></table></figure></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">readelf -S filename 主要是看某一段(sections)的偏移和权限</div></pre></td></tr></table></figure>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">readelf -l filename 主要是看某一节(segments)的信息</div></pre></td></tr></table></figure>
+<h2 id="objdump-amp-readelf"><a href="#objdump-amp-readelf" class="headerlink" title="objdump &amp; readelf"></a>objdump &amp; readelf</h2><h3 id="readelf"><a href="#readelf" class="headerlink" title="readelf"></a>readelf</h3><p>readelf 主要是看一些相关信息, 报名哟反汇编的功能, 常用的就是<code>-S</code></p>
+<pre class="line-numbers language-shell"><code class="language-shell">readelf -h filename elf头部,主要是好看
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-shell"><code class="language-shell">readelf -S filename 主要是看某一段(sections)的偏移和权限
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-shell"><code class="language-shell">readelf -l filename 主要是看某一节(segments)的信息
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>这个<code>sections</code>和<code>segments</code>,emmmmmm~,是传说中的链接视图和执行视图里的概念</p>
 <p>通常,在ELF在加载到内存里时候,系统会将权限相同的Sections合并成一个Segments</p>
-<h3 id="objdump"><a href="#objdump" class="headerlink" title="objdump"></a>objdump</h3><p>我用这个objdump主要用来看汇编代码<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">objdump -d pwn100 反汇编</div></pre></td></tr></table></figure></p>
-<p>如果当时编译的时候用了<code>-g</code>,这个时候就能更详细的显示反汇编(掺杂源代码)<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">objdump -S [-l] pwn100</div></pre></td></tr></table></figure></p>
+<h3 id="objdump"><a href="#objdump" class="headerlink" title="objdump"></a>objdump</h3><p>我用这个objdump主要用来看汇编代码</p>
+<pre class="line-numbers language-shell"><code class="language-shell">objdump -d pwn100 反汇编
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>如果当时编译的时候用了<code>-g</code>,这个时候就能更详细的显示反汇编(掺杂源代码)</p>
+<pre class="line-numbers language-shell"><code class="language-shell">objdump -S [-l] pwn100
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>这个时候加上<code>-l</code>还能把原来行号显示出来</p>
 <p><code>-j .text</code> 可以只反汇编指定的<code>section</code></p>
 <p>另外记得加上这个…<code>-M intel</code>,默认是AT&amp;T的..看的我</p>
-<p>最后一点<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">-d, --disassemble        Display assembler contents of executable sections</div><div class="line">-D, --disassemble-all    Display assembler contents of all sections</div></pre></td></tr></table></figure></p>
+<p>最后一点</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token operator">-</span>d<span class="token punctuation">,</span> <span class="token operator">--</span>disassemble        Display assembler contents of executable sections
+<span class="token operator">-</span>D<span class="token punctuation">,</span> <span class="token operator">--</span>disassemble<span class="token operator">-</span>all    Display assembler contents of all sections
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>另外,<code>objdump -h</code>查看ELF的各个段(Sections)的时候,只是把关键的段显示出来了,而忽略了其他辅助的段,要查看所有的段,就要用<code>readelf -S</code></p>
 <p>段(Sections)的名字对于编译器,链接器是有意义的,对于操作系统其实只是段的属性和权限有用</p>
 

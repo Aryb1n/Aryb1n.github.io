@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -557,8 +558,11 @@
 <li>硬件: 打印机</li>
 <li>软件：内存 指针 数组</li>
 </ul>
-<p>临界区：访问临界资源的代码段<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">进入区</div><div class="line">临界区</div><div class="line">退出区</div></pre></td></tr></table></figure></p>
-<p>其实感觉进入区的设计很关键…不然的话可能就造成…<br>有的语句, 在高层比如C语言里看到是一条语句, 其实编译后很多条, 就不是原子的</p>
+<p>临界区：访问临界资源的代码段</p>
+<pre><code>进入区
+临界区
+退出区
+</code></pre><p>其实感觉进入区的设计很关键…不然的话可能就造成…<br>有的语句, 在高层比如C语言里看到是一条语句, 其实编译后很多条, 就不是原子的</p>
 <p>同步机制遵循原则：</p>
 <ul>
 <li>空闲让进</li>
@@ -566,7 +570,26 @@
 <li>有限等待</li>
 <li>让权等待</li>
 </ul>
-<h4 id="过去的解决方法"><a href="#过去的解决方法" class="headerlink" title="过去的解决方法"></a>过去的解决方法</h4><p>软件<br>Peterson算法, 其实不是很理解…就是说自己不能很快写出<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">define</span> FALSE 0</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> TRUE 1 </span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> N 2</span></div><div class="line"></div><div class="line"><span class="keyword">int</span> turn;</div><div class="line"><span class="keyword">int</span> interested[N];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">enter_region</span><span class="params">(<span class="keyword">int</span> process)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> other;</div><div class="line">    other = <span class="number">1</span> - process;</div><div class="line">    interested[process] = TRUE;</div><div class="line">    turn = process;</div><div class="line">    <span class="keyword">while</span>(turn == process &amp;&amp; interested[other] == TRUE);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">leave_region</span><span class="params">(<span class="keyword">int</span> process)</span> </span>&#123;</div><div class="line">    interested[process] = FALSE;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="过去的解决方法"><a href="#过去的解决方法" class="headerlink" title="过去的解决方法"></a>过去的解决方法</h4><p>软件<br>Peterson算法, 其实不是很理解…就是说自己不能很快写出</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">define</span> FALSE 0</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> TRUE 1 </span>
+<span class="token macro property">#<span class="token directive keyword">define</span> N 2</span>
+
+<span class="token keyword">int</span> turn<span class="token punctuation">;</span>
+<span class="token keyword">int</span> interested<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">enter_region</span><span class="token punctuation">(</span><span class="token keyword">int</span> process<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> other<span class="token punctuation">;</span>
+    other <span class="token operator">=</span> <span class="token number">1</span> <span class="token operator">-</span> process<span class="token punctuation">;</span>
+    interested<span class="token punctuation">[</span>process<span class="token punctuation">]</span> <span class="token operator">=</span> TRUE<span class="token punctuation">;</span>
+    turn <span class="token operator">=</span> process<span class="token punctuation">;</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span>turn <span class="token operator">==</span> process <span class="token operator">&amp;&amp;</span> interested<span class="token punctuation">[</span>other<span class="token punctuation">]</span> <span class="token operator">==</span> TRUE<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">leave_region</span><span class="token punctuation">(</span><span class="token keyword">int</span> process<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    interested<span class="token punctuation">[</span>process<span class="token punctuation">]</span> <span class="token operator">=</span> FALSE<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p> 硬件</p>
 <ol>
 <li>TSL指令</li>
@@ -577,28 +600,94 @@
 <li>整数信号量S<br>原子操作：</li>
 </ol>
 <ul>
-<li><p>wait(P)</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">wait</span><span class="params">(<span class="keyword">int</span> S)</span> </span>&#123;</div><div class="line">    <span class="keyword">while</span>(S &lt;= <span class="number">0</span>) ;</div><div class="line">    S -= <span class="number">1</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<li>wait(P)<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">wait</span><span class="token punctuation">(</span><span class="token keyword">int</span> S<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">while</span><span class="token punctuation">(</span>S <span class="token operator">&lt;=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">;</span>
+  S <span class="token operator">-</span><span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
-<li><p>singal(V)</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">Signal</span><span class="params">(<span class="keyword">int</span> S)</span> </span>&#123;</div><div class="line">    S += <span class="number">1</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<li>singal(V)<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">Signal</span><span class="token punctuation">(</span><span class="token keyword">int</span> S<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  S <span class="token operator">+</span><span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 </li>
 </ul>
 <ol>
 <li>记录型信号量S<br>由于整数型信号量里的<code>while(S &lt;= 0) ;</code>不符合让权等待<br>现在推出了这个记录型的信号量</li>
 </ol>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></div><div class="line">    <span class="keyword">int</span> value;</div><div class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">process_contorl_block</span> *<span class="title">list</span>;</span></div><div class="line">&#125;semaphore;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">wait</span><span class="params">(semaphore * S)</span> </span>&#123;</div><div class="line">    S -&gt; value--;</div><div class="line">    <span class="keyword">if</span>(S -&gt; value &lt; <span class="number">0</span>)</div><div class="line">        block(S -&gt; <span class="built_in">list</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">signal</span><span class="params">(semaphore * S)</span> </span>&#123;</div><div class="line">    S -&gt; value++;</div><div class="line">    <span class="keyword">if</span>(S -&gt; value &lt;= <span class="number">0</span>)</div><div class="line">        wakeup(s -&gt; <span class="built_in">list</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span><span class="token punctuation">{</span>
+    <span class="token keyword">int</span> value<span class="token punctuation">;</span>
+    <span class="token keyword">struct</span> process_contorl_block <span class="token operator">*</span>list<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>semaphore<span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">wait</span><span class="token punctuation">(</span>semaphore <span class="token operator">*</span> S<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    S <span class="token operator">-></span> value<span class="token operator">--</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>S <span class="token operator">-></span> value <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token function">block</span><span class="token punctuation">(</span>S <span class="token operator">-></span> list<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">signal</span><span class="token punctuation">(</span>semaphore <span class="token operator">*</span> S<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    S <span class="token operator">-></span> value<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>S <span class="token operator">-></span> value <span class="token operator">&lt;=</span> <span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token function">wakeup</span><span class="token punctuation">(</span>s <span class="token operator">-></span> list<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>下面有等于0, 是因为</p>
 <p><code>S -&gt; value &gt;= 0</code>代表可用资源数量， <code>S -&gt; value &lt; 0</code>代表阻塞队列中进程的数量</p>
 <h4 id="信号量作用"><a href="#信号量作用" class="headerlink" title="信号量作用"></a>信号量作用</h4><p>主要两个作用吧, 就是互斥和同步, 就是这样子</p>
 <ol>
 <li>用于互斥, 即同一时刻只能同一个人使用资源</li>
 </ol>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> top = <span class="number">-1</span>;</div><div class="line"><span class="keyword">int</span> <span class="built_in">stack</span>[n];</div><div class="line">semaphore mutex; </div><div class="line">mutex.value = <span class="number">1</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">proc1</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</div><div class="line">    <span class="comment">// 进程1</span></div><div class="line">    wait(mutex);    <span class="comment">// 进入</span></div><div class="line"></div><div class="line">    top = (top + <span class="number">1</span>) % n;</div><div class="line">    <span class="built_in">stack</span>[top] = x;</div><div class="line"></div><div class="line">    signal(mutex);  <span class="comment">// 退出</span></div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">proc2</span><span class="params">(<span class="keyword">int</span> y)</span> </span>&#123;</div><div class="line">    <span class="comment">// 进程2</span></div><div class="line">    wait(S); <span class="comment">//进入</span></div><div class="line"></div><div class="line">    top = (top + <span class="number">1</span>) % n;</div><div class="line">    <span class="built_in">stack</span>[top] = y;</div><div class="line"></div><div class="line">    signal(mutex);  <span class="comment">//退出</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">int</span> top <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> stack<span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">;</span>
+semaphore mutex<span class="token punctuation">;</span> 
+mutex<span class="token punctuation">.</span>value <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">proc1</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 进程1</span>
+    <span class="token function">wait</span><span class="token punctuation">(</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">// 进入</span>
+
+    top <span class="token operator">=</span> <span class="token punctuation">(</span>top <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">%</span> n<span class="token punctuation">;</span>
+    stack<span class="token punctuation">[</span>top<span class="token punctuation">]</span> <span class="token operator">=</span> x<span class="token punctuation">;</span>
+
+    <span class="token function">signal</span><span class="token punctuation">(</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 退出</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">void</span> <span class="token function">proc2</span><span class="token punctuation">(</span><span class="token keyword">int</span> y<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 进程2</span>
+    <span class="token function">wait</span><span class="token punctuation">(</span>S<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//进入</span>
+
+    top <span class="token operator">=</span> <span class="token punctuation">(</span>top <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">%</span> n<span class="token punctuation">;</span>
+    stack<span class="token punctuation">[</span>top<span class="token punctuation">]</span> <span class="token operator">=</span> y<span class="token punctuation">;</span>
+
+    <span class="token function">signal</span><span class="token punctuation">(</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//退出</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ol>
 <li>用于同步<br>这个说的是那种合作的进程…<br>比如生产者消费者问题应该是就算这种的<br>生产者消费者共享缓冲池, 其实对于生产者消费者分别相当于是, 空位置和非空位置是资源<br>而且生产和消费不能同时进行<br>而且下面的例子是那个,,,单消费者单生产者多缓冲区</li>
 </ol>
-<p>这里就写伪代码了…<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Producer:</span></div><div class="line">nextp = produce();</div><div class="line"></div><div class="line">wait(empty);</div><div class="line">wait(mutex);</div><div class="line"></div><div class="line">Buffer[in_ptr] = nextp;</div><div class="line">in_ptr = (in_ptr + <span class="number">1</span>) % n;</div><div class="line"></div><div class="line">signal(mutex);</div><div class="line">signal(full);</div><div class="line"></div><div class="line"><span class="comment">// Customer:</span></div><div class="line">wait(full);</div><div class="line">wait(mutex);</div><div class="line"></div><div class="line">nextc = buffer(out_ptr);</div><div class="line">out_ptr = (out_ptr + <span class="number">1</span>) % n;</div><div class="line"></div><div class="line">signal(mutex);</div><div class="line">signal(empty);</div></pre></td></tr></table></figure></p>
+<p>这里就写伪代码了…</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token comment" spellcheck="true">// Producer:</span>
+nextp <span class="token operator">=</span> <span class="token function">produce</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token function">wait</span><span class="token punctuation">(</span>empty<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">wait</span><span class="token punctuation">(</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+Buffer<span class="token punctuation">[</span>in_ptr<span class="token punctuation">]</span> <span class="token operator">=</span> nextp<span class="token punctuation">;</span>
+in_ptr <span class="token operator">=</span> <span class="token punctuation">(</span>in_ptr <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">%</span> n<span class="token punctuation">;</span>
+
+<span class="token function">signal</span><span class="token punctuation">(</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">signal</span><span class="token punctuation">(</span>full<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// Customer:</span>
+<span class="token function">wait</span><span class="token punctuation">(</span>full<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">wait</span><span class="token punctuation">(</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+nextc <span class="token operator">=</span> <span class="token function">buffer</span><span class="token punctuation">(</span>out_ptr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+out_ptr <span class="token operator">=</span> <span class="token punctuation">(</span>out_ptr <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">%</span> n<span class="token punctuation">;</span>
+
+<span class="token function">signal</span><span class="token punctuation">(</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">signal</span><span class="token punctuation">(</span>empty<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>注意的点在于上面不光是有<code>full/signal</code>这个….还同时有<code>mutex</code>…为什么呢<br>这个<code>mutex</code>是设定了同时只有生产者或者消费者在运作,就是使得在生产的时候不能消费,在消费的时候不能生产,即一个互斥的关系<br>这个<code>full/signal</code>的话就是说对资源的同步….</p>
 <p>如果我们改变这个问题呢….<br>比如</p>
 <ol>
@@ -611,7 +700,20 @@
 <li><p>允许生产者写的时候消费者读<br>这个时候, 第一想到就是不需要mutex了,其实不然…只是可以Producer和Customer一起进行了, 但同类之间还是互斥的,这个时候, 解决方法是设置<code>mutex_Producer</code>和<code>mutex_Customer</code>…程序大概变成了这个样子</p>
 </li>
 </ol>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Producer:</span></div><div class="line">wait(empty)</div><div class="line">wait(mutex_Producer)</div><div class="line"><span class="comment">// 生产</span></div><div class="line">singal(mutex_Producer)</div><div class="line">singal(full)</div><div class="line"></div><div class="line"><span class="comment">// Customer:</span></div><div class="line">wait(full)</div><div class="line">wait(mutex_Customer)</div><div class="line"><span class="comment">// 生产</span></div><div class="line">singal(mutex_Customer)</div><div class="line">singal(empty)</div></pre></td></tr></table></figure>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token comment" spellcheck="true">// Producer:</span>
+<span class="token function">wait</span><span class="token punctuation">(</span>empty<span class="token punctuation">)</span>
+<span class="token function">wait</span><span class="token punctuation">(</span>mutex_Producer<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// 生产</span>
+<span class="token function">singal</span><span class="token punctuation">(</span>mutex_Producer<span class="token punctuation">)</span>
+<span class="token function">singal</span><span class="token punctuation">(</span>full<span class="token punctuation">)</span>
+
+<span class="token comment" spellcheck="true">// Customer:</span>
+<span class="token function">wait</span><span class="token punctuation">(</span>full<span class="token punctuation">)</span>
+<span class="token function">wait</span><span class="token punctuation">(</span>mutex_Customer<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// 生产</span>
+<span class="token function">singal</span><span class="token punctuation">(</span>mutex_Customer<span class="token punctuation">)</span>
+<span class="token function">singal</span><span class="token punctuation">(</span>empty<span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ol>
 <li>调整wait/signal顺序<br>生产者的wait调换的话, 缓冲区为满时候生产者继续运行时候会产生死锁<br>消费者的wait调换的话, 缓冲区为空时候消费者继续运行时候会产生死锁</li>
 </ol>
@@ -628,12 +730,55 @@
 <li>并没有产品产品/缓冲区的概念, 也就不需要说先写出东西来再去读取</li>
 </ol>
 <p>拿到问题后一种想法就是, 我们好像只要有一个互斥量wmutex就可以了,当第一个读者开始读取时候wait一个, 最后一个读者离开时候signal一下…每个写者都要独自的wait和signal<br>所以初步写出程序大概</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 读者</span></div><div class="line"><span class="keyword">if</span>(readcount == <span class="number">0</span>)</div><div class="line">    wait(wmutex);</div><div class="line"></div><div class="line">readcount += <span class="number">1</span>;</div><div class="line"><span class="comment">// 读操作</span></div><div class="line">readcount -= <span class="number">1</span>;</div><div class="line"></div><div class="line"><span class="keyword">if</span>(readcount == <span class="number">0</span>)</div><div class="line">    signal(wmutex);</div><div class="line"></div><div class="line"><span class="comment">// 写者</span></div><div class="line">wait(wmutex)</div><div class="line"><span class="comment">// 写操作</span></div><div class="line">signal(wmutex)</div></pre></td></tr></table></figure>
-<p>表面上看起来很和谐, 其实有个问题就是这里的<code>readcount</code>也是一个临界变量不能由多个read来访问…所以应该在readcount修改前后也变成临界区<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 读者</span></div><div class="line">wait(rmutex);</div><div class="line">    <span class="keyword">if</span>(readcount == <span class="number">0</span>)</div><div class="line">        wait(wmutex);</div><div class="line">    readcount += <span class="number">1</span>;</div><div class="line">signal(rmutex);</div><div class="line"></div><div class="line"><span class="comment">// 读操作</span></div><div class="line"></div><div class="line">wait(rmutex);</div><div class="line">    readcount -= <span class="number">1</span>;</div><div class="line">    <span class="keyword">if</span>(readcount == <span class="number">0</span>)</div><div class="line">        signal(wmutex);</div><div class="line">signal(rmutex);</div></pre></td></tr></table></figure></p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token comment" spellcheck="true">// 读者</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span>readcount <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token function">wait</span><span class="token punctuation">(</span>wmutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+readcount <span class="token operator">+</span><span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// 读操作</span>
+readcount <span class="token operator">-</span><span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+
+<span class="token keyword">if</span><span class="token punctuation">(</span>readcount <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token function">signal</span><span class="token punctuation">(</span>wmutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// 写者</span>
+<span class="token function">wait</span><span class="token punctuation">(</span>wmutex<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// 写操作</span>
+<span class="token function">signal</span><span class="token punctuation">(</span>wmutex<span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>表面上看起来很和谐, 其实有个问题就是这里的<code>readcount</code>也是一个临界变量不能由多个read来访问…所以应该在readcount修改前后也变成临界区</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token comment" spellcheck="true">// 读者</span>
+<span class="token function">wait</span><span class="token punctuation">(</span>rmutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>readcount <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token function">wait</span><span class="token punctuation">(</span>wmutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    readcount <span class="token operator">+</span><span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token function">signal</span><span class="token punctuation">(</span>rmutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// 读操作</span>
+
+<span class="token function">wait</span><span class="token punctuation">(</span>rmutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    readcount <span class="token operator">-</span><span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>readcount <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token function">signal</span><span class="token punctuation">(</span>wmutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">signal</span><span class="token punctuation">(</span>rmutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ol>
 <li>哲学家进餐问题<br>关键在于资源申请的时候如果每个人都先申请同一只手的筷子的话…就很容易死锁, 所以应该有个人反着拿</li>
 </ol>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// philosopher[0..3]</span></div><div class="line">wait(chopsticks[i]);</div><div class="line">wait(chopsticks[(i + <span class="number">1</span>) % <span class="number">5</span>]);</div><div class="line"><span class="comment">// eat</span></div><div class="line">signal(chopsticks[i]);</div><div class="line">signal(chopsticks[(i + <span class="number">1</span>) % <span class="number">5</span>]);</div><div class="line"></div><div class="line"><span class="comment">// philosopher[4]</span></div><div class="line">wait(chopsticks[(i + <span class="number">1</span>) % <span class="number">5</span>]);</div><div class="line">wait(chopsticks[i]);</div><div class="line"><span class="comment">// eat</span></div><div class="line">signal(chopsticks[i]);</div><div class="line">signal(chopsticks[(i + <span class="number">1</span>) % <span class="number">5</span>]);</div></pre></td></tr></table></figure>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token comment" spellcheck="true">// philosopher[0..3]</span>
+<span class="token function">wait</span><span class="token punctuation">(</span>chopsticks<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">wait</span><span class="token punctuation">(</span>chopsticks<span class="token punctuation">[</span><span class="token punctuation">(</span>i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// eat</span>
+<span class="token function">signal</span><span class="token punctuation">(</span>chopsticks<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">signal</span><span class="token punctuation">(</span>chopsticks<span class="token punctuation">[</span><span class="token punctuation">(</span>i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// philosopher[4]</span>
+<span class="token function">wait</span><span class="token punctuation">(</span>chopsticks<span class="token punctuation">[</span><span class="token punctuation">(</span>i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">wait</span><span class="token punctuation">(</span>chopsticks<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// eat</span>
+<span class="token function">signal</span><span class="token punctuation">(</span>chopsticks<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">signal</span><span class="token punctuation">(</span>chopsticks<span class="token punctuation">[</span><span class="token punctuation">(</span>i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="进程通信"><a href="#进程通信" class="headerlink" title="进程通信"></a>进程通信</h3><ol>
 <li>共享存储器系统</li>
 <li>消息方式</li>
@@ -677,8 +822,8 @@
 <li><p>平均周转时间<br> 各个进程周转时间的均值</p>
 </li>
 <li><p>平均带权周转时间<br> 每个进程时间带上权值</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">W = 1/n * (\sum_&#123;i=1&#125;^n T_i / T_&#123;si&#125;)   //我就这样子乱写了...</div></pre></td></tr></table></figure>
-<p> 这个<code>T_i</code>是第i个作业周转时间, 包括上面的四个过程<br> <code>T_{si}</code>是第i个作业的要求服务时间, 只包括周转时间的第三第四个过程</p>
+<pre><code> W = 1/n * (\sum_{i=1}^n T_i / T_{si})   //我就这样子乱写了...
+</code></pre><p> 这个<code>T_i</code>是第i个作业周转时间, 包括上面的四个过程<br> <code>T_{si}</code>是第i个作业的要求服务时间, 只包括周转时间的第三第四个过程</p>
 </li>
 </ul>
 <h3 id="调度算法"><a href="#调度算法" class="headerlink" title="调度算法"></a>调度算法</h3><p>调度实际上就是资源分配</p>

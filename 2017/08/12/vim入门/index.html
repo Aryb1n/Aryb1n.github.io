@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -498,11 +499,10 @@
 <p><code>w</code> 下一个单词开头<br><code>e</code> 下一个单词结尾</p>
 <p>下面俩是反向, 往前找<br><code>b</code> 下一个单词开头<br><code>ge</code> 下一个单词结尾…这个我好像用不了</p>
 <ol>
-<li>单词和字串<br>面向单词的操作是小写的 <code>w</code>, <code>b</code>, <code>e</code>, <code>ge</code><br>面向字串的操作是大写的 <code>W</code>, <code>B</code>, <code>E</code>, <code>GE</code><br>单词: 由字母, 数字, 下划线, 或者其他空白字符组成<br>这个定义怎么理解:<br> 这里的空白字符都是自成单词<br>字串: 由非空白字符序列组成, 以空白字符分割<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">e.g. it&apos;s going too slow</div></pre></td></tr></table></figure>
+<li><p>单词和字串<br>面向单词的操作是小写的 <code>w</code>, <code>b</code>, <code>e</code>, <code>ge</code><br>面向字串的操作是大写的 <code>W</code>, <code>B</code>, <code>E</code>, <code>GE</code><br>单词: 由字母, 数字, 下划线, 或者其他空白字符组成<br>这个定义怎么理解:<br> 这里的空白字符都是自成单词<br>字串: 由非空白字符序列组成, 以空白字符分割</p>
+<pre><code>e.g. it&#39;s going too slow
+</code></pre><p>这里的<code>e</code>,<code>.</code>,<code>g</code>,<code>.</code> 这是四个单词</p>
 </li>
-</ol>
-<p>这里的<code>e</code>,<code>.</code>,<code>g</code>,<code>.</code> 这是四个单词</p>
-<ol>
 <li><p>行内查找字符<br>f{char}<br>下一个  ;<br>上一个  ,</p>
 </li>
 <li><p>全文查找<br>用命令/<br>下一个 n<br>上一个 N<br>取消高亮 :nohl</p>
@@ -511,28 +511,34 @@
 <ol>
 <li>边界<br>iw 当前单词<br>aw 当前单词及一个空格<br>iW 当前字串<br>aW 当前字串及一个空格<br>is 当前句子<br>as 当前句子及一个空格<br>ip 当前段落<br>ap 当前段落及一个空行</li>
 </ol>
-<h2 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">body</span> &#123; <span class="attribute">color</span>: <span class="number">#3c3c3c</span>; &#125;</div><div class="line"><span class="selector-tag">a</span> &#123; <span class="attribute">color</span>: <span class="number">#0000EE</span>; &#125;</div><div class="line"><span class="selector-tag">strong</span> &#123; <span class="attribute">color</span>: <span class="number">#000</span>; &#125;</div></pre></td></tr></table></figure>
-<p>要匹配颜色值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/#\([0-9a-fA-F]\&#123;6&#125;\|[0-9a-fA-F]\&#123;3&#125;\)</div></pre></td></tr></table></figure></p>
-<p>天…真的好复杂…</p>
+<h2 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h2><pre class="line-numbers language-css"><code class="language-css"><span class="token selector">body </span><span class="token punctuation">{</span> <span class="token property">color</span><span class="token punctuation">:</span> <span class="token hexcode">#3c3c3c</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token selector">a </span><span class="token punctuation">{</span> <span class="token property">color</span><span class="token punctuation">:</span> <span class="token hexcode">#0000EE</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token selector">strong </span><span class="token punctuation">{</span> <span class="token property">color</span><span class="token punctuation">:</span> <span class="token hexcode">#000</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>要匹配颜色值</p>
+<pre><code>/#\([0-9a-fA-F]\{6}\|[0-9a-fA-F]\{3}\)
+</code></pre><p>天…真的好复杂…</p>
 <p>在此例中，我们用到了 3 类括号。方括号缺省具有特殊含义，因此不用转义。圆括号会按原义匹配字符(及)，因此需要转义，使其具有特殊含义。花括号也一样需要转义，不过，我们只需为开括号转义，而与之对应的闭括号则不用，因为 Vim 会推测我们的意图。圆括号的情况有所不同，无论开闭括号都必须转义</p>
 <p>这里的或者<code>|</code>也转义了</p>
 <p>还是不太懂为什么这里方括号不转义</p>
 <p>例子摘自书… 记下记下记下</p>
-<p>书里说道<code>\v</code>开启新世界大门!<br>使用了<code>\v</code> 假定除_、大小写字母以及数字 0 到 9 之外的所有字符都具有特殊含义, 所以!<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/\v#([0-9a-fA-F]&#123;6&#125;|[0-9a-fA-F]&#123;3&#125;)</div></pre></td></tr></table></figure></p>
-<p>开心. 如果, 用<code>\x</code>的话就可以变成<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/\v#(\x&#123;6&#125;|\x&#123;3&#125;)</div></pre></td></tr></table></figure></p>
-<p>这里的<code>#</code>没有特殊含义, 所以也可以直接用</p>
+<p>书里说道<code>\v</code>开启新世界大门!<br>使用了<code>\v</code> 假定除_、大小写字母以及数字 0 到 9 之外的所有字符都具有特殊含义, 所以!</p>
+<pre><code>/\v#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})
+</code></pre><p>开心. 如果, 用<code>\x</code>的话就可以变成</p>
+<pre><code>/\v#(\x{6}|\x{3})
+</code></pre><p>这里的<code>#</code>没有特殊含义, 所以也可以直接用</p>
 <ol>
-<li>圆括号捕获子匹配<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">I love Paris in the</div><div class="line">the springtime.</div></pre></td></tr></table></figure>
-</li>
+<li>圆括号捕获子匹配<pre><code>I love Paris in the
+the springtime.
+</code></pre>匹配连续出现两次的相同单词<pre><code>/\v&lt;(\w+)\_s+\1&gt;
+</code></pre></li>
 </ol>
-<p>匹配连续出现两次的相同单词<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/\v&lt;(\w+)\_s+\1&gt;</div></pre></td></tr></table></figure></p>
 <p><code>\1</code>~<code>\9</code>代表第n个子匹配, <code>\0</code>代表整个匹配<br><code>&lt;&gt;</code>匹配单词边界<br><code>\_s</code>匹配空白字符或者换行</p>
 <p>另外在圆括号前加上<code>%</code>表示不捕获</p>
 <ol>
-<li>单词边界<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">the there three</div></pre></td></tr></table></figure>
-</li>
+<li>单词边界<pre><code>the there three
+</code></pre>用<code>/\vthe</code>的话…会匹配三个单词<br>如果<code>/\v&lt;the&gt;</code>就匹配<code>the</code>一个单词</li>
 </ol>
-<p>用<code>/\vthe</code>的话…会匹配三个单词<br>如果<code>/\v&lt;the&gt;</code>就匹配<code>the</code>一个单词</p>
 
         
     

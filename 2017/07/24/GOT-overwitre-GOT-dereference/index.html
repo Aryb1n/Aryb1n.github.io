@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -487,13 +488,32 @@
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
         <p>还是来自<code>sploitfun</code>的blog,绕过地址随机化之三</p>
-<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><h3 id="GOT-overwitre"><a href="#GOT-overwitre" class="headerlink" title="GOT overwitre"></a>GOT overwitre</h3><p>其实就是我们常说的GOT表覆写,这个got表的地址是早已经确定的,但got表的内容<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">offset_diff = execve_addr - getuid_addr</div><div class="line">GOT[getuid] = GOT[getuid] + offset_diff</div></pre></td></tr></table></figure></p>
+<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><h3 id="GOT-overwitre"><a href="#GOT-overwitre" class="headerlink" title="GOT overwitre"></a>GOT overwitre</h3><p>其实就是我们常说的GOT表覆写,这个got表的地址是早已经确定的,但got表的内容</p>
+<pre class="line-numbers language-python"><code class="language-python">offset_diff <span class="token operator">=</span> execve_addr <span class="token operator">-</span> getuid_addr
+GOT<span class="token punctuation">[</span>getuid<span class="token punctuation">]</span> <span class="token operator">=</span> GOT<span class="token punctuation">[</span>getuid<span class="token punctuation">]</span> <span class="token operator">+</span> offset_diff
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>其实<code>ret2dl-resolve</code>是不是有类似的地方</p>
-<h3 id="GOT-dereference"><a href="#GOT-dereference" class="headerlink" title="GOT dereference"></a>GOT dereference</h3><p>这个没有使用过<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">offset_diff = execve_addr - getuid_addr</div><div class="line">eax = GOT[getuid]</div><div class="line">eax = eax + offset_diff</div></pre></td></tr></table></figure></p>
+<h3 id="GOT-dereference"><a href="#GOT-dereference" class="headerlink" title="GOT dereference"></a>GOT dereference</h3><p>这个没有使用过</p>
+<pre class="line-numbers language-python"><code class="language-python">offset_diff <span class="token operator">=</span> execve_addr <span class="token operator">-</span> getuid_addr
+eax <span class="token operator">=</span> GOT<span class="token punctuation">[</span>getuid<span class="token punctuation">]</span>
+eax <span class="token operator">=</span> eax <span class="token operator">+</span> offset_diff
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>是用ROP咯</p>
-<h3 id="GOT-overwitre-1"><a href="#GOT-overwitre-1" class="headerlink" title="GOT overwitre"></a>GOT overwitre</h3><p>作者找到了几个gadget<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># gadget1</div><div class="line">add eax, [ebx + 0x5d5b04c4]</div><div class="line">ret</div></pre></td></tr></table></figure></p>
-<p>这样子让<code>$eax = offset</code>并且<code>$ebx = got[uid] -0x5d5b04c4</code>就阔以啦<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># gadget2</div><div class="line">pop ebx</div><div class="line">ret</div></pre></td></tr></table></figure></p>
-<p>我们先把所要的值搞到栈里,然后调到这里来完成给ebx的赋值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># gadget3</div><div class="line">pop eax</div><div class="line">ret</div></pre></td></tr></table></figure></p>
+<h3 id="GOT-overwitre-1"><a href="#GOT-overwitre-1" class="headerlink" title="GOT overwitre"></a>GOT overwitre</h3><p>作者找到了几个gadget</p>
+<pre class="line-numbers language-asm"><code class="language-asm"># gadget1
+add eax, [ebx + 0x5d5b04c4]
+ret
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>这样子让<code>$eax = offset</code>并且<code>$ebx = got[uid] -0x5d5b04c4</code>就阔以啦</p>
+<pre class="line-numbers language-asm"><code class="language-asm"># gadget2
+pop ebx
+ret
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>我们先把所要的值搞到栈里,然后调到这里来完成给ebx的赋值</p>
+<pre class="line-numbers language-asm"><code class="language-asm"># gadget3
+pop eax
+ret
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p>emmmmm~,这样子就阔以了,然后作者说找不到这个gadget3</p>
 <h3 id="GOT-dereference-1"><a href="#GOT-dereference-1" class="headerlink" title="GOT dereference"></a>GOT dereference</h3><h2 id="技巧"><a href="#技巧" class="headerlink" title="技巧"></a>技巧</h2><p>原文中提到了<code>stack pivot</code>,利用<code>leave</code>来实现,因为<code>leave</code>其实相当于可以控制<code>esp</code>,所以相当于可以自定义栈地址<br>所以只需要改掉<code>ebp</code>,然后跳到<code>leave; ret</code></p>
 

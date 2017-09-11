@@ -294,7 +294,8 @@
     <!-- Custom Head -->
     
 
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -496,7 +497,11 @@
 <li>LOCAL_OUT</li>
 <li>POST_ROUTING</li>
 </ul>
-<h3 id="各个hook点的位置"><a href="#各个hook点的位置" class="headerlink" title="各个hook点的位置"></a>各个hook点的位置</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">                          ---------</div><div class="line">Data =&gt; [*]PRE_ROUTING =&gt; |ROUTING| =&gt; [*]LOCAL_IN =&gt; [*]LOCAL_OUT =&gt; [*]POST_ROUTING</div><div class="line">                          |ROUTING| =&gt; [*]FORWARD  =&gt; [*]POST_ROUTING</div><div class="line">                          ---------</div></pre></td></tr></table></figure>
+<h3 id="各个hook点的位置"><a href="#各个hook点的位置" class="headerlink" title="各个hook点的位置"></a>各个hook点的位置</h3><pre class="line-numbers language-javascript"><code class="language-javascript">                          <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+Data <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span>PRE_ROUTING <span class="token operator">=</span><span class="token operator">></span> <span class="token operator">|</span>ROUTING<span class="token operator">|</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span>LOCAL_IN <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span>LOCAL_OUT <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span>POST_ROUTING
+                          <span class="token operator">|</span>ROUTING<span class="token operator">|</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span>FORWARD  <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span>POST_ROUTING
+                          <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p>数据包过来，先过<code>PRE_ROUTING</code>,然后过一个路由,决定数据包是本机的,还是要转发<br>如果是本机的就回过<code>LOCAL_IN</code>,<code>LOCAL_OUT</code>,再<code>POST_ROUTING</code><br>如果是要直接转发的则要过<code>FORWARD</code>后,然后再<code>POST_ROUTING</code></p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="http://blog.chinaunix.net/uid-23069658-id-3160506.html" target="_blank" rel="external">http://blog.chinaunix.net/uid-23069658-id-3160506.html</a><br><a href="http://blog.csdn.net/suiyuan19840208/article/details/19684883" target="_blank" rel="external">http://blog.csdn.net/suiyuan19840208/article/details/19684883</a><br><a href="https://zhuanlan.zhihu.com/p/21534942" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/21534942</a></p>
 
