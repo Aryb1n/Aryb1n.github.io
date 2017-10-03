@@ -3,6 +3,27 @@
   
     
     <entry>
+      <title><![CDATA[2017国庆记]]></title>
+      <url>/2017/10/03/2017%E5%9B%BD%E5%BA%86%E8%AE%B0/</url>
+      <content type="html"><![CDATA[<p>emmmm</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 日记 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 回忆 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[离散数学复习]]></title>
       <url>/2017/09/06/%E7%A6%BB%E6%95%A3%E6%95%B0%E5%AD%A6%E5%A4%8D%E4%B9%A0/</url>
       <content type="html"><![CDATA[<p>$$<br>\sum{2 + 3}<br>$$</p>
@@ -10696,14 +10717,14 @@ creature<span class="token punctuation">.</span><span class="token function">sle
   
     
     <entry>
-      <title><![CDATA[友链]]></title>
-      <url>/links/index.html</url>
+      <title><![CDATA[tags]]></title>
+      <url>/tags/index.html</url>
       <content type="html"></content>
     </entry>
     
     <entry>
-      <title><![CDATA[tags]]></title>
-      <url>/tags/index.html</url>
+      <title><![CDATA[友链]]></title>
+      <url>/links/index.html</url>
       <content type="html"></content>
     </entry>
     
