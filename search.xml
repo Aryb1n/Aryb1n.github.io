@@ -54,9 +54,7 @@
     <entry>
       <title><![CDATA[离散数学复习]]></title>
       <url>/2017/09/06/%E7%A6%BB%E6%95%A3%E6%95%B0%E5%AD%A6%E5%A4%8D%E4%B9%A0/</url>
-      <content type="html"><![CDATA[<p>$$<br>\sum{2 + 3}<br>$$</p>
-<p>$ \sum $</p>
-<p>内容大概有, 集合论, 关系理论, 图论, 排列组合, 近世代数</p>
+      <content type="html"><![CDATA[<p>内容大概有, 集合论, 关系理论, 图论, 排列组合, 近世代数</p>
 <h2 id="集合论"><a href="#集合论" class="headerlink" title="集合论"></a>集合论</h2><p>集合: 无序, 互异, 确定</p>
 <h3 id="集合间的关系"><a href="#集合间的关系" class="headerlink" title="集合间的关系"></a>集合间的关系</h3><ol>
 <li>被包含关系(子集)<br>性质:</li>
@@ -143,6 +141,12 @@
 <h3 id="函数运算"><a href="#函数运算" class="headerlink" title="函数运算"></a>函数运算</h3><h2 id="代数系统"><a href="#代数系统" class="headerlink" title="代数系统"></a>代数系统</h2><p>这个比较复杂, 计划一下是否继续复习</p>
 ]]></content>
       
+        <categories>
+            
+            <category> 备忘 </category>
+            
+        </categories>
+        
         
     </entry>
     
@@ -194,9 +198,14 @@
 <li><p>对网络攻防的看法</p>
 </li>
 </ol>
-<p>$F_a = F_b + F_c + F_{\mu}$</p>
 ]]></content>
       
+        
+        <tags>
+            
+            <tag> 学习 </tag>
+            
+        </tags>
         
     </entry>
     
@@ -1352,6 +1361,12 @@ data<span class="token punctuation">[</span>rear<span class="token punctuation">
 <h3 id="基数排序"><a href="#基数排序" class="headerlink" title="基数排序"></a>基数排序</h3><p>其实还感觉…这一块比较乱…我学这么多排序干啥呢</p>
 ]]></content>
       
+        <categories>
+            
+            <category> 备忘 </category>
+            
+        </categories>
+        
         
         <tags>
             
@@ -2206,6 +2221,18 @@ codecs<span class="token punctuation">.</span>register_error that <span class="t
       <url>/2017/08/09/%E6%B5%81%E7%95%85%E7%9A%84python-%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</url>
       <content type="html"></content>
       
+        <categories>
+            
+            <category> 学习 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 半途而费 </tag>
+            
+        </tags>
         
     </entry>
     
@@ -2225,6 +2252,12 @@ codecs<span class="token punctuation">.</span>register_error that <span class="t
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="http://blog.csdn.net/yyttiao/article/details/7391831" target="_blank" rel="external">http://blog.csdn.net/yyttiao/article/details/7391831</a> (一个系列的文章)<br><a href="http://www.cnblogs.com/LittleHann/p/3854977.html" target="_blank" rel="external">http://www.cnblogs.com/LittleHann/p/3854977.html</a> (一个总结)<br><a href="http://blog.csdn.net/u012301943/article/details/25830229" target="_blank" rel="external">http://blog.csdn.net/u012301943/article/details/25830229</a><br><a href="http://manoharvanga.com/hackme/" target="_blank" rel="external">http://manoharvanga.com/hackme/</a></p>
 ]]></content>
       
+        <categories>
+            
+            <category> 学习 </category>
+            
+        </categories>
+        
         
     </entry>
     
@@ -3644,6 +3677,12 @@ pacman -S socat
 <p>还有HCTF 2016 <a href="https://github.com/vidar-team/HCTF2016" target="_blank" rel="external">https://github.com/vidar-team/HCTF2016</a></p>
 ]]></content>
       
+        <categories>
+            
+            <category> 备忘 </category>
+            
+        </categories>
+        
         
     </entry>
     
@@ -4254,6 +4293,12 @@ window.onload = csrf_attack;
 <p>然后突然发现在同一个ip还有一道题目 <a href="https://moe.sh/article/19" target="_blank" rel="external">https://moe.sh/article/19</a></p>
 ]]></content>
       
+        
+        <tags>
+            
+            <tag> writeup </tag>
+            
+        </tags>
         
     </entry>
     
@@ -5139,10 +5184,16 @@ exports<span class="token punctuation">.</span>BrowerWindow <span class="token o
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="http://exploringjs.com/es6/ch_modules.html#_imports-are-hoisted" target="_blank" rel="external">http://exploringjs.com/es6/ch_modules.html#_imports-are-hoisted</a> (炒鸡炒鸡不错)<br><a href="https://stackoverflow.com/questions/31354559/using-node-js-require-vs-es6-import-export" target="_blank" rel="external">https://stackoverflow.com/questions/31354559/using-node-js-require-vs-es6-import-export</a><br><a href="http://es6.ruanyifeng.com/#docs/module-loader#ES6-%E6%A8%A1%E5%9D%97%E4%B8%8E-CommonJS-%E6%A8%A1%E5%9D%97%E7%9A%84%E5%B7%AE%E5%BC%82" target="_blank" rel="external">http://es6.ruanyifeng.com/#docs/module-loader#ES6-%E6%A8%A1%E5%9D%97%E4%B8%8E-CommonJS-%E6%A8%A1%E5%9D%97%E7%9A%84%E5%B7%AE%E5%BC%82</a></p>
 ]]></content>
       
+        <categories>
+            
+            <category> 学习 </category>
+            
+        </categories>
+        
         
         <tags>
             
-            <tag> es6 </tag>
+            <tag> javascript </tag>
             
         </tags>
         
@@ -5158,6 +5209,12 @@ exports<span class="token punctuation">.</span>BrowerWindow <span class="token o
 </code></pre><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="http://www.w3cplus.com/css/inline-blocks.html" target="_blank" rel="external">http://www.w3cplus.com/css/inline-blocks.html</a> (inline-block)<br><a href="http://vanseodesign.com/css/understanding-css-floats/" target="_blank" rel="external">http://vanseodesign.com/css/understanding-css-floats/</a> (介绍float)</p>
 ]]></content>
       
+        <categories>
+            
+            <category> 学习 </category>
+            
+        </categories>
+        
         
         <tags>
             
@@ -5340,6 +5397,18 @@ ReactDOM<span class="token punctuation">.</span><span class="token function">ren
 <p>这些都配好以后只要 <code>webpack</code>一下就可以得到我们的<code>bundle</code>,在这里我跑了一下不知道为什么FF不可以,chrome是可以的</p>
 ]]></content>
       
+        <categories>
+            
+            <category> 学习 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> web </tag>
+            
+        </tags>
         
     </entry>
     
@@ -5445,6 +5514,12 @@ ReactDOM<span class="token punctuation">.</span><span class="token function">ren
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://wenku.baidu.com/view/438f85a2aa00b52acfc7caa0.html" target="_blank" rel="external">https://wenku.baidu.com/view/438f85a2aa00b52acfc7caa0.html</a></p>
 ]]></content>
       
+        <categories>
+            
+            <category> 学习 </category>
+            
+        </categories>
+        
         
         <tags>
             
@@ -5613,20 +5688,18 @@ shellcode <span class="token operator">+=</span> <span class="token string">"som
 <p>只是泛读了一下,和我想的不一样….</p>
 <h2 id="第五章-攻击用户"><a href="#第五章-攻击用户" class="headerlink" title="第五章 攻击用户"></a>第五章 攻击用户</h2>]]></content>
       
+        <categories>
+            
+            <category> 学习 </category>
+            
+        </categories>
+        
         
         <tags>
             
             <tag> web </tag>
             
         </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[数据结构从入门到无法入门]]></title>
-      <url>/2017/06/04/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%97%A0%E6%B3%95%E5%85%A5%E9%97%A8/</url>
-      <content type="html"></content>
-      
         
     </entry>
     
@@ -5905,6 +5978,12 @@ shellcode <span class="token operator">+=</span> <span class="token string">"som
 ]]></content>
       
         
+        <tags>
+            
+            <tag> 学习 </tag>
+            
+        </tags>
+        
     </entry>
     
     <entry>
@@ -6000,6 +6079,12 @@ no ip route
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>netstat命令 <a href="https://linux.cn/article-2434-1.html" target="_blank" rel="external">https://linux.cn/article-2434-1.html</a><br>多层交换概述 <a href="https://wenku.baidu.com/view/5e4111976bec0975f465e203.html" target="_blank" rel="external">https://wenku.baidu.com/view/5e4111976bec0975f465e203.html</a><br>多层交换机与路由器 <a href="http://network.pconline.com.cn/474/4741916.html" target="_blank" rel="external">http://network.pconline.com.cn/474/4741916.html</a><br>MAC表含义 <a href="http://skyeagle.blog.51cto.com/417071/93338" target="_blank" rel="external">http://skyeagle.blog.51cto.com/417071/93338</a></p>
 ]]></content>
       
+        <categories>
+            
+            <category> 学习 </category>
+            
+        </categories>
+        
         
         <tags>
             
@@ -7063,12 +7148,33 @@ function doSomething2(){
 <h2 id="后来"><a href="#后来" class="headerlink" title="后来"></a>后来</h2><p>在找资料的过程中get到这样子一个tool<br><a href="http://www.fefork.com/fetool/" target="_blank" rel="external">http://www.fefork.com/fetool/</a><br>和这样子一个ppt项目介绍<br><a href="http://www.cnblogs.com/xiaoheimiaoer/p/3930220.html#3545040" target="_blank" rel="external">http://www.cnblogs.com/xiaoheimiaoer/p/3930220.html#3545040</a></p>
 ]]></content>
       
+        <categories>
+            
+            <category> 学习 </category>
+            
+        </categories>
+        
         
         <tags>
             
             <tag> web </tag>
             
         </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[ramda]]></title>
+      <url>/2017/05/23/ramda/</url>
+      <content type="html"><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>今天在知乎上看到了这个<code>Ramda</code><br>是一个函数式的.额,然后就想到了underscore</p>
+<p>搜了一下看到了<br>官网<code>http://ramdajs.com/</code>, github 8k star<br>所有的方法都支持Curry</p>
+<p>哦还搜到了一篇文章<br><a href="http://www.ruanyifeng.com/blog/2017/03/ramda.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2017/03/ramda.html</a></p>
+<p>还有一本gitbook是js函数式<br><a href="https://www.gitbook.com/book/llh911001/mostly-adequate-guide-chinese/details" target="_blank" rel="external">https://www.gitbook.com/book/llh911001/mostly-adequate-guide-chinese/details</a></p>
+<p>想有时间学一下,先mark一下</p>
+<p>算了不过了,mark啥,现在就学学呗</p>
+<p>等我先写完,,,那个a的href和onclick就学这个</p>
+]]></content>
+      
         
     </entry>
     
@@ -7132,21 +7238,6 @@ R<span class="token punctuation">.</span><span class="token function">test</span
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>确实很语义化,很酷炫,,,</p>
 <p>后面还有个很长的例子,,,很酷炫</p>
-]]></content>
-      
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[ramda]]></title>
-      <url>/2017/05/23/ramda/</url>
-      <content type="html"><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>今天在知乎上看到了这个<code>Ramda</code><br>是一个函数式的.额,然后就想到了underscore</p>
-<p>搜了一下看到了<br>官网<code>http://ramdajs.com/</code>, github 8k star<br>所有的方法都支持Curry</p>
-<p>哦还搜到了一篇文章<br><a href="http://www.ruanyifeng.com/blog/2017/03/ramda.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2017/03/ramda.html</a></p>
-<p>还有一本gitbook是js函数式<br><a href="https://www.gitbook.com/book/llh911001/mostly-adequate-guide-chinese/details" target="_blank" rel="external">https://www.gitbook.com/book/llh911001/mostly-adequate-guide-chinese/details</a></p>
-<p>想有时间学一下,先mark一下</p>
-<p>算了不过了,mark啥,现在就学学呗</p>
-<p>等我先写完,,,那个a的href和onclick就学这个</p>
 ]]></content>
       
         
@@ -7348,6 +7439,12 @@ Render Tree：DOM 和 CSSOM 合并后生成 Render Tree(Render Tree 和DOM一样
 <h2 id="文章写得超赞…"><a href="#文章写得超赞…" class="headerlink" title="文章写得超赞…"></a>文章写得超赞…</h2><p>尤其是利用Windows下两个特殊的通配符：&lt;、&gt; + realpath 来暴力枚举的</p>
 ]]></content>
       
+        <categories>
+            
+            <category> 学习 </category>
+            
+        </categories>
+        
         
         <tags>
             
@@ -7872,6 +7969,12 @@ Free|127] &lt;- [bytes] &lt;- [bytes] &lt;- [bytes] &lt;- [bytes] &lt;- 来自Fr
 <p>什么时候能像他那样子</p>
 ]]></content>
       
+        <categories>
+            
+            <category> 日记 </category>
+            
+        </categories>
+        
         
     </entry>
     
@@ -7990,6 +8093,12 @@ payload <span class="token operator">=</span> fmtstr_payload<span class="token p
 <p>off by one<br>use after free</p>
 ]]></content>
       
+        <categories>
+            
+            <category> 日记 </category>
+            
+        </categories>
+        
         
         <tags>
             
@@ -8019,6 +8128,12 @@ popl %ebp
 <h2 id="x86-和x64-区别"><a href="#x86-和x64-区别" class="headerlink" title="x86 和x64 区别"></a>x86 和x64 区别</h2><p><em>首先是内存地址的范围由32位变成了64位</em>。但是可以使用的内存地址不能大于0x00007fffffffffff，否则会抛出异常。<br><em>其次是函数参数的传递方式发生了改变</em>，x86中参数都是保存在栈上，但在x64中的前六个参数依次保存在RDI，RSI，RDX，RCX，R8和 R9中，如果还有更多的参数的话才会保存在栈上</p>
 ]]></content>
       
+        <categories>
+            
+            <category> 学习 </category>
+            
+        </categories>
+        
         
     </entry>
     
@@ -8199,6 +8314,12 @@ quit    =&gt; 杀死
 <p>在做ssctf web的时候突然发现</p>
 ]]></content>
       
+        <categories>
+            
+            <category> 备忘 </category>
+            
+        </categories>
+        
         
         <tags>
             
@@ -8658,6 +8779,12 @@ root\#: <span class="token keyword">exit</span>
       <content type="html"><![CDATA[<p><a href="http://k1n9.me/2017/03/16/attack-in-cbc/" target="_blank" rel="external">http://k1n9.me/2017/03/16/attack-in-cbc/</a></p>
 ]]></content>
       
+        <categories>
+            
+            <category> 学习 </category>
+            
+        </categories>
+        
         
         <tags>
             
@@ -8812,8 +8939,15 @@ Omi<span class="token punctuation">.</span><span class="token function">render</
     <entry>
       <title><![CDATA[前端框架安全问题]]></title>
       <url>/2017/04/13/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/</url>
-      <content type="html"></content>
+      <content type="html"><![CDATA[<p>待记录</p>
+]]></content>
       
+        <categories>
+            
+            <category> 学习 </category>
+            
+        </categories>
+        
         
     </entry>
     
@@ -8853,6 +8987,12 @@ Omi<span class="token punctuation">.</span><span class="token function">render</
 <p><a href="http://www.freebuf.com/articles/network/107077.html" target="_blank" rel="external">http://www.freebuf.com/articles/network/107077.html</a></p>
 ]]></content>
       
+        <categories>
+            
+            <category> 学习 </category>
+            
+        </categories>
+        
         
         <tags>
             
@@ -9027,6 +9167,12 @@ r
 </ul>
 ]]></content>
       
+        <categories>
+            
+            <category> 日记 </category>
+            
+        </categories>
+        
         
         <tags>
             
@@ -9615,6 +9761,12 @@ s <span class="token operator">=</span> <span class="token string">'0123456789ab
       <content type="html"><![CDATA[<p>访问控制: What can I do? =&gt; 可能越权<br>认证: Who ma I? =&gt; 可能冒名</p>
 ]]></content>
       
+        <categories>
+            
+            <category> 学习 </category>
+            
+        </categories>
+        
         
     </entry>
     
@@ -9681,6 +9833,12 @@ s <span class="token operator">=</span> <span class="token string">'0123456789ab
 </ol>
 ]]></content>
       
+        <categories>
+            
+            <category> 学习 </category>
+            
+        </categories>
+        
         
         <tags>
             
@@ -9853,6 +10011,12 @@ s <span class="token operator">=</span> <span class="token string">'0123456789ab
 <p>1、从Ultra－edit-32中提取出来的<br>JPEG (jpg)，文件头：FFD8FF<br>PNG (png)，文件头：89504E47<br>GIF (gif)，文件头：47494638<br>TIFF (tif)，文件头：49492A00<br>Windows Bitmap (bmp)，文件头：424D<br>CAD (dwg)，文件头：41433130<br>Adobe Photoshop (psd)，文件头：38425053<br>Rich Text Format (rtf)，文件头：7B5C727466<br>XML (xml)，文件头：3C3F786D6C<br>HTML (html)，文件头：68746D6C3E<br>Email [thorough only] (eml)，文件头：44656C69766572792D646174653A<br>Outlook Express (dbx)，文件头：CFAD12FEC5FD746F<br>Outlook (pst)，文件头：2142444E<br>MS Word/Excel (xls.or.doc)，文件头：D0CF11E0<br>MS Access (mdb)，文件头：5374616E64617264204A<br>WordPerfect (wpd)，文件头：FF575043<br>Postscript (eps.or.ps)，文件头：252150532D41646F6265<br>Adobe Acrobat (pdf)，文件头：255044462D312E<br>Quicken (qdf)，文件头：AC9EBD8F<br>Windows Password (pwl)，文件头：E3828596<br>ZIP Archive (zip)，文件头：504B0304<br>RAR Archive (rar)，文件头：52617221<br>Wave (wav)，文件头：57415645<br>AVI (avi)，文件头：41564920<br>Real Audio (ram)，文件头：2E7261FD<br>Real Media (rm)，文件头：2E524D46<br>MPEG (mpg)，文件头：000001BA<br>MPEG (mpg)，文件头：000001B3<br>Quicktime (mov)，文件头：6D6F6F76<br>Windows Media (asf)，文件头：3026B2758E66CF11<br>MIDI (mid)，文件头：4D546864<br>2、从winhex中取出的文件头列表<br>File Type ExtensionsHeader<br>JPEG jpg;jpeg 0xFFD8FF<br>PNG png 0x89504E470D0A1A0A<br>GIF gif GIF8<br>TIFF tif;tiff 0x49492A00<br>TIFF tif;tiff 0x4D4D002A<br>Bit map bmp BM<br>AOL ART art 0x4A47040E000000<br>AOL ART art 0x4A47030E000000<br>PC Paintbrush pcx 0x0A050108<br>Graphics Metafile wmf 0xD7CDC69A<br>Graphics Metafile wmf 0x01000900<br>Graphics Metafile wmf 0x02000900<br>Enhanced Metafile emf 0x0100000058000000<br>Corel Draw cdr CDR<br>CAD dwg 0x41433130<br>Adobe Photoshop psd 8BPS<br>Rich Text Format rtf rtf<br>XML xml<br>HTML html;htm;PHP;php3;php4;phtml;shtml type<br>Email eml Delivery-date:<br>Outlook Express dbx 0xCFAD12FE<br>Outlookpst!BDN<br>MS Office/OLE2doc;xls;dot;ppt;xla;ppa;pps;pot;msi;sdw;db 0xD0CF11E0A1B11AE1<br>MS Access mdb;mda;mde;mdt Standard J<br>WordPerfect wpd 0xFF575043<br>OpenOffice Writer sxw writer<br>OpenOffice Calc sxc calc<br>OpenOffice Math sxm math<br>OpenOffice Impress sxi impress<br>OpenOffice Draw sxd draw<br>Adobe FrameMaker fm &lt;MAKERFILE<br>PostScript eps.or.ps;ps;eps %!PS-Adobe<br>Adobe Acrobat pdf %PDF-1.<br>Quicken qdf 0xAC9EBD8F<br>QuickBooks Backup qbb 0x458600000600<br>Sage sly.or.srt.or.slt;sly;srt;slt0x53520100<br>Sage Backup 1 SAGEBACKUP<br>Lotus WordPro v9 lwp 0x576F726450726F<br>Lotus 123 v9 123 0x00001A00051004<br>Lotus 123 v5 wk4 0x00001A0002100400<br>Lotus 123 v3 wk3 0x00001A0000100400<br>Lotus 123 v1 wk1 0x2000604060<br>Windows Password pwl 0xE3828596<br>ZIP Archive zip;jar 0x504B0304<br>ZIP Archive (outdated) zip 0x504B3030<br>RAR Archive rar Rar!<br>GZ Archive gz;tgz 0x1F8B08<br>BZIP Archive bz2 BZh<br>ARJ Archive arj 0x60EA<br>7-ZIP Archive 7z 7z集’<br>Wave wav WAVE<br>AVI avi AVI<br>Real Audio ram;ra .ra?0<br>Real Media rm .RMF<br>MPEG mpg;mpeg 0x000001BA<br>MPEG mpg;mpeg 0x000001B3<br>Quicktime mov moov<br>Windows Media asf 0x3026B2758E66CF11<br>MIDI mid MThd<br>Win32 Executable exe;dll;drv;vxd;sys;ocx;vbxMZ<br>Win16 Executable exe;dll;drv;vxd;sys;ocx;vbxMZ<br>ELF Executable elf;; 0x7F454C4601010100<br>各种文件类型文件头标志位详细列表<br>FFD8FFFE00, .JPEG;.JPE;.JPG, “JPGGraphic File”<br>FFD8FFE000, .JPEG;.JPE;.JPG, “JPGGraphic File”<br>474946383961, .gif, “GIF 89A”<br>474946383761, .gif, “GIF 87A”<br>424D, .bmp, “Windows Bitmap”<br>4D5A,.exe;.com;.386;.ax;.acm;.sys;.dll;.drv;.flt;.fon;.ocx;.scr;.lrc;.vxd;<br>.cpl;.x32, “Executable File”<br>504B0304, .zip, “Zip Compressed”<br>3A42617365, .cnt, “”<br>D0CF11E0A1B11AE1,.doc;.xls;.xlt;.ppt;.apr, “MS Compound Document v1 or Lotus Approach APRfile”<br>0100000058000000, .emf, “”<br>03000000C466C456, .evt, “”<br>3F5F0300, .gid;.hlp;.lhp, “Windows HelpFile”<br>1F8B08, .gz, “GZ Compressed File”<br>28546869732066696C65, .hqx, “”<br>0000010000, .ico, “Icon File”<br>4C000000011402, .lnk, “Windows LinkFile”<br>25504446, .pdf, “Adobe PDF File”<br>5245474544495434, .reg, “”<br>7B5C727466,.rtf, “Rich Text Format File”<br>lh, .lzh, “Lz compression file”<br>MThd, .mid, “”<br>0A050108, .pcx, “”<br>25215053, .eps, “Adobe EPS File”<br>2112, .ain, “AIN Archive File”<br>1A02, .arc, “ARC/PKPAK Compressed 1”<br>1A03, .arc, “ARC/PKPAK Compressed 2”<br>1A04, .arc, “ARC/PKPAK Compressed 3”<br>1A08, .arc, “ARC/PKPAK Compressed 4”<br>1A09, .arc, “ARC/PKPAK Compressed 5”<br>60EA, .arj, “ARJ Compressed”<br>41564920, .avi, “Audio Video Interleave(AVI)”<br>425A68, .bz;.bz2, “Bzip Archive”<br>49536328, .cab, “Cabinet File”<br>4C01, .obj, “Compiled Object Module”<br>303730373037, .tar;.cpio, “CPIO ArchiveFile”<br>4352555348, .cru;.crush, “CRUSH ArchiveFile”<br>3ADE68B1, .dcx, “DCX Graphic File”<br>1F8B, .gz;.tar;.tgz, “Gzip ArchiveFile”<br>91334846, .hap, “HAP Archive File”<br>3C68746D6C3E,.htm;.html, “HyperText Markup Language 1”<br>3C48544D4C3E,.htm;.html, “HyperText Markup Language 2”<br>3C21444F4354, .htm;.html, “HyperText MarkupLanguage 3”<br>100, .ico, “ICON File”<br>5F27A889, .jar, “JAR Archive File”<br>2D6C68352D,.lha, “LHA Compressed”<br>20006040600, .wk1;.wks, “Lotus 123 v1 Worksheet”<br>00001A0007800100, .fm3, “Lotus 123 v3 FMTfile”<br>00001A0000100400, .wk3, “Lotus 123 v3Worksheet”<br>20006800200, .fmt, “Lotus 123 v4 FMTfile”<br>00001A0002100400, .wk4, “Lotus 123 v5”<br>5B7665725D, .ami, “Lotus Ami Pro”<br>300000041505052, .adx, “Lotus ApproachADX file”<br>1A0000030000, .nsf;.ntf, “Lotus NotesDatabase/Template”<br>4D47582069747064, .ds4, “MicrografixDesigner 4”<br>4D534346, .cab, “Microsoft CAB FileFormat”<br>4D546864, .mid, “Midi Audio File”<br>000001B3, .mpg;.mpeg, “MPEG Movie”<br>0902060000001000B9045C00, .xls, “MS Excel v2”<br>0904060000001000F6055C00, .xls, “MS Excel v4”<br>7FFE340A,.doc, “MS Word”<br>1234567890FF, .doc, “MS Word 6.0”<br>31BE000000AB0000, .doc, “MS Word forDOS 6.0”<br>1A00000300001100, .nsf, “NotesDatabase”<br>7E424B00, .psp, “PaintShop Pro Image File”<br>504B0304, .zip, “PKZIP Compressed”<br>89504E470D0A, .png, “PNG Image File”<br>6D646174, .mov, “QuickTime Movie”<br>6D646174, .qt, “Quicktime MovieFile”<br>52617221, .rar, “RAR Archive File”<br>2E7261FD, .ra;.ram, “Real AudioFile”<br>EDABEEDB, .rpm, “RPM Archive File”<br>2E736E64, .au, “SoundMachine AudioFile”<br>53495421, .sit, “Stuffit v1 ArchiveFile”<br>53747566664974, .sit, “Stuffit v5Archive File”<br>1F9D, .z, “TAR Compressed ArchiveFile”<br>49492A, .tif;.tiff, “TIFF (Intel)”<br>4D4D2A,.tif;.tiff, “TIFF (Motorola)”<br>554641, .ufa, “UFA Archive File”<br>57415645666D74, .wav, “Wave Files”<br>D7CDC69A,.wmf, “Windows Meta File”<br>4C000000, .lnk, “Windows Shortcut (LinkFile)”<br>504B3030504B0304, .zip, “WINZIPCompressed”<br>FF575047, .wpg, “WordPerfectGraphics”<br>FF575043, .wp, “WordPerfect v5 orv6”<br>3C3F786D6C,.xml, “XML Document”<br>FFFE3C0052004F004F0054005300540055004200, .xml, “XML Document(ROOTSTUB)”<br>3C21454E54495459, .dtd, “XML DTD”<br>5A4F4F20, .zoo, “ZOO Archive File</p>
 ]]></content>
       
+        <categories>
+            
+            <category> 备忘 </category>
+            
+        </categories>
+        
         
         <tags>
             
@@ -10156,6 +10320,12 @@ console<span class="token punctuation">.</span><span class="token function">log<
 </ul>
 ]]></content>
       
+        <categories>
+            
+            <category> 日记 </category>
+            
+        </categories>
+        
         
         <tags>
             
@@ -10436,6 +10606,12 @@ Sheep anotherOne <span class="token operator">=</span> one<span class="token pun
 is restricted to users with role &quot;admin-gui&quot;. Users are defined in /etc/tomcat8/tomcat-users.xml.
 </code></pre>]]></content>
       
+        <categories>
+            
+            <category> 日记 </category>
+            
+        </categories>
+        
         
         <tags>
             
