@@ -3,6 +3,67 @@
   
     
     <entry>
+      <title><![CDATA[pwnable.tw orw]]></title>
+      <url>/2017/10/15/pwnable-tw-orw/</url>
+      <content type="html"><![CDATA[<p>程序先调用了<code>orw_seccomp</code>函数<br>函数里有两个关键函数</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token function">qmemcpy</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>v3<span class="token punctuation">,</span> <span class="token operator">&amp;</span>unk_8048640<span class="token punctuation">,</span> <span class="token number">0x60u</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+v1 <span class="token operator">=</span> <span class="token number">12</span><span class="token punctuation">;</span>
+v2 <span class="token operator">=</span> <span class="token operator">&amp;</span>v3<span class="token punctuation">;</span>
+<span class="token function">prctl</span><span class="token punctuation">(</span><span class="token number">38</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">prctl</span><span class="token punctuation">(</span><span class="token number">22</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>v1<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// prctl(PR_SET_SECCOMP, SECCOMP_MODE_FILTER, &amp;v1)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这里的v1, v2存储上是挨着的, 其实是一个结构体</p>
+<p>prctl第一个参数是option, 每个数字代表的含义在<code>/usr/include/linux/prctl.h</code>里可以找到, 这个<a href="http://man7.org/linux/man-pages/man2/prctl.2.html" target="_blank" rel="external">网站</a>有参考</p>
+<pre><code>#define PR_SET_NO_NEW_PRIVS    38
+#define PR_SET_SECCOMP    22
+</code></pre><p>下面这个启用了seccomp沙盒模式, 第二个参数说明了沙盒类型<code>seccomp_mode_filter</code>相当于是设置了函数白名单, 具体filter了哪些函数, 看第三个参数, 第三个参数是个<code>struct sock_fprog</code>, 那我们在IDA里导入这个结构体….[这只是幻想…我好像还没有掌握这个技能…]</p>
+<p>我们要做的是把从v3(offset = 0x640 ~ 0x6a0)这里开始的96字节数据dump下来, 然后看看是啥…</p>
+<pre><code>dd if=orw of=orw_fprog bs=1 skip=1600 count=96
+</code></pre><p>我这一手不娴熟的dd操作….(bs是块的大小, skip和count用的都是这个单位好像)</p>
+<p>对照结构体</p>
+<pre><code>struct sock_fprog       /* Required for SO_ATTACH_FILTER. */
+{
+        unsigned short          len;    /* Number of filter blocks */
+        struct sock_filter      *filter;
+};
+
+struct sock_filter      /* Filter block */
+{
+        __u16   code;   /* Actual filter code */
+        __u8    jt;     /* Jump true */
+        __u8    jf;     /* Jump false */
+        __u32   k;      /* Generic multiuse field */
+};
+</code></pre><p>我们的len就是12, 有12个block…每个8字节, 正好96字节, 我们看看sock_filter的内容</p>
+<p>找资料说<code>libpcap</code>里有一个<code>bpf_image</code>函数可以那个…把结构体解释成人类可解读的…汇编…写了半天,不知道为什么编译不通过…留下了没技术的泪水</p>
+<p>关于<code>seccomp</code>模式, 具体见<a href="https://en.wikipedia.org/wiki/Seccomp" target="_blank" rel="external">这里</a><br>除了用prctl也可以用prctl的system call来进入这个模式</p>
+<p>这个模式下, 默认只能使用四种系统调用</p>
+<ul>
+<li>read</li>
+<li>write</li>
+<li>sigreturn</li>
+<li>exit</li>
+</ul>
+<p>然后读入shellcode<br>执行shellcode</p>
+<p>所以思路就是构造</p>
+]]></content>
+      
+        <categories>
+            
+            <category> writeup </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> pwn </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[pwnable.tw start]]></title>
       <url>/2017/10/15/pwnable-tw-start/</url>
       <content type="html"><![CDATA[<p>小巧的文件, 只有两个函数, <code>_start</code>和<code>_exit</code></p>
@@ -6988,9 +7049,9 @@ newObj<span class="token punctuation">.</span>createCallback <span class="token 
         
         <tags>
             
-            <tag> request </tag>
-            
             <tag> php </tag>
+            
+            <tag> request </tag>
             
         </tags>
         
@@ -7230,21 +7291,6 @@ function doSomething2(){
     
     <entry>
       <title><![CDATA[ramda]]></title>
-      <url>/2017/05/23/ramda/</url>
-      <content type="html"><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>今天在知乎上看到了这个<code>Ramda</code><br>是一个函数式的.额,然后就想到了underscore</p>
-<p>搜了一下看到了<br>官网<code>http://ramdajs.com/</code>, github 8k star<br>所有的方法都支持Curry</p>
-<p>哦还搜到了一篇文章<br><a href="http://www.ruanyifeng.com/blog/2017/03/ramda.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2017/03/ramda.html</a></p>
-<p>还有一本gitbook是js函数式<br><a href="https://www.gitbook.com/book/llh911001/mostly-adequate-guide-chinese/details" target="_blank" rel="external">https://www.gitbook.com/book/llh911001/mostly-adequate-guide-chinese/details</a></p>
-<p>想有时间学一下,先mark一下</p>
-<p>算了不过了,mark啥,现在就学学呗</p>
-<p>等我先写完,,,那个a的href和onclick就学这个</p>
-]]></content>
-      
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[ramda]]></title>
       <url>/2017/05/23/Ramda/</url>
       <content type="html"><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>今天在知乎上看到了这个<code>Ramda</code><br>是一个函数式的.额,然后就想到了underscore</p>
 <p>搜了一下看到了<br>官网<code>http://ramdajs.com/</code>, github 8k star<br>所有的方法都支持Curry</p>
@@ -7303,6 +7349,21 @@ R<span class="token punctuation">.</span><span class="token function">test</span
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>确实很语义化,很酷炫,,,</p>
 <p>后面还有个很长的例子,,,很酷炫</p>
+]]></content>
+      
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[ramda]]></title>
+      <url>/2017/05/23/ramda/</url>
+      <content type="html"><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>今天在知乎上看到了这个<code>Ramda</code><br>是一个函数式的.额,然后就想到了underscore</p>
+<p>搜了一下看到了<br>官网<code>http://ramdajs.com/</code>, github 8k star<br>所有的方法都支持Curry</p>
+<p>哦还搜到了一篇文章<br><a href="http://www.ruanyifeng.com/blog/2017/03/ramda.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2017/03/ramda.html</a></p>
+<p>还有一本gitbook是js函数式<br><a href="https://www.gitbook.com/book/llh911001/mostly-adequate-guide-chinese/details" target="_blank" rel="external">https://www.gitbook.com/book/llh911001/mostly-adequate-guide-chinese/details</a></p>
+<p>想有时间学一下,先mark一下</p>
+<p>算了不过了,mark啥,现在就学学呗</p>
+<p>等我先写完,,,那个a的href和onclick就学这个</p>
 ]]></content>
       
         
@@ -10986,14 +11047,14 @@ creature<span class="token punctuation">.</span><span class="token function">sle
   
     
     <entry>
-      <title><![CDATA[友链]]></title>
-      <url>/links/index.html</url>
+      <title><![CDATA[tags]]></title>
+      <url>/tags/index.html</url>
       <content type="html"></content>
     </entry>
     
     <entry>
-      <title><![CDATA[tags]]></title>
-      <url>/tags/index.html</url>
+      <title><![CDATA[友链]]></title>
+      <url>/links/index.html</url>
       <content type="html"></content>
     </entry>
     
