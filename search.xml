@@ -3,6 +3,119 @@
   
     
     <entry>
+      <title><![CDATA[安卓逆向入门]]></title>
+      <url>/2017/11/05/%E5%AE%89%E5%8D%93%E9%80%86%E5%90%91%E5%85%A5%E9%97%A8/</url>
+      <content type="html"><![CDATA[<p>好久不写blog, 感觉最近好懒, 喵喵喵, 我也不知道最近干什么去了</p>
+<h1 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h1><h2 id="AndroidManifest-xml"><a href="#AndroidManifest-xml" class="headerlink" title="AndroidManifest.xml"></a>AndroidManifest.xml</h2><ol>
+<li><p>Application类<br>生命周期是整个app的生命周期</p>
+<pre class="line-numbers language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>manifest</span> <span class="token attr-name">...</span><span class="token punctuation">></span></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>uses-sdk</span> <span class="token attr-name">...</span> <span class="token punctuation">/></span></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>uses-permission</span> <span class="token attr-name">...</span> <span class="token punctuation">/></span></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>application</span> <span class="token attr-name">...</span><span class="token punctuation">></span></span>
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>activity</span> <span class="token attr-name">...</span><span class="token punctuation">></span></span>
+         ...
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>activity</span><span class="token punctuation">></span></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>application</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>manifest</span><span class="token punctuation">></span></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>MainActivity类<br>第一个启动的Activity<br>类名不一定叫这个, 但他的<code>intent-filter</code>很重要, 比如我们可以叫<code>FirstActivity</code></p>
+<pre class="line-numbers language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>activity</span> 
+ <span class="token attr-name"><span class="token namespace">android:</span>name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>.FirstActivity<span class="token punctuation">"</span></span>
+ <span class="token attr-name"><span class="token namespace">android:</span>label</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>This is my First Activity<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>intent-filter</span><span class="token punctuation">></span></span>
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>action</span> <span class="token attr-name"><span class="token namespace">android:</span>name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>android.intent.action.MAIN<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>category</span> <span class="token attr-name"><span class="token namespace">android:</span>name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>android.intent.category.LAUNCHER<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>intent-filter</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>activity</span><span class="token punctuation">></span></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>特殊的permission</p>
+<pre class="line-numbers language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>uses-permission</span> <span class="token attr-name"><span class="token namespace">android:</span>name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>android.permission.ACCESS_NETWORK_STATE<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+</ol>
+<h2 id="四大组件"><a href="#四大组件" class="headerlink" title="四大组件"></a>四大组件</h2><p>Activity<br>Service<br>Broadcast Receiver<br>Content Provider</p>
+<h2 id="其他小知识"><a href="#其他小知识" class="headerlink" title="其他小知识"></a>其他小知识</h2><p>arm平台的话的话, so里默认使用的是thumb, 不是ARM</p>
+<h1 id="反编译-amp-反汇编"><a href="#反编译-amp-反汇编" class="headerlink" title="反编译 &amp; 反汇编"></a>反编译 &amp; 反汇编</h1><p>在一本书上看到的, 在android设备上的<br><code>反汇编</code>指的是针对<code>NDK</code>产生的so文件进行逆向, 得到汇编<br><code>反编译</code>指的是逆向dex文件, 得到所用语言的源代码(smali???)<br>我怎么感觉怪怪的….</p>
+<h1 id="安卓一个项目下-lib文件夹下可能有多个不同名的文件夹里有同名的so"><a href="#安卓一个项目下-lib文件夹下可能有多个不同名的文件夹里有同名的so" class="headerlink" title="安卓一个项目下, lib文件夹下可能有多个不同名的文件夹里有同名的so"></a>安卓一个项目下, lib文件夹下可能有多个不同名的文件夹里有同名的so</h1><pre><code>lib
+├── arm64-v8a
+│   └── libtest.so
+├── armeabi
+│   └── libtest.so
+├── armeabi-v7a
+│   └── libtest.so
+├── mips
+│   └── libtest.so
+└── mips64
+    └── libtest.so
+</code></pre><p>这个时候, 应该看哪个…有的时候还有x86..而且内容还不太一样<br>自己写个NDK的项目, 先…</p>
+<h1 id="反编译后得到形如MainActivity-1-smali-是什么意思"><a href="#反编译后得到形如MainActivity-1-smali-是什么意思" class="headerlink" title="反编译后得到形如MainActivity$1.smali, 是什么意思"></a>反编译后得到形如MainActivity$1.smali, 是什么意思</h1><p>感觉有的逆向根据会产生, 有的会是另一种表现形式<br>一般是内部类… 比如</p>
+<pre class="line-numbers language-java"><code class="language-java">Button botton <span class="token operator">=</span> <span class="token punctuation">(</span>Button<span class="token punctuation">)</span> <span class="token function">findViewById</span><span class="token punctuation">(</span>R<span class="token punctuation">.</span>id<span class="token punctuation">.</span>button1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+button<span class="token punctuation">.</span><span class="token function">setOnClickListener</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">OnClickListener</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">onClick</span><span class="token punctuation">(</span>View v<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这里在<code>OnClickListener</code>接口这里其实有一个<code>基于接口实现的匿名内部类</code>, java学的奇菜…然后补一补</p>
+<p>所以这个<code>MainActivity$1.smali</code>里的类会有<code>OnClick</code>方法什么的</p>
+<h1 id="有的时候会有dex反编译失败的时候…"><a href="#有的时候会有dex反编译失败的时候…" class="headerlink" title="有的时候会有dex反编译失败的时候…"></a>有的时候会有dex反编译失败的时候…</h1><p>这个时候该怎么办QAQ, md我也不知道啊</p>
+<h1 id="动态调试"><a href="#动态调试" class="headerlink" title="动态调试"></a>动态调试</h1><p>准备把以前的小米MAX拿来做题了….<br>真机的话, 直接usb连上去, 开启usb调试, 然后adb就有反应…模拟器真是…</p>
+<ol>
+<li><p>出现问题 <code>[Errno 104] Connection reset by peer</code><br>这个在网上查找是某个app是<code>debuggable=false</code>的原因…好像记得是不是有一种不需要一个一个应用更改的方法, 好像是…<br>找到一篇<a href="http://blog.csdn.net/feibabeibei_beibei/article/details/52744231" target="_blank" rel="external">blog</a> 有介绍具体方法</p>
+</li>
+<li><p>找到一份资料是叫<code>安卓动态调试七种武器</code></p>
+</li>
+</ol>
+<h1 id="HOOK"><a href="#HOOK" class="headerlink" title="HOOK"></a>HOOK</h1><p>HOOK有</p>
+<ol>
+<li>JAVA API HOOK</li>
+<li>Native API HOOK</li>
+</ol>
+<p>如果对Zygote进行HOOK, 那就相当于对所以app都进行了HOOK, 喵喵喵<br>其实所有app都只直接与Zygote有关, 所以相当于安卓程序都是比底下的Linux程序高一层, 对吧, 来自菜鸡的无奈…</p>
+<h2 id="xposed-原理"><a href="#xposed-原理" class="headerlink" title="xposed 原理"></a>xposed 原理</h2><p>通过替换<code>/system/bin/app_process</code>来控制Zygote, 使得app_process启动的过程中加载<code>XposedBridge.jar</code>, 从而完成劫持</p>
+<p><del>先睡觉, 命要紧</del><br>刚home以已经100%, 然后把swap格掉了, 给了/home, 突然多了8G, 哈哈哈哈</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 学习 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 安卓 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[php入门日记]]></title>
+      <url>/2017/10/28/php%E5%85%A5%E9%97%A8%E6%97%A5%E8%AE%B0/</url>
+      <content type="html"></content>
+      
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[IDA call analysis failed]]></title>
+      <url>/2017/10/27/IDA-call-analysis-failed/</url>
+      <content type="html"><![CDATA[<p>在静态分析的时候, 某个函数在结尾处出现<code>sp-analysis failed</code>, 并且不能使用f5看c的时候…找到了看雪的两篇帖子</p>
+<p><a href="https://bbs.pediy.com/thread-140002.htm" target="_blank" rel="external">https://bbs.pediy.com/thread-140002.htm</a><br><a href="https://bbs.pediy.com/thread-158896.htm" target="_blank" rel="external">https://bbs.pediy.com/thread-158896.htm</a></p>
+<p>我遇到的一个问题就在于, main中某个调用函数的参数错误导致堆栈不平</p>
+<p>看汇编, 是push了一个地址, 然后call了一个类似puts的函数, 可以把字符串打印出来, 但按一下Y, 能看到这里函数定义是<code>int __cdecl xxx(int, int)</code>, 我们改成<code>int __cdecl xxx(char *)</code>, 再次尝试就可以了<br>不过这个问题造成的原因是什么?</p>
+<p>又找到一篇资料 IDA为什么产生 sp-analysis failed 错误?<br><a href="http://blog.csdn.net/dj0379/article/details/8699219" target="_blank" rel="external">http://blog.csdn.net/dj0379/article/details/8699219</a></p>
+]]></content>
+      
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[pwnable.tw calc]]></title>
       <url>/2017/10/16/pwnable-tw-calc/</url>
       <content type="html"><![CDATA[<p>zhe ti tai nan le…<br>wo hao cai a</p>
@@ -1825,7 +1938,7 @@ A <span class="token function">a</span><span class="token punctuation">(</span><
         
         <tags>
             
-            <tag> RE </tag>
+            <tag> mobile </tag>
             
         </tags>
         
@@ -4999,7 +5112,9 @@ mysql<span class="token operator">></span> <span class="token keyword">select</s
     <entry>
       <title><![CDATA[xss从入门到入门1]]></title>
       <url>/2017/07/15/xss%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%85%A5%E9%97%A81/</url>
-      <content type="html"></content>
+      <content type="html"><![CDATA[<p>这里有一篇资料总结<br><a href="http://blog.csdn.net/caiqiiqi/article/details/73456264" target="_blank" rel="external">http://blog.csdn.net/caiqiiqi/article/details/73456264</a></p>
+<p>dalao博客里有大量关于CSP的知识<br><a href="https://lorexxar.cn/" target="_blank" rel="external">https://lorexxar.cn/</a></p>
+]]></content>
       
         
         <tags>
@@ -10868,9 +10983,9 @@ is restricted to users with role &quot;admin-gui&quot;. Users are defined in /et
         
         <tags>
             
-            <tag> 周五 </tag>
-            
             <tag> Linux </tag>
+            
+            <tag> 周五 </tag>
             
         </tags>
         
@@ -11145,14 +11260,14 @@ creature<span class="token punctuation">.</span><span class="token function">sle
   
     
     <entry>
-      <title><![CDATA[友链]]></title>
-      <url>/links/index.html</url>
+      <title><![CDATA[tags]]></title>
+      <url>/tags/index.html</url>
       <content type="html"></content>
     </entry>
     
     <entry>
-      <title><![CDATA[tags]]></title>
-      <url>/tags/index.html</url>
+      <title><![CDATA[友链]]></title>
+      <url>/links/index.html</url>
       <content type="html"></content>
     </entry>
     
