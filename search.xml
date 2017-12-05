@@ -3,6 +3,56 @@
   
     
     <entry>
+      <title><![CDATA[VC++6.0 Unicode & ascii]]></title>
+      <url>/2017/12/05/VC-6-0-Unicode-ascii/</url>
+      <content type="html"><![CDATA[<p>准备卸载了Linux, 装个Windows好好学windows编程…<br>现在Windows里搞了个xp + vc6.0<br>然后照着书…敲了一个helloworld…然后…</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"windows.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"tchar.h"</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">MessageBox</span><span class="token punctuation">(</span><span class="token constant">NULL</span><span class="token punctuation">,</span> 
+               L<span class="token string">"Hello World!"</span><span class="token punctuation">,</span> 
+               L<span class="token string">"Aryb1n"</span><span class="token punctuation">,</span> 
+               MB_OK<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>然后我的标题就显示一个<code>H</code>….<br>然后我以为是Windows xp太远古了….标题栏就能显示一个字母…</p>
+<p>然后我才发现……..<br>VC6.0默认处理的是ASCII, 而我存储的是Lstring…俩字节一个unicode, 所以遇到那个<code>\x00</code>的时候就截止了</p>
+<p>找了一下解决办法</p>
+<ol>
+<li>就用普通的String…不加L前缀</li>
+<li>用 <code>TEXT(&quot;Hello world&quot;)</code>, 或者<code>_TEXT</code>, <code>_T</code> (这三个一样), 这个宏定义会根据你的环境…在ascii的时候相当于ascii的string, 在unicode的时候相当于<code>L&quot;String&quot;</code></li>
+<li>继续用LString, 在VC6.0里添加宏<code>UNICODE, _UNICODE</code>, <code>[Project Setting] -&gt; [General] -&gt; [Preprocessor definitions]</code>这个框框里加上这俩宏</li>
+</ol>
+]]></content>
+      
+        <categories>
+            
+            <category> 学习 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> vc++ </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[写给自己]]></title>
+      <url>/2017/11/12/%E5%86%99%E7%BB%99%E8%87%AA%E5%B7%B1/</url>
+      <content type="html"></content>
+      
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[安卓逆向入门]]></title>
       <url>/2017/11/05/%E5%AE%89%E5%8D%93%E9%80%86%E5%90%91%E5%85%A5%E9%97%A8/</url>
       <content type="html"><![CDATA[<p>好久不写blog, 感觉最近好懒, 喵喵喵, 我也不知道最近干什么去了</p>
@@ -50,6 +100,10 @@
 └── mips64
     └── libtest.so
 </code></pre><p>这个时候, 应该看哪个…有的时候还有x86..而且内容还不太一样<br>自己写个NDK的项目, 先…</p>
+<p><a href="http://blog.csdn.net/weijinqian0/article/details/78182307" target="_blank" rel="external">http://blog.csdn.net/weijinqian0/article/details/78182307</a><br><a href="https://zhuanlan.zhihu.com/p/21302804" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/21302804</a><br><a href="http://www.jianshu.com/p/cb05698a1968" target="_blank" rel="external">http://www.jianshu.com/p/cb05698a1968</a><br>其中这个最后一篇里讲到</p>
+<blockquote>
+<p>当一个应用安装在设备上，只有该设备支持的CPU架构对应的.so文件会被安装。在x86设备上，libs/x86目录中如果存在.so文件的话，会被安装，如果不存在，则会选择armeabi-v7a中的.so文件，如果也不存在，则选择armeabi目录中的.so文件（因为x86设备也支持armeabi-v7a和armeabi）</p>
+</blockquote>
 <h1 id="反编译后得到形如MainActivity-1-smali-是什么意思"><a href="#反编译后得到形如MainActivity-1-smali-是什么意思" class="headerlink" title="反编译后得到形如MainActivity$1.smali, 是什么意思"></a>反编译后得到形如MainActivity$1.smali, 是什么意思</h1><p>感觉有的逆向根据会产生, 有的会是另一种表现形式<br>一般是内部类… 比如</p>
 <pre class="line-numbers language-java"><code class="language-java">Button botton <span class="token operator">=</span> <span class="token punctuation">(</span>Button<span class="token punctuation">)</span> <span class="token function">findViewById</span><span class="token punctuation">(</span>R<span class="token punctuation">.</span>id<span class="token punctuation">.</span>button1<span class="token punctuation">)</span><span class="token punctuation">;</span>
 button<span class="token punctuation">.</span><span class="token function">setOnClickListener</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">OnClickListener</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -11260,14 +11314,14 @@ creature<span class="token punctuation">.</span><span class="token function">sle
   
     
     <entry>
-      <title><![CDATA[tags]]></title>
-      <url>/tags/index.html</url>
+      <title><![CDATA[友链]]></title>
+      <url>/links/index.html</url>
       <content type="html"></content>
     </entry>
     
     <entry>
-      <title><![CDATA[友链]]></title>
-      <url>/links/index.html</url>
+      <title><![CDATA[tags]]></title>
+      <url>/tags/index.html</url>
       <content type="html"></content>
     </entry>
     

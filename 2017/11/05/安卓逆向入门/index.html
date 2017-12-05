@@ -233,7 +233,7 @@
 
     
         <meta property="article:published_time" content="Sun Nov 05 2017 20:22:28 GMT+0800" />
-        <meta property="article:modified_time" content="Mon Nov 06 2017 10:54:14 GMT+0800" />
+        <meta property="article:modified_time" content="Mon Nov 06 2017 20:33:26 GMT+0800" />
     
 
     <!-- The Twitter Card protocol -->
@@ -260,7 +260,7 @@
     "mainEntityOfPage": "http://yoursite.com/2017/11/05/安卓逆向入门/index.html",
     "headline": "安卓逆向入门",
     "datePublished": "Sun Nov 05 2017 20:22:28 GMT+0800",
-    "dateModified": "Mon Nov 06 2017 10:54:14 GMT+0800",
+    "dateModified": "Mon Nov 06 2017 20:33:26 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "Aryb1n",
@@ -508,6 +508,10 @@
 └── mips64
     └── libtest.so
 </code></pre><p>这个时候, 应该看哪个…有的时候还有x86..而且内容还不太一样<br>自己写个NDK的项目, 先…</p>
+<p><a href="http://blog.csdn.net/weijinqian0/article/details/78182307" target="_blank" rel="external">http://blog.csdn.net/weijinqian0/article/details/78182307</a><br><a href="https://zhuanlan.zhihu.com/p/21302804" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/21302804</a><br><a href="http://www.jianshu.com/p/cb05698a1968" target="_blank" rel="external">http://www.jianshu.com/p/cb05698a1968</a><br>其中这个最后一篇里讲到</p>
+<blockquote>
+<p>当一个应用安装在设备上，只有该设备支持的CPU架构对应的.so文件会被安装。在x86设备上，libs/x86目录中如果存在.so文件的话，会被安装，如果不存在，则会选择armeabi-v7a中的.so文件，如果也不存在，则选择armeabi目录中的.so文件（因为x86设备也支持armeabi-v7a和armeabi）</p>
+</blockquote>
 <h1 id="反编译后得到形如MainActivity-1-smali-是什么意思"><a href="#反编译后得到形如MainActivity-1-smali-是什么意思" class="headerlink" title="反编译后得到形如MainActivity$1.smali, 是什么意思"></a>反编译后得到形如MainActivity$1.smali, 是什么意思</h1><p>感觉有的逆向根据会产生, 有的会是另一种表现形式<br>一般是内部类… 比如</p>
 <pre class="line-numbers language-java"><code class="language-java">Button botton <span class="token operator">=</span> <span class="token punctuation">(</span>Button<span class="token punctuation">)</span> <span class="token function">findViewById</span><span class="token punctuation">(</span>R<span class="token punctuation">.</span>id<span class="token punctuation">.</span>button1<span class="token punctuation">)</span><span class="token punctuation">;</span>
 button<span class="token punctuation">.</span><span class="token function">setOnClickListener</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">OnClickListener</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -554,6 +558,14 @@ button<span class="token punctuation">.</span><span class="token function">setOn
             <!-- Post Prev & Next Nav -->
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
+    
+        <a href="/2017/11/12/写给自己/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
     
 
     <!-- Section Spacer -->
@@ -653,7 +665,7 @@ button<span class="token punctuation">.</span><span class="token function">setOn
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/10/">十月 2017<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">16</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">38</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">13</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">52</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">26</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">13</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/11/">十一月 2016<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/10/">十月 2016<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/07/">七月 2016<span class="sidebar_archives-count">13</span></a>
+                <a class="sidebar_archives-link" href="/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/10/">十月 2017<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">16</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">38</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">13</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">52</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">26</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">13</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/11/">十一月 2016<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/10/">十月 2016<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/07/">七月 2016<span class="sidebar_archives-count">13</span></a>
             </ul>
         </li>
         
@@ -671,7 +683,7 @@ button<span class="token punctuation">.</span><span class="token function">setOn
             </a>
             <ul class="dropdown-menu">
                 <li>
-                <a class="sidebar_archives-link" href="/categories/writeup/">writeup<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/备忘/">备忘<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/categories/学习/">学习<span class="sidebar_archives-count">18</span></a></li><li><a class="sidebar_archives-link" href="/categories/日记/">日记<span class="sidebar_archives-count">6</span></a>
+                <a class="sidebar_archives-link" href="/categories/writeup/">writeup<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/备忘/">备忘<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/categories/学习/">学习<span class="sidebar_archives-count">19</span></a></li><li><a class="sidebar_archives-link" href="/categories/日记/">日记<span class="sidebar_archives-count">6</span></a>
             </ul>
         </li>
         
