@@ -5,7 +5,14 @@
     <entry>
       <title><![CDATA[2017-12-18]]></title>
       <url>/2017/12/18/2017-12-18/</url>
-      <content type="html"></content>
+      <content type="html"><![CDATA[<p>我好想记日记…感觉没有日记的日子过得好颓废…我也不知道自己做了什么</p>
+<p>决定每天记一篇..即便什么都没做..比如..今天</p>
+<p>今天… 什么都没做, 好了结束了</p>
+<p>收藏了几个网站感觉不错<br>我要学一学</p>
+<p>Linux工具快速教程 <a href="http://linuxtools-rst.readthedocs.io/zh_CN/latest/" target="_blank" rel="external">http://linuxtools-rst.readthedocs.io/zh_CN/latest/</a><br>CTF All in One <a href="https://www.gitbook.com/book/firmianay/ctf-all-in-one/details" target="_blank" rel="external">https://www.gitbook.com/book/firmianay/ctf-all-in-one/details</a><br>CTF wiki <a href="https://ctf-wiki.github.io/ctf-wiki/" target="_blank" rel="external">https://ctf-wiki.github.io/ctf-wiki/</a></p>
+<p>还学习了xargs <a href="http://fatmouse.xyz/2016/05/10/2016-05-10-find-grep-xargs-and-pipe/" target="_blank" rel="external">http://fatmouse.xyz/2016/05/10/2016-05-10-find-grep-xargs-and-pipe/</a></p>
+<p>其他的时间…都在睡觉…真可怕</p>
+]]></content>
       
         <categories>
             
@@ -73,6 +80,7 @@
 <p>然后今天在网上找了一段代码加到bashrc里发现可以补全了…用了没两分钟…我把它删掉了</p>
 <p>这tm…从来没想过…能补全了…就没法缩进了, 醉了</p>
 <p>每次想起node的REPL…再回头看看py的…QAQ, 两行泪水留下来</p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>后来…我知道了有个东西叫ipython….</p>
 ]]></content>
       
         <categories>
