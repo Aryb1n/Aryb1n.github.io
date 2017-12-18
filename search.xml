@@ -3,6 +3,143 @@
   
     
     <entry>
+      <title><![CDATA[2017-12-18]]></title>
+      <url>/2017/12/18/2017-12-18/</url>
+      <content type="html"></content>
+      
+        <categories>
+            
+            <category> 日记 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> diary </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[MDN真好]]></title>
+      <url>/2017/12/13/MDN%E7%9C%9F%E5%A5%BD/</url>
+      <content type="html"><![CDATA[<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/Security" target="_blank" rel="external">https://developer.mozilla.org/zh-CN/docs/Web/Security</a><br><a href="https://blog.mozilla.org/security/" target="_blank" rel="external">https://blog.mozilla.org/security/</a></p>
+<p>感觉MDN是学web最好的地方之一了…<br>好好读一下</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 学习 </category>
+            
+        </categories>
+        
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[angr从入门到还没入门]]></title>
+      <url>/2017/12/13/angr%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E8%BF%98%E6%B2%A1%E5%85%A5%E9%97%A8/</url>
+      <content type="html"><![CDATA[<h2 id="资料"><a href="#资料" class="headerlink" title="资料"></a>资料</h2><p><a href="http://www.freebuf.com/articles/web/150296.html" target="_blank" rel="external">http://www.freebuf.com/articles/web/150296.html</a><br><a href="https://github.com/Vsane/angr-doc-cn" target="_blank" rel="external">https://github.com/Vsane/angr-doc-cn</a></p>
+<h2 id="疑问"><a href="#疑问" class="headerlink" title="疑问"></a>疑问</h2><ol>
+<li><p>s1 = claripy.Solver()<br>s2 = angr.Project(‘xxx’).factory.entry_state().solver…<br>他们都能添加约束和符号求解,这个内部是…怎么个写的呢…不会是重复代码吧<br>s1.add(x &gt; 10)<br>s2.add(x &gt; 10)<br>但这个他们eval的用法不太一样<br>前者是 s1.solver(e, n)<br>后者是 s2.solver(e)</p>
+</li>
+<li><p>claripy.BVS 和 angr.Project(‘xxx’).factory.entry_state().solver.BVS<br>一样的问题<br>难道是内部的…各种套吗</p>
+</li>
+</ol>
+<p>1.</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 学习 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> pwn </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[python在终端里的自动补全]]></title>
+      <url>/2017/12/13/python%E5%9C%A8%E7%BB%88%E7%AB%AF%E9%87%8C%E7%9A%84%E8%87%AA%E5%8A%A8%E8%A1%A5%E5%85%A8/</url>
+      <content type="html"><![CDATA[<p>以前觉得…终端里直接开python的REPL, 测试一些代码段, 没有tab补全关键字…很烦人啊</p>
+<p>然后今天在网上找了一段代码加到bashrc里发现可以补全了…用了没两分钟…我把它删掉了</p>
+<p>这tm…从来没想过…能补全了…就没法缩进了, 醉了</p>
+<p>每次想起node的REPL…再回头看看py的…QAQ, 两行泪水留下来</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 备忘 </category>
+            
+        </categories>
+        
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[用call压参字符串]]></title>
+      <url>/2017/12/11/%E7%94%A8call%E5%8E%8B%E5%8F%82%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
+      <content type="html"><![CDATA[<p><code>逆向工程核心原理</code>的p278中提到的一个技巧</p>
+<p>使用call指令将包含在代码间的字符串压入栈内, 执行了一条call相当于执行了push和jmp, 只能用于汇编编写的程序…(因为C写的程序…字符串是不会直接放在代码段的)</p>
+<p>代码大致如下</p>
+<pre class="line-numbers language-asm"><code class="language-asm">002D002E    call 0x002D003F -----+
+                                 +
+002D0033    'R'                  +
+002D0034    'E'                  +
+...         ...                  +
+002D003E    'E'                  +
+                                 +
+002D003F    <--------------------+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>利用这个call把0x002D0033处这个字符串压入了栈里, 然后跳到0x002D003F继续执行…call是不一定要返回的…<br>这个trick会不会给反汇编工具带来错觉呢==</p>
+<p>我的xp虚拟机起不来了…==顿时想格调硬盘重新开始….这样子前四部分也看不完了….准备跳到第六部分先</p>
+]]></content>
+      
+        <categories>
+            
+            <category> trick </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 周一 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Essential Linux Device Driver]]></title>
+      <url>/2017/12/11/Essential-Linux-Device-Driver/</url>
+      <content type="html"><![CDATA[<h2 id="书名"><a href="#书名" class="headerlink" title="书名"></a>书名</h2><p>Essential Linux Device Driver<br>精通Linux设备驱动程序开发<br>还借了几本类似的书…结果一团乱…这本感觉还不错, 翻译也还可以</p>
+<h2 id="内核"><a href="#内核" class="headerlink" title="内核"></a>内核</h2><h2 id="内核组件"><a href="#内核组件" class="headerlink" title="内核组件"></a>内核组件</h2>]]></content>
+      
+        <categories>
+            
+            <category> 笔记 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Linux Kernel </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[VC++6.0 Unicode & ascii]]></title>
       <url>/2017/12/05/VC-6-0-Unicode-ascii/</url>
       <content type="html"><![CDATA[<p>准备卸载了Linux, 装个Windows好好学windows编程…<br>现在Windows里搞了个xp + vc6.0<br>然后照着书…敲了一个helloworld…然后…</p>
@@ -7558,6 +7695,21 @@ function doSomething2(){
     
     <entry>
       <title><![CDATA[ramda]]></title>
+      <url>/2017/05/23/ramda/</url>
+      <content type="html"><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>今天在知乎上看到了这个<code>Ramda</code><br>是一个函数式的.额,然后就想到了underscore</p>
+<p>搜了一下看到了<br>官网<code>http://ramdajs.com/</code>, github 8k star<br>所有的方法都支持Curry</p>
+<p>哦还搜到了一篇文章<br><a href="http://www.ruanyifeng.com/blog/2017/03/ramda.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2017/03/ramda.html</a></p>
+<p>还有一本gitbook是js函数式<br><a href="https://www.gitbook.com/book/llh911001/mostly-adequate-guide-chinese/details" target="_blank" rel="external">https://www.gitbook.com/book/llh911001/mostly-adequate-guide-chinese/details</a></p>
+<p>想有时间学一下,先mark一下</p>
+<p>算了不过了,mark啥,现在就学学呗</p>
+<p>等我先写完,,,那个a的href和onclick就学这个</p>
+]]></content>
+      
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[ramda]]></title>
       <url>/2017/05/23/Ramda/</url>
       <content type="html"><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>今天在知乎上看到了这个<code>Ramda</code><br>是一个函数式的.额,然后就想到了underscore</p>
 <p>搜了一下看到了<br>官网<code>http://ramdajs.com/</code>, github 8k star<br>所有的方法都支持Curry</p>
@@ -7616,21 +7768,6 @@ R<span class="token punctuation">.</span><span class="token function">test</span
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>确实很语义化,很酷炫,,,</p>
 <p>后面还有个很长的例子,,,很酷炫</p>
-]]></content>
-      
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[ramda]]></title>
-      <url>/2017/05/23/ramda/</url>
-      <content type="html"><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>今天在知乎上看到了这个<code>Ramda</code><br>是一个函数式的.额,然后就想到了underscore</p>
-<p>搜了一下看到了<br>官网<code>http://ramdajs.com/</code>, github 8k star<br>所有的方法都支持Curry</p>
-<p>哦还搜到了一篇文章<br><a href="http://www.ruanyifeng.com/blog/2017/03/ramda.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2017/03/ramda.html</a></p>
-<p>还有一本gitbook是js函数式<br><a href="https://www.gitbook.com/book/llh911001/mostly-adequate-guide-chinese/details" target="_blank" rel="external">https://www.gitbook.com/book/llh911001/mostly-adequate-guide-chinese/details</a></p>
-<p>想有时间学一下,先mark一下</p>
-<p>算了不过了,mark啥,现在就学学呗</p>
-<p>等我先写完,,,那个a的href和onclick就学这个</p>
 ]]></content>
       
         
