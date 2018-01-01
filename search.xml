@@ -3,7 +3,28 @@
   
     
     <entry>
-      <title><![CDATA[2017-12-18]]></title>
+      <title><![CDATA[issue | "休眠后的网络问题"]]></title>
+      <url>/2018/01/01/%E4%BC%91%E7%9C%A0%E5%90%8E%E7%9A%84%E7%BD%91%E7%BB%9C%E9%97%AE%E9%A2%98/</url>
+      <content type="html"><![CDATA[<p>休眠之后</p>
+]]></content>
+      
+        <categories>
+            
+            <category> issue </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> issue </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[日记 | 2017-12-18]]></title>
       <url>/2017/12/18/2017-12-18/</url>
       <content type="html"><![CDATA[<p>我好想记日记…感觉没有日记的日子过得好颓废…我也不知道自己做了什么</p>
 <p>决定每天记一篇..即便什么都没做..比如..今天</p>
@@ -12,6 +33,9 @@
 <p>Linux工具快速教程 <a href="http://linuxtools-rst.readthedocs.io/zh_CN/latest/" target="_blank" rel="external">http://linuxtools-rst.readthedocs.io/zh_CN/latest/</a><br>CTF All in One <a href="https://www.gitbook.com/book/firmianay/ctf-all-in-one/details" target="_blank" rel="external">https://www.gitbook.com/book/firmianay/ctf-all-in-one/details</a><br>CTF wiki <a href="https://ctf-wiki.github.io/ctf-wiki/" target="_blank" rel="external">https://ctf-wiki.github.io/ctf-wiki/</a></p>
 <p>还学习了xargs <a href="http://fatmouse.xyz/2016/05/10/2016-05-10-find-grep-xargs-and-pipe/" target="_blank" rel="external">http://fatmouse.xyz/2016/05/10/2016-05-10-find-grep-xargs-and-pipe/</a></p>
 <p>其他的时间…都在睡觉…真可怕</p>
+<h2 id="todo"><a href="#todo" class="headerlink" title="todo"></a>todo</h2><p>整理一下书单<br>收拾东西准备回家<br>决定一下是不是出去旅游, 然后旅游回去..</p>
+<p>林沛满的两本 wireshark书感觉挺好的…床头读物, 睡不着的时候读一读<br>图书馆有…Wireshark数据包分析实战…过几天还手里的书的时候去看看<br>还有一本 gitbook <a href="https://www.gitbook.com/book/wizardforcel/wireshark-manual/details" target="_blank" rel="external">https://www.gitbook.com/book/wizardforcel/wireshark-manual/details</a></p>
+<p>2333, 成功有了wireshark书单</p>
 ]]></content>
       
         <categories>
@@ -11377,9 +11401,9 @@ is restricted to users with role &quot;admin-gui&quot;. Users are defined in /et
         
         <tags>
             
-            <tag> java </tag>
-            
             <tag> 周三 </tag>
+            
+            <tag> java </tag>
             
         </tags>
         
@@ -11447,9 +11471,9 @@ creature<span class="token punctuation">.</span><span class="token function">sle
         
         <tags>
             
-            <tag> java </tag>
-            
             <tag> 周三 </tag>
+            
+            <tag> java </tag>
             
         </tags>
         
