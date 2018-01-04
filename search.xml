@@ -3,6 +3,37 @@
   
     
     <entry>
+      <title><![CDATA[python | WSGI学习]]></title>
+      <url>/2018/01/04/python-WSGI%E5%AD%A6%E4%B9%A0/</url>
+      <content type="html"><![CDATA[<p><a href="http://python.jobbole.com/88653/" target="_blank" rel="external">http://python.jobbole.com/88653/</a><br><a href="http://python.jobbole.com/87502/" target="_blank" rel="external">http://python.jobbole.com/87502/</a></p>
+<p>这两篇讲的很好了，就做个收集..</p>
+<p>WSGI就是规定了server和application如何通信的协议(从Server端看)</p>
+<p>这里server不是我们通常说的B/S和C/S里的server</p>
+<p>可以认为是这样子(但愿我理解的对)</p>
+<pre><code>+========+                     +=========================+
+|Client  | ================&gt;   |        ===+WSGI+===     |
+|Browser | &lt;================   | Server ===|协议|=== app |
++========+                     +=========================+
++B  or  C+                     |我们说的B/S或者C/S里面的S|
++--------+                     +-------------------------+
+</code></pre>]]></content>
+      
+        <categories>
+            
+            <category> 学习 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> python </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[python | StringIO]]></title>
       <url>/2018/01/04/python-StringIO/</url>
       <content type="html"><![CDATA[<p>StringIO是用读写文件一样处理字符串</p>
@@ -7536,9 +7567,9 @@ newObj<span class="token punctuation">.</span>createCallback <span class="token 
         
         <tags>
             
-            <tag> php </tag>
-            
             <tag> request </tag>
+            
+            <tag> php </tag>
             
         </tags>
         
@@ -11534,14 +11565,14 @@ creature<span class="token punctuation">.</span><span class="token function">sle
   
     
     <entry>
-      <title><![CDATA[友链]]></title>
-      <url>/links/index.html</url>
+      <title><![CDATA[tags]]></title>
+      <url>/tags/index.html</url>
       <content type="html"></content>
     </entry>
     
     <entry>
-      <title><![CDATA[tags]]></title>
-      <url>/tags/index.html</url>
+      <title><![CDATA[友链]]></title>
+      <url>/links/index.html</url>
       <content type="html"></content>
     </entry>
     
