@@ -3,9 +3,54 @@
   
     
     <entry>
-      <title><![CDATA[issue | "休眠后的网络问题"]]></title>
+      <title><![CDATA[python | StringIO]]></title>
+      <url>/2018/01/04/python-StringIO/</url>
+      <content type="html"><![CDATA[<p>StringIO是用读写文件一样处理字符串</p>
+<blockquote>
+<p>想以前在用c实现一个简单的Server的时候….在处理响应头的时候, 一直没有想到好的方法，只是拼接字符串，因为没有对字符串格式化读写的操作，后来想到了sprintf，简直是神器…</p>
+</blockquote>
+<p>new一个StringIO对象，就可以用read, readline, write…来操作对象了</p>
+<p>py2.x</p>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">from</span> StringIO <span class="token keyword">import</span> StringIO
+f_fake <span class="token operator">=</span> StringIO<span class="token punctuation">(</span><span class="token string">'file content'</span><span class="token punctuation">)</span>
+f_true <span class="token operator">=</span> open<span class="token punctuation">(</span><span class="token string">'./xxx'</span><span class="token punctuation">)</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>py3.x</p>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">from</span> io <span class="token keyword">import</span> StringIO
+f_fake <span class="token operator">=</span> StringIO<span class="token punctuation">(</span><span class="token string">'file content'</span><span class="token punctuation">)</span>
+f_true <span class="token operator">=</span> open<span class="token punctuation">(</span><span class="token string">'./xxx'</span><span class="token punctuation">)</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="read和getvalue的区别"><a href="#read和getvalue的区别" class="headerlink" title="read和getvalue的区别"></a>read和getvalue的区别</h3><p>read返回当前位置到结尾的部分<br>而getvalue返回整个字符串<br>seek可以设置当前位置(读写指针的位置)</p>
+<blockquote>
+<p>为什么我seek之后 f.tell()不改变==</p>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> 学习 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> python </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[issue | 休眠后的网络问题]]></title>
       <url>/2018/01/01/%E4%BC%91%E7%9C%A0%E5%90%8E%E7%9A%84%E7%BD%91%E7%BB%9C%E9%97%AE%E9%A2%98/</url>
-      <content type="html"><![CDATA[<p>休眠之后</p>
+      <content type="html"><![CDATA[<p>休眠之后, wifi就搜不到了</p>
+<p>智障了很久.发现其实重启一下服务就可以</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">service</span> network-manager restart
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>另外…才发现<code>xxxctl</code>里的ctl是<code>control</code>的意思</p>
 ]]></content>
       
         <categories>
@@ -6776,7 +6821,7 @@ total     3 users
     </entry>
     
     <entry>
-      <title><![CDATA[python-getattr]]></title>
+      <title><![CDATA[trick | python-getattr]]></title>
       <url>/2017/05/30/python-getattr/</url>
       <content type="html"><![CDATA[<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">import</span> os
 getattr<span class="token punctuation">(</span>os<span class="token punctuation">,</span> <span class="token string">"getcwd"</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
@@ -6788,6 +6833,12 @@ os<span class="token punctuation">.</span>getcwd<span class="token punctuation">
 <p>好菜啊…我<br>这样子就可以不通过<code>.</code>来调用对象方法了</p>
 ]]></content>
       
+        <categories>
+            
+            <category> trick </category>
+            
+        </categories>
+        
         
         <tags>
             
@@ -7727,21 +7778,6 @@ function doSomething2(){
     
     <entry>
       <title><![CDATA[ramda]]></title>
-      <url>/2017/05/23/ramda/</url>
-      <content type="html"><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>今天在知乎上看到了这个<code>Ramda</code><br>是一个函数式的.额,然后就想到了underscore</p>
-<p>搜了一下看到了<br>官网<code>http://ramdajs.com/</code>, github 8k star<br>所有的方法都支持Curry</p>
-<p>哦还搜到了一篇文章<br><a href="http://www.ruanyifeng.com/blog/2017/03/ramda.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2017/03/ramda.html</a></p>
-<p>还有一本gitbook是js函数式<br><a href="https://www.gitbook.com/book/llh911001/mostly-adequate-guide-chinese/details" target="_blank" rel="external">https://www.gitbook.com/book/llh911001/mostly-adequate-guide-chinese/details</a></p>
-<p>想有时间学一下,先mark一下</p>
-<p>算了不过了,mark啥,现在就学学呗</p>
-<p>等我先写完,,,那个a的href和onclick就学这个</p>
-]]></content>
-      
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[ramda]]></title>
       <url>/2017/05/23/Ramda/</url>
       <content type="html"><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>今天在知乎上看到了这个<code>Ramda</code><br>是一个函数式的.额,然后就想到了underscore</p>
 <p>搜了一下看到了<br>官网<code>http://ramdajs.com/</code>, github 8k star<br>所有的方法都支持Curry</p>
@@ -7800,6 +7836,21 @@ R<span class="token punctuation">.</span><span class="token function">test</span
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>确实很语义化,很酷炫,,,</p>
 <p>后面还有个很长的例子,,,很酷炫</p>
+]]></content>
+      
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[ramda]]></title>
+      <url>/2017/05/23/ramda/</url>
+      <content type="html"><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>今天在知乎上看到了这个<code>Ramda</code><br>是一个函数式的.额,然后就想到了underscore</p>
+<p>搜了一下看到了<br>官网<code>http://ramdajs.com/</code>, github 8k star<br>所有的方法都支持Curry</p>
+<p>哦还搜到了一篇文章<br><a href="http://www.ruanyifeng.com/blog/2017/03/ramda.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2017/03/ramda.html</a></p>
+<p>还有一本gitbook是js函数式<br><a href="https://www.gitbook.com/book/llh911001/mostly-adequate-guide-chinese/details" target="_blank" rel="external">https://www.gitbook.com/book/llh911001/mostly-adequate-guide-chinese/details</a></p>
+<p>想有时间学一下,先mark一下</p>
+<p>算了不过了,mark啥,现在就学学呗</p>
+<p>等我先写完,,,那个a的href和onclick就学这个</p>
 ]]></content>
       
         
@@ -11401,9 +11452,9 @@ is restricted to users with role &quot;admin-gui&quot;. Users are defined in /et
         
         <tags>
             
-            <tag> 周三 </tag>
-            
             <tag> java </tag>
+            
+            <tag> 周三 </tag>
             
         </tags>
         
@@ -11471,9 +11522,9 @@ creature<span class="token punctuation">.</span><span class="token function">sle
         
         <tags>
             
-            <tag> 周三 </tag>
-            
             <tag> java </tag>
+            
+            <tag> 周三 </tag>
             
         </tags>
         
