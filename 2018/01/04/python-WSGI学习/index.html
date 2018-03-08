@@ -246,7 +246,7 @@
 
     
         <meta property="article:published_time" content="Thu Jan 04 2018 11:58:02 GMT+0800" />
-        <meta property="article:modified_time" content="Thu Jan 04 2018 12:10:22 GMT+0800" />
+        <meta property="article:modified_time" content="Thu Jan 04 2018 17:50:04 GMT+0800" />
     
 
     <!-- The Twitter Card protocol -->
@@ -273,7 +273,7 @@
     "mainEntityOfPage": "http://yoursite.com/2018/01/04/python-WSGI学习/index.html",
     "headline": "python | WSGI学习",
     "datePublished": "Thu Jan 04 2018 11:58:02 GMT+0800",
-    "dateModified": "Thu Jan 04 2018 12:10:22 GMT+0800",
+    "dateModified": "Thu Jan 04 2018 17:50:04 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "Aryb1n",
@@ -467,8 +467,9 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p><a href="http://python.jobbole.com/88653/" target="_blank" rel="external">http://python.jobbole.com/88653/</a><br><a href="http://python.jobbole.com/87502/" target="_blank" rel="external">http://python.jobbole.com/87502/</a></p>
-<p>这两篇讲的很好了，就做个收集..</p>
+        <p><a href="http://python.jobbole.com/88653/" target="_blank" rel="external">http://python.jobbole.com/88653/</a></p>
+<p>文章讲的很好了</p>
+<p>WSGI 是 python 定义的</p>
 <p>WSGI就是规定了server和application如何通信的协议(从Server端看)</p>
 <p>这里server不是我们通常说的B/S和C/S里的server</p>
 <p>可以认为是这样子(但愿我理解的对)</p>
@@ -478,7 +479,23 @@
 +========+                     +=========================+
 +B  or  C+                     |我们说的B/S或者C/S里面的S|
 +--------+                     +-------------------------+
-</code></pre>
+</code></pre><p>常见的Django, Flask 应该算是这里的app<br>但他们里面也有简单的Server(WSGIRefServer的封装应该是?)实现，所以自己也可以跑起来，生产环境则会搭配一些Server, 比如bjoern, gunicorn, uWSGI<br>所以这些web框架，一般会有几种不同的启动方式?</p>
+<blockquote>
+<p>Bottle, 只有一个文件的web框架</p>
+<p>我怕是个傻子，才知道ipython的存在…</p>
+</blockquote>
+<p>这里有个turorial: <a href="http://wsgi.tutorial.codepoint.net/" target="_blank" rel="external">http://wsgi.tutorial.codepoint.net/</a></p>
+<p>app端大致的定义</p>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">app</span><span class="token punctuation">(</span>environ<span class="token punctuation">,</span> start_response<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    start_response<span class="token punctuation">(</span>status<span class="token punctuation">,</span> headers<span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token keyword">return</span> iterator
+
+    <span class="token comment" spellcheck="true"># environ, start_response由Server调用app时候传入...放在js里大概是就是叫回调函数?</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>另外有一篇为什么要用ORM的: <a href="https://stackoverflow.com/questions/398134/what-are-the-advantages-of-using-an-orm" target="_blank" rel="external">https://stackoverflow.com/questions/398134/what-are-the-advantages-of-using-an-orm</a></p>
+
         
     
 
@@ -497,6 +514,14 @@
             <!-- Post Prev & Next Nav -->
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
+    
+        <a href="/2018/01/04/python-装饰器/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
     
 
     <!-- Section Spacer -->
@@ -596,7 +621,7 @@
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="/archives/2018/01/">一月 2018<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/10/">十月 2017<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">16</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">38</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">13</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">52</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">26</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">13</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/11/">十一月 2016<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/10/">十月 2016<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/07/">七月 2016<span class="sidebar_archives-count">13</span></a>
+                <a class="sidebar_archives-link" href="/archives/2018/03/">三月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/01/">一月 2018<span class="sidebar_archives-count">10</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/10/">十月 2017<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">16</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">38</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">13</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">52</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">26</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">13</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/11/">十一月 2016<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/10/">十月 2016<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/07/">七月 2016<span class="sidebar_archives-count">13</span></a>
             </ul>
         </li>
         
@@ -614,7 +639,7 @@
             </a>
             <ul class="dropdown-menu">
                 <li>
-                <a class="sidebar_archives-link" href="/categories/issue/">issue<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/trick/">trick<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/writeup/">writeup<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/备忘/">备忘<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/学习/">学习<span class="sidebar_archives-count">23</span></a></li><li><a class="sidebar_archives-link" href="/categories/日记/">日记<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/categories/笔记/">笔记<span class="sidebar_archives-count">1</span></a>
+                <a class="sidebar_archives-link" href="/categories/issue/">issue<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/trick/">trick<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/writeup/">writeup<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/备忘/">备忘<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/学习/">学习<span class="sidebar_archives-count">26</span></a></li><li><a class="sidebar_archives-link" href="/categories/日记/">日记<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/categories/笔记/">笔记<span class="sidebar_archives-count">1</span></a>
             </ul>
         </li>
         
