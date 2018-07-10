@@ -246,7 +246,7 @@
 
     
         <meta property="article:published_time" content="Sat Jan 20 2018 11:29:46 GMT+0800" />
-        <meta property="article:modified_time" content="Mon Mar 05 2018 22:05:01 GMT+0800" />
+        <meta property="article:modified_time" content="Sat Jul 07 2018 22:24:41 GMT+0800" />
     
 
     <!-- The Twitter Card protocol -->
@@ -273,7 +273,7 @@
     "mainEntityOfPage": "http://yoursite.com/2018/01/20/pwn-trick/index.html",
     "headline": "pwn | trick",
     "datePublished": "Sat Jan 20 2018 11:29:46 GMT+0800",
-    "dateModified": "Mon Mar 05 2018 22:05:01 GMT+0800",
+    "dateModified": "Sat Jul 07 2018 22:24:41 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "Aryb1n",
@@ -358,7 +358,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#21字节shellcode"><span class="post-toc-number">1.</span> <span class="post-toc-text">21字节shellcode</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#利用leave伪造栈帧"><span class="post-toc-number">2.</span> <span class="post-toc-text">利用leave伪造栈帧</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#libc-csu-init处的gadget"><span class="post-toc-number">3.</span> <span class="post-toc-text">libc_csu_init处的gadget</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#MK-FP"><span class="post-toc-number">4.</span> <span class="post-toc-text">MK_FP</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#堆方向大概是这样子的"><span class="post-toc-number">5.</span> <span class="post-toc-text">堆方向大概是这样子的</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#实际堆块大小"><span class="post-toc-number">6.</span> <span class="post-toc-text">实际堆块大小</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#fast-bin-大小"><span class="post-toc-number">7.</span> <span class="post-toc-text">fast bin 大小</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#FIFO-amp-LIFO"><span class="post-toc-number">8.</span> <span class="post-toc-text">FIFO & LIFO</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#checksec"><span class="post-toc-number">9.</span> <span class="post-toc-text">checksec</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#hint"><span class="post-toc-number">10.</span> <span class="post-toc-text">hint</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#新的unlink的利用方法-传说中的unlink"><span class="post-toc-number">11.</span> <span class="post-toc-text">新的unlink的利用方法(传说中的unlink)</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#unlink"><span class="post-toc-number">12.</span> <span class="post-toc-text">unlink</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#总觉UAF和unlink哪里很像"><span class="post-toc-number">13.</span> <span class="post-toc-text">总觉UAF和unlink哪里很像</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#很多天了-没搞清楚这个unlink的double-free"><span class="post-toc-number">14.</span> <span class="post-toc-text">很多天了, 没搞清楚这个unlink的double free</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#贴一篇关于堆-感觉挺好的"><span class="post-toc-number">15.</span> <span class="post-toc-text">贴一篇关于堆, 感觉挺好的</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#格式化字符串"><span class="post-toc-number">16.</span> <span class="post-toc-text">格式化字符串</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#有的时候不能想当然"><span class="post-toc-number">17.</span> <span class="post-toc-text">有的时候不能想当然</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#这样子一段"><span class="post-toc-number">18.</span> <span class="post-toc-text">这样子一段</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#格式化字符串-1"><span class="post-toc-number">19.</span> <span class="post-toc-text">格式化字符串</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#任意地址读"><span class="post-toc-number">19.1.</span> <span class="post-toc-text">任意地址读</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#任意地址写"><span class="post-toc-number">19.2.</span> <span class="post-toc-text">任意地址写</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#IDA相关"><span class="post-toc-number">20.</span> <span class="post-toc-text">IDA相关</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#ROPGadget里的only"><span class="post-toc-number">1.</span> <span class="post-toc-text">ROPGadget里的only</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#21字节shellcode"><span class="post-toc-number">2.</span> <span class="post-toc-text">21字节shellcode</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#更改执行流程"><span class="post-toc-number">3.</span> <span class="post-toc-text">更改执行流程</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#emmmm"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">emmmm</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#常识"><span class="post-toc-number">4.</span> <span class="post-toc-text">常识</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#利用leave伪造栈帧"><span class="post-toc-number">5.</span> <span class="post-toc-text">利用leave伪造栈帧</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#libc-csu-init处的gadget"><span class="post-toc-number">6.</span> <span class="post-toc-text">libc_csu_init处的gadget</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#MK-FP"><span class="post-toc-number">7.</span> <span class="post-toc-text">MK_FP</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#堆方向大概是这样子的"><span class="post-toc-number">8.</span> <span class="post-toc-text">堆方向大概是这样子的</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#实际堆块大小"><span class="post-toc-number">9.</span> <span class="post-toc-text">实际堆块大小</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#fast-bin-大小"><span class="post-toc-number">10.</span> <span class="post-toc-text">fast bin 大小</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#FIFO-amp-LIFO"><span class="post-toc-number">11.</span> <span class="post-toc-text">FIFO & LIFO</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#checksec"><span class="post-toc-number">12.</span> <span class="post-toc-text">checksec</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#hint"><span class="post-toc-number">13.</span> <span class="post-toc-text">hint</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#新的unlink的利用方法-传说中的unlink"><span class="post-toc-number">14.</span> <span class="post-toc-text">新的unlink的利用方法(传说中的unlink)</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#unlink"><span class="post-toc-number">15.</span> <span class="post-toc-text">unlink</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#总觉UAF和double-free哪里很像"><span class="post-toc-number">16.</span> <span class="post-toc-text">总觉UAF和double free哪里很像</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#很多天了-没搞清楚这个unlink的double-free"><span class="post-toc-number">17.</span> <span class="post-toc-text">很多天了, 没搞清楚这个unlink的double free</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#贴一篇关于堆-感觉挺好的"><span class="post-toc-number">18.</span> <span class="post-toc-text">贴一篇关于堆, 感觉挺好的</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#格式化字符串"><span class="post-toc-number">19.</span> <span class="post-toc-text">格式化字符串</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#有的时候不能想当然"><span class="post-toc-number">20.</span> <span class="post-toc-text">有的时候不能想当然</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#这样子一段"><span class="post-toc-number">21.</span> <span class="post-toc-text">这样子一段</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#格式化字符串-1"><span class="post-toc-number">22.</span> <span class="post-toc-text">格式化字符串</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#任意地址读"><span class="post-toc-number">22.1.</span> <span class="post-toc-text">任意地址读</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#任意地址写"><span class="post-toc-number">22.2.</span> <span class="post-toc-text">任意地址写</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#资料"><span class="post-toc-number">22.3.</span> <span class="post-toc-text">资料</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#IDA相关"><span class="post-toc-number">23.</span> <span class="post-toc-text">IDA相关</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#生成器"><span class="post-toc-number">24.</span> <span class="post-toc-text">生成器</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#leak-libc"><span class="post-toc-number">25.</span> <span class="post-toc-text">leak libc</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#bins-0"><span class="post-toc-number">26.</span> <span class="post-toc-text">bins[0]</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#mem-chunk"><span class="post-toc-number">27.</span> <span class="post-toc-text">mem chunk</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#关于初始化"><span class="post-toc-number">28.</span> <span class="post-toc-text">关于初始化</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#gdb里"><span class="post-toc-number">29.</span> <span class="post-toc-text">gdb里</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#malloc-amp-free"><span class="post-toc-number">30.</span> <span class="post-toc-text">malloc & free</span></a></li></ol>
     </ul>
     
 
@@ -477,6 +477,7 @@
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
         <p>今天学pwn…希望能坚持…现在还没有什么trick, 就当一个备忘的板子</p>
+<h3 id="ROPGadget里的only"><a href="#ROPGadget里的only" class="headerlink" title="ROPGadget里的only"></a>ROPGadget里的only</h3><p>坑爹啊…铁三的时候用这个<code>--only &#39;int&#39;</code>…只能找到一个<code>int 0x80</code><br>然后碰巧这题里…这个gadget最低位是坏字符用不了…<br>现在才发现,,,,不加这玩意, 随便<code>| grep &#39;int 0x80&#39;</code>能得到一堆…<br>伤…<br>我特么</p>
 <h3 id="21字节shellcode"><a href="#21字节shellcode" class="headerlink" title="21字节shellcode"></a>21字节shellcode</h3><p>应该是x86通用的?</p>
 <pre class="line-numbers language-python"><code class="language-python">shellcode  <span class="token operator">=</span> <span class="token string">"\x31\xc9\xf7\xe1\x51\x68\x2f\x2f\x73"</span>
 shellcode <span class="token operator">+=</span> <span class="token string">"\x68\x68\x2f\x62\x69\x6e\x89\xe3\xb0"</span>
@@ -491,7 +492,44 @@ shellcode <span class="token operator">+=</span> <span class="token string">"\x0
   11:   b0 0b                   mov    al,0xb
   13:   cd 80                   int    0x80
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="利用leave伪造栈帧"><a href="#利用leave伪造栈帧" class="headerlink" title="利用leave伪造栈帧"></a>利用leave伪造栈帧</h3><pre class="line-numbers language-asm"><code class="language-asm">push ebp
+<h3 id="更改执行流程"><a href="#更改执行流程" class="headerlink" title="更改执行流程"></a>更改执行流程</h3><p>栈溢出, 覆盖返回地址</p>
+<p>更改got表, 有的题目是静态链接或者开启<code>full RELRO</code>保护不能写GOT的时候就可以考虑使用malloc_hook</p>
+<p>使用malloc_hook, 这个刚刚学到, 在RCTF2017-RNote里, 这题有点神奇, 错位分配fastbin到malloc_hook</p>
+<h4 id="emmmm"><a href="#emmmm" class="headerlink" title="emmmm"></a>emmmm</h4><p>有个疑问, 就是静态链接到底可以改got表来劫持流程吗…</p>
+<h3 id="常识"><a href="#常识" class="headerlink" title="常识"></a>常识</h3><p>prev是指低地址的, 我智商太低老是反映不过来<br>比如, free的时候, 合并到低地址的空闲chunk是如下操作</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">prev_inuse</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    prevsize <span class="token operator">=</span> <span class="token function">prev_size</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    size <span class="token operator">+</span><span class="token operator">=</span> prevsize<span class="token punctuation">;</span>
+    p <span class="token operator">=</span> <span class="token function">chunk_at_offset</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> <span class="token operator">-</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">long</span><span class="token punctuation">)</span> prevsize<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">unlink</span><span class="token punctuation">(</span>av<span class="token punctuation">,</span> p<span class="token punctuation">,</span> bck<span class="token punctuation">,</span> fwd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre><code>------------------ &lt;- 低地址
+prev_size | size
+------------------ 
+fd      |    bk
+------------------ 
+not used content
+------------------ &lt;- p
+prev_size | size
+-----------------
+Data
+-----------------
+
+变成
+
+------------------ &lt;- p
+prev_size | size
+------------------ 
+fd      |    bk
+------------------ 
+not used content
+------------------ &lt;- 原来p的指向
+
+-----------------
+
+-----------------
+</code></pre><h3 id="利用leave伪造栈帧"><a href="#利用leave伪造栈帧" class="headerlink" title="利用leave伪造栈帧"></a>利用leave伪造栈帧</h3><pre class="line-numbers language-asm"><code class="language-asm">push ebp
 mov  ebp, esp
 
 leave # mov esp, ebp | pop ebp
@@ -545,7 +583,25 @@ chunk     | ?bit
 </code></pre><p>再说这里的<code>((x + 7) &amp; ~7)</code>, 这个是为了8字节对齐, 明眼人一下就看出来这是个分段函数<br><code>x = 1...8</code>时候<code>f(x) = 8</code>, <code>x = 9...16</code>的时候<code>f(x) = 16</code>, 恩, 就这样子</p>
 <p>另外, 32位以8字节对齐, 那64位应该是16字节对齐的?所以就是<code>((size + 8 + 15) &amp; ~15)</code>, ???</p>
 <p>对的, 是双字对齐<code>double-word aligned</code></p>
-<h3 id="fast-bin-大小"><a href="#fast-bin-大小" class="headerlink" title="fast bin 大小"></a>fast bin 大小</h3><p>16~64(0x10, 0x40) bytes for x86_32<br>32~128(0x20, 0x80) bytes for x86_64<br>这个大小应该指的是data的大小, 还是总共分的大小</p>
+<p>后来, 在读malloc源码的时候看到了…<br>具体对齐的代码是</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">define</span> request2size(req)                                         \
+  (((req) + SIZE_SZ + MALLOC_ALIGN_MASK &lt; MINSIZE)  ?             \
+   MINSIZE :                                                      \
+   ((req) + SIZE_SZ + MALLOC_ALIGN_MASK) &amp; ~MALLOC_ALIGN_MASK)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>本来是需要两个额外的size_t来存储头部信息, 但由于可以借用下一个chunk的<code>prev_size</code>, 所以这里只要加一个size_t, 如果是mmap申请的, 就没有办法借用…就需要加<code>2*size_t</code>, 然后再对齐</p>
+<h3 id="fast-bin-大小"><a href="#fast-bin-大小" class="headerlink" title="fast bin 大小"></a>fast bin 大小</h3><p>16~64(0x10, 0x40) bytes for x86_32<br>32~128(0x20, 0x80) bytes for x86_64<br>这个大小应该指的是data的大小, 还是总共分的大小<br>这个data是chunk的大小, 不是data的大小</p>
+<p>根据上面的计算公式, 这个, 那个32bit下…malloc 大小0x0和0x8的..会得到一个0x10大小的chunk, 也就是最小的chunk</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token operator">-></span> free <span class="token operator">-></span> fastbinY<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">0x10</span>
+<span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token operator">-></span> free <span class="token operator">-></span> fastbinY<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">0x10</span>
+<span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token operator">-></span> free <span class="token operator">-></span> fastbinY<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">0x18</span>
+<span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">24</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token operator">-></span> free <span class="token operator">-></span> fastbinY<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">0x20</span>
+<span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token operator">-></span> free <span class="token operator">-></span> fastbinY<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">0x28</span>
+<span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">40</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token operator">-></span> free <span class="token operator">-></span> fastbinY<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">0x30</span>
+<span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">48</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token operator">-></span> free <span class="token operator">-></span> fastbinY<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">0x38</span>
+<span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">56</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token operator">-></span> free <span class="token operator">-></span> fastbinY<span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">0x40</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>实际上这个fastbinY是有10个位置…fastbinY[0..9], 意思是后三个[7..9], 其实是没用上的, 这个可能通过设置来实现?</p>
 <pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">char</span> <span class="token operator">*</span> p1 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token keyword">char</span> <span class="token operator">*</span> p2 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token keyword">char</span> <span class="token operator">*</span> p3 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -560,6 +616,11 @@ chunk     | ?bit
 <pre><code>bins[0] -&gt; 0x604940 -&gt; 0x604820
            后入后出    先入先出
 </code></pre><p>进入的方向和fastbins是一样的, 但出去的方向是不一样的</p>
+<p>普通的bin有很多…大概是…126 这么多…而且bins是双向链表, 一个位要占两个格子</p>
+<pre><code>1 unsorted bin
+62 small bin
+63 large bin
+</code></pre><p>那我怎么感觉, 调试的时候在最后一个bins和binmap时间有8字节的padding呢…</p>
 <h3 id="FIFO-amp-LIFO"><a href="#FIFO-amp-LIFO" class="headerlink" title="FIFO &amp; LIFO"></a>FIFO &amp; LIFO</h3><p>fastbins是先进后出, 像栈一样<br>其他的bins都是先进先出, 像队列一样</p>
 <h3 id="checksec"><a href="#checksec" class="headerlink" title="checksec"></a>checksec</h3><p>FULL RELRO之后就不能改写got表了</p>
 <h3 id="hint"><a href="#hint" class="headerlink" title="hint"></a>hint</h3><p>UAF 用来leak堆上的信息, 然后计算一些地址</p>
@@ -571,8 +632,10 @@ chunk     | ?bit
 +-----------+------+-----------------------------+----------------+
                    |&lt;-----fake出来的堆块--------&gt;|&lt;-溢出时fake一下|
 </code></pre><p>通过p1的堆溢出来在p1的数据部分fake一个堆, 同时对p2的下一块的prev(改成fake出来堆块的大小)和size(主要是标志位)进行修改, 让系统以为p1已经空闲, 然后在<code>free(p2)</code>的时候就可以对p1进行unlink, 这个时候就要注意fake出来的堆块的构造方式, 主要是fake_fd和fake_bk….</p>
+<p>Unlink有很多中利用方式, 就是有不同的构造方式, 这里是用overflow的方法, 也可以用overlap的方法, 强网杯补题里有说..</p>
 <h3 id="unlink"><a href="#unlink" class="headerlink" title="unlink"></a>unlink</h3><p>double free的经典题目<code>0ctf2015-freenote</code>的wp很多, 但我感觉这一篇真棒, 有图真好, <a href="http://angelboy.logdown.com/posts/259180-0ctf-2015-write-up" target="_blank" rel="external">http://angelboy.logdown.com/posts/259180-0ctf-2015-write-up</a><br><a href="http://rk700.github.io/2015/04/21/0ctf-freenote/" target="_blank" rel="external">http://rk700.github.io/2015/04/21/0ctf-freenote/</a></p>
-<h3 id="总觉UAF和unlink哪里很像"><a href="#总觉UAF和unlink哪里很像" class="headerlink" title="总觉UAF和unlink哪里很像"></a>总觉UAF和unlink哪里很像</h3><h3 id="很多天了-没搞清楚这个unlink的double-free"><a href="#很多天了-没搞清楚这个unlink的double-free" class="headerlink" title="很多天了, 没搞清楚这个unlink的double free"></a>很多天了, 没搞清楚这个unlink的double free</h3><p>在unlink一个块, 我们叫他<code>p = 0x604800</code>的时候是(64位为例)<br>用方块代表取一个地址里的东西</p>
+<h3 id="总觉UAF和double-free哪里很像"><a href="#总觉UAF和double-free哪里很像" class="headerlink" title="总觉UAF和double free哪里很像"></a>总觉UAF和double free哪里很像</h3><p>问题终结…<br>在某大佬的PPT里说…<br>Double Free算是一种特殊的UAF</p>
+<h3 id="很多天了-没搞清楚这个unlink的double-free"><a href="#很多天了-没搞清楚这个unlink的double-free" class="headerlink" title="很多天了, 没搞清楚这个unlink的double free"></a>很多天了, 没搞清楚这个unlink的double free</h3><p>在unlink一个块, 我们叫他<code>p = 0x604800</code>的时候是(64位为例)<br>用方块代表取一个地址里的东西</p>
 <pre><code>BK = p -&gt; bk
    BK = [0x604800 + 0x18] = 0x604900
 FD = p -&gt; fd
@@ -585,7 +648,7 @@ BK -&gt; fd = FD -&gt; bk
 <p>double link的时候, ptr是找到一个地址指向我们要unlink的块, 而不是 <code>ptr == p</code>. 是<code>*ptr == p</code>,(p是我们unlink的时候要释放的fake出来的块), 理解错误之一<br>unlink的时候这个会发生一次赋值<del><code>ptr = p - 0x18</code></del>, 这里是我理解的最大错误之二, 应该是<code>*ptr = ptr - 3</code><br>然后如果能对ptr里存的地址所指向的位置进行写的话, 就可以写到<code>ptr - 3</code>的地方<br>现在才懂这个图是啥意思 <a href="http://www.cnblogs.com/0xJDchen/p/6195919.html" target="_blank" rel="external">http://www.cnblogs.com/0xJDchen/p/6195919.html</a><br>然后对 <code>note[0] -&gt; content</code> (我们上面的ptr)进行写入的话, 其实就是写到了<code>ptr - 0xc</code>这个地址, 因为<code>ptr - 0x18</code>这个地址位于<code>ptr</code>的上方, 所以这样子就能重新覆盖掉ptr, 比如把ptr里的内容覆盖成<code>free@got</code>,<br>我怕是个傻子</p>
 <p>妈的, 终于懂了</p>
 <h3 id="贴一篇关于堆-感觉挺好的"><a href="#贴一篇关于堆-感觉挺好的" class="headerlink" title="贴一篇关于堆, 感觉挺好的"></a>贴一篇关于堆, 感觉挺好的</h3><p><a href="https://paper.seebug.org/255/" target="_blank" rel="external">https://paper.seebug.org/255/</a></p>
-<h3 id="格式化字符串"><a href="#格式化字符串" class="headerlink" title="格式化字符串"></a>格式化字符串</h3><p>看这个 <a href="https://paper.seebug.org/246/" target="_blank" rel="external">https://paper.seebug.org/246/</a></p>
+<h3 id="格式化字符串"><a href="#格式化字符串" class="headerlink" title="格式化字符串"></a>格式化字符串</h3><p>看这个 <a href="https://paper.seebug.org/246/" target="_blank" rel="external">https://paper.seebug.org/246/</a><br>当格式化字符串存储在bss, 堆上的时候怎么办<br>当格式化字符串使用不同函数接收时候的字符限制<br>当开启保护不能改got表怎么办 -&gt; 改stdin虚表</p>
 <h3 id="有的时候不能想当然"><a href="#有的时候不能想当然" class="headerlink" title="有的时候不能想当然"></a>有的时候不能想当然</h3><pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">func1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
     <span class="token keyword">char</span> buffer<span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
@@ -598,10 +661,12 @@ BK -&gt; fd = FD -&gt; bk
 <span class="token function">setvbuf</span><span class="token punctuation">(</span><span class="token constant">stdout</span><span class="token punctuation">,</span> <span class="token number">0LL</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">0LL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token keyword">return</span> <span class="token function">alarm</span><span class="token punctuation">(</span><span class="token number">0x3Cu</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>对这个setvbuf还是不太懂</p>
+<p>对这个setvbuf还是不太懂<br>后来…偶然调试了一下…<br>如果不setbuf的话…在用printf, scanf输入输出的时候会在堆上申请内存来作为输入输出缓冲区<br>调试发现, 第一次用printf会产生一个0x400(1024)大小的缓冲区, 如果加上<code>setvbuf(stdout, 0, 2, 0)</code>就不会产生这个缓冲区<br>scanf同理, 也会产生一个<br>那么如果取消缓冲区的话….那他们怎么缓冲呢QwQ</p>
 <h3 id="格式化字符串-1"><a href="#格式化字符串-1" class="headerlink" title="格式化字符串"></a>格式化字符串</h3><p>test使用<code>AAAA.%1$p.%2$p...</code>这样子的</p>
 <h4 id="任意地址读"><a href="#任意地址读" class="headerlink" title="任意地址读"></a>任意地址读</h4><p>确定位置之后,比如是<code>%3$p</code>, 使用<code>addr.%3$s</code>来任意地址读…我这里写了个题, 利用格式化字符串来DynELF…结果失败了,QAQ, 不知道为啥</p>
-<h4 id="任意地址写"><a href="#任意地址写" class="headerlink" title="任意地址写"></a>任意地址写</h4><h3 id="IDA相关"><a href="#IDA相关" class="headerlink" title="IDA相关"></a>IDA相关</h3><p>就写在这里吧…<br>IDA栈帧表示</p>
+<h4 id="任意地址写"><a href="#任意地址写" class="headerlink" title="任意地址写"></a>任意地址写</h4><p>可以用pwntools带的fmtstr_payload…</p>
+<h4 id="资料"><a href="#资料" class="headerlink" title="资料"></a>资料</h4><p><a href="https://paper.seebug.org/246/" target="_blank" rel="external">https://paper.seebug.org/246/</a></p>
+<h3 id="IDA相关"><a href="#IDA相关" class="headerlink" title="IDA相关"></a>IDA相关</h3><p>就写在这里吧…<br>IDA栈帧表示</p>
 <pre><code>-0000000000000008                 db ? ; undefined
 -0000000000000007                 db ? ; undefined
 -0000000000000006                 db ? ; undefined
@@ -610,6 +675,105 @@ BK -&gt; fd = FD -&gt; bk
 +0000000000000000  s              db 8 dup(?)
 +0000000000000008  r              db 8 dup(?)
 </code></pre><p>这个s是saved的ebp, r是返回地址ret</p>
+<h3 id="生成器"><a href="#生成器" class="headerlink" title="生成器"></a>生成器</h3><p>经常用的</p>
+<pre class="line-numbers language-python"><code class="language-python">libc <span class="token operator">=</span> ELF<span class="token punctuation">(</span><span class="token string">"./libc32"</span><span class="token punctuation">)</span>
+list<span class="token punctuation">(</span>libc<span class="token punctuation">.</span>search<span class="token punctuation">(</span><span class="token string">'/bin/sh'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token comment" spellcheck="true"># 写法一</span>
+libc<span class="token punctuation">.</span>search<span class="token punctuation">(</span><span class="token string">'/bin/sh'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>next<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># 写法二</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>这个<code>libc.search()</code> 返回的就是一个<code>generator</code>, 大概用法</p>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">gen</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    x <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
+        <span class="token keyword">yield</span> x
+        x <span class="token operator">+=</span> <span class="token number">1</span>
+<span class="token comment" spellcheck="true"># 用法1</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> gen<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    do sth<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token comment" spellcheck="true"># 用法1</span>
+g <span class="token operator">=</span> gen<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span> g<span class="token punctuation">.</span>next<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span> g<span class="token punctuation">.</span>next<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span> g<span class="token punctuation">.</span>next<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="leak-libc"><a href="#leak-libc" class="headerlink" title="leak libc"></a>leak libc</h3><p>因为fastbin是单链表, 所以要其他bin才能leak出main_area, 从而算出来libc地址</p>
+<h3 id="bins-0"><a href="#bins-0" class="headerlink" title="bins[0]"></a>bins[0]</h3><p><code>bins[0]</code>貌似是没有意义的…</p>
+<p>因为在<code>malloc_init_state</code>中…这样子写道</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">malloc_init_state</span> <span class="token punctuation">(</span>mstate av<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> i<span class="token punctuation">;</span>
+    mbinptr bin<span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">/* Establish circular links for normal bins */</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> NBINS<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        bin <span class="token operator">=</span> <span class="token function">bin_at</span> <span class="token punctuation">(</span>av<span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        bin<span class="token operator">-></span>fd <span class="token operator">=</span> bin<span class="token operator">-></span>bk <span class="token operator">=</span> bin<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这里的<code>bin_at</code>是</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token comment" spellcheck="true">/* addressing -- note that bin_at(0) does not exist */</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> bin_at(m, i) \
+  (mbinptr) (((char *) &amp;((m)->bins[((i) - 1) * 2]))                              \
+             - offsetof (struct malloc_chunk, fd))</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>喔…不对…我的理解好像出现了偏差…</p>
+<h3 id="mem-chunk"><a href="#mem-chunk" class="headerlink" title="mem chunk"></a>mem chunk</h3><p>malloc里把malloc和free的的指针, 称mem, 即不包含chunk的头部的<code>prev_size</code>和<code>size</code><br>在进入<code>__libc_free</code>时, 会把传入的<code>mem</code>用<code>mem2chunk</code>转为<code>chunk</code><br>其中, <code>mem2chunk</code>是</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">define</span> mem2chunk(mem) ((mchunkptr)((char*)(mem) - 2*SIZE_SZ))</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>对应的<code>chunk2mem</code>为</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">define</span> chunk2mem(p)   ((void*)((char*)(p) + 2*SIZE_SZ))</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="关于初始化"><a href="#关于初始化" class="headerlink" title="关于初始化"></a>关于初始化</h3><p>初始化之后…<br>fastbinsY[0…9] 都为 0<br>bins  并不是为0, 而是会指向自身, 所以是是可以通过这个leak出main_area的地址</p>
+<pre class="line-numbers language-python"><code class="language-python">gdb<span class="token operator">-</span>peda$ p main_arena 
+$<span class="token number">1</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+  mutex <span class="token operator">=</span> <span class="token number">0x0</span><span class="token punctuation">,</span> 
+  flags <span class="token operator">=</span> <span class="token number">0x1</span><span class="token punctuation">,</span> 
+  fastbinsY <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">0x0</span><span class="token punctuation">,</span> <span class="token number">0x0</span><span class="token punctuation">,</span> <span class="token number">0x0</span><span class="token punctuation">,</span> <span class="token number">0x0</span><span class="token punctuation">,</span> <span class="token number">0x0</span><span class="token punctuation">,</span> <span class="token number">0x0</span><span class="token punctuation">,</span> <span class="token number">0x0</span><span class="token punctuation">,</span> <span class="token number">0x0</span><span class="token punctuation">,</span> <span class="token number">0x0</span><span class="token punctuation">,</span> <span class="token number">0x0</span><span class="token punctuation">}</span><span class="token punctuation">,</span> 
+  top <span class="token operator">=</span> <span class="token number">0x804b070</span><span class="token punctuation">,</span> 
+  last_remainder <span class="token operator">=</span> <span class="token number">0x0</span><span class="token punctuation">,</span> 
+  bins <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">0xf7f977b0</span> <span class="token operator">&lt;</span>main_arena<span class="token operator">+</span><span class="token number">48</span><span class="token operator">></span><span class="token punctuation">,</span> <span class="token number">0xf7f977b0</span> <span class="token operator">&lt;</span>main_arena<span class="token operator">+</span><span class="token number">48</span><span class="token operator">></span><span class="token punctuation">,</span> 
+    <span class="token number">0xf7f977b8</span> <span class="token operator">&lt;</span>main_arena<span class="token operator">+</span><span class="token number">56</span><span class="token operator">></span><span class="token punctuation">,</span> <span class="token number">0xf7f977b8</span> <span class="token operator">&lt;</span>main_arena<span class="token operator">+</span><span class="token number">56</span><span class="token operator">></span><span class="token punctuation">,</span> 
+    <span class="token number">0xf7f977c0</span> <span class="token operator">&lt;</span>main_arena<span class="token operator">+</span><span class="token number">64</span><span class="token operator">></span><span class="token punctuation">,</span> <span class="token number">0xf7f977c0</span> <span class="token operator">&lt;</span>main_arena<span class="token operator">+</span><span class="token number">64</span><span class="token operator">></span><span class="token punctuation">,</span> 
+    <span class="token number">0xf7f977c8</span> <span class="token operator">&lt;</span>main_arena<span class="token operator">+</span><span class="token number">72</span><span class="token operator">></span><span class="token punctuation">,</span> <span class="token number">0xf7f977c8</span> <span class="token operator">&lt;</span>main_arena<span class="token operator">+</span><span class="token number">72</span><span class="token operator">></span><span class="token punctuation">,</span> 
+    <span class="token number">0xf7f977d0</span> <span class="token operator">&lt;</span>main_arena<span class="token operator">+</span><span class="token number">80</span><span class="token operator">></span><span class="token punctuation">,</span> <span class="token number">0xf7f977d0</span> <span class="token operator">&lt;</span>main_arena<span class="token operator">+</span><span class="token number">80</span><span class="token operator">></span><span class="token punctuation">,</span> 
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>真是醉了….<br>说是unsorted_bin是bin[1]…然而</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">define</span> unsorted_chunks(M) (bin_at(M, 1))</span>
+
+<span class="token macro property">#<span class="token directive keyword">define</span> bin_at(m, i) \
+(mbinptr) (((char *) &amp;((m)->bins[((i) - 1) * 2])) \
+- offsetof (struct malloc_chunk, fd))</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>带进去算一下就可以知道…其实是 <code>main_arena -&gt; bins[0]</code> 存的就是<code>unsorted_bin</code>的<code>fd</code>, <code>main_arena -&gt; bins[1]</code>存的就是<code>unsorted_bin</code>的<code>bk</code></p>
+<h3 id="gdb里"><a href="#gdb里" class="headerlink" title="gdb里"></a>gdb里</h3><pre class="line-numbers language-c"><code class="language-c">gdb<span class="token operator">-</span>peda$ p <span class="token operator">*</span><span class="token punctuation">(</span>mfastbinptr<span class="token punctuation">)</span><span class="token number">0x804b000</span>
+$<span class="token number">5</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+  prev_size <span class="token operator">=</span> <span class="token number">0x0</span><span class="token punctuation">,</span> 
+  size <span class="token operator">=</span> <span class="token number">0x91</span><span class="token punctuation">,</span> 
+  fd <span class="token operator">=</span> <span class="token number">0xf7f97838</span> <span class="token operator">&lt;</span>main_arena<span class="token operator">+</span><span class="token number">184</span><span class="token operator">></span><span class="token punctuation">,</span> 
+  bk <span class="token operator">=</span> <span class="token number">0x804b0a0</span><span class="token punctuation">,</span> 
+  fd_nextsize <span class="token operator">=</span> <span class="token number">0x41414141</span><span class="token punctuation">,</span> 
+  bk_nextsize <span class="token operator">=</span> <span class="token number">0x41414141</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="malloc-amp-free"><a href="#malloc-amp-free" class="headerlink" title="malloc &amp; free"></a>malloc &amp; free</h3><p><code>_int_malloc</code></p>
+<ol>
+<li>是否fastbin, 看是否有合适大小的fastbin</li>
+<li>是否smallbin, 看是否有合适大小的fastbin</li>
+<li>如果没有合适的fastbin和smallbin, 就进行<code>consolidate fastbin -&gt; unsorted_bin</code></li>
+<li>开始大循环</li>
+</ol>
+<p>如果…<code>unsorted_bin</code>中只有一个<code>last_remainder</code>.并且大小足够分, 就把这一块分一半给用户, 剩下的一块就是新的<code>last_remainder</code>, 再重新放入<code>unsorted_bin</code>…</p>
+<p>大循环:<br>    反向寻找<code>unsorted_bin</code>, 最多找1w次…<br>    大小精确相等的, 就可以直接分配<br>    如果当前块是small bins, 就放到对应大小的smallbin的第一个位置<br>    如果是large bins, 就放到largebin的合适位置(因为large是一个范围, 大小排序好的)</p>
+<p>所以…small_bin和large_bin都是从unsorted_bin取出来放进去的…</p>
+<p>明天再写…这个循环有点迷</p>
+<p><code>_int_free</code></p>
+<ol>
+<li>是否fastbin</li>
+<li>是否mmap分配的, 如果是就用munmap</li>
+<li>不然的话, 即使非mmap分配的small或者large, 就放入unsorted_bin</li>
+</ol>
+<p>free这里主要是各种检查</p>
 
         
     
@@ -736,7 +900,7 @@ BK -&gt; fd = FD -&gt; bk
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="/archives/2018/03/">三月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/01/">一月 2018<span class="sidebar_archives-count">10</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/10/">十月 2017<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">16</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">38</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">13</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">52</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">26</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">13</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/11/">十一月 2016<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/10/">十月 2016<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/07/">七月 2016<span class="sidebar_archives-count">13</span></a>
+                <a class="sidebar_archives-link" href="/archives/2018/07/">七月 2018<span class="sidebar_archives-count">14</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/06/">六月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/05/">五月 2018<span class="sidebar_archives-count">11</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/04/">四月 2018<span class="sidebar_archives-count">12</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/03/">三月 2018<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/01/">一月 2018<span class="sidebar_archives-count">10</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/10/">十月 2017<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">16</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">38</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">13</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">52</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">26</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">13</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/11/">十一月 2016<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/10/">十月 2016<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/07/">七月 2016<span class="sidebar_archives-count">13</span></a>
             </ul>
         </li>
         
@@ -754,7 +918,7 @@ BK -&gt; fd = FD -&gt; bk
             </a>
             <ul class="dropdown-menu">
                 <li>
-                <a class="sidebar_archives-link" href="/categories/issue/">issue<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/trick/">trick<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/writeup/">writeup<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/备忘/">备忘<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/学习/">学习<span class="sidebar_archives-count">26</span></a></li><li><a class="sidebar_archives-link" href="/categories/日记/">日记<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/categories/笔记/">笔记<span class="sidebar_archives-count">1</span></a>
+                <a class="sidebar_archives-link" href="/categories/issue/">issue<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/trick/">trick<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/categories/writeup/">writeup<span class="sidebar_archives-count">24</span></a></li><li><a class="sidebar_archives-link" href="/categories/writeup/学习/">学习<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/咸鱼/">咸鱼<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/备忘/">备忘<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/学习/">学习<span class="sidebar_archives-count">35</span></a></li><li><a class="sidebar_archives-link" href="/categories/日记/">日记<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/笔记/">笔记<span class="sidebar_archives-count">1</span></a>
             </ul>
         </li>
         

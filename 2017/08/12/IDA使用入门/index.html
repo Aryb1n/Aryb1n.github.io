@@ -246,7 +246,7 @@
 
     
         <meta property="article:published_time" content="Sat Aug 12 2017 22:14:43 GMT+0800" />
-        <meta property="article:modified_time" content="Mon Aug 14 2017 22:17:00 GMT+0800" />
+        <meta property="article:modified_time" content="Thu May 17 2018 20:05:03 GMT+0800" />
     
 
     <!-- The Twitter Card protocol -->
@@ -273,7 +273,7 @@
     "mainEntityOfPage": "http://yoursite.com/2017/08/12/IDA使用入门/index.html",
     "headline": "IDA使用入门",
     "datePublished": "Sat Aug 12 2017 22:14:43 GMT+0800",
-    "dateModified": "Mon Aug 14 2017 22:17:00 GMT+0800",
+    "dateModified": "Thu May 17 2018 20:05:03 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "Aryb1n",
@@ -358,7 +358,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#基本使用"><span class="post-toc-number">1.</span> <span class="post-toc-text">基本使用</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#C"><span class="post-toc-number">2.</span> <span class="post-toc-text">C++</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Patch"><span class="post-toc-number">3.</span> <span class="post-toc-text">Patch</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#IDA脚本"><span class="post-toc-number">4.</span> <span class="post-toc-text">IDA脚本</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#反静态分析"><span class="post-toc-number">5.</span> <span class="post-toc-text">反静态分析</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#反动态分析"><span class="post-toc-number">6.</span> <span class="post-toc-text">反动态分析</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#自己学习一丢丢C"><span class="post-toc-number">7.</span> <span class="post-toc-text">自己学习一丢丢C++</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#F5的问题"><span class="post-toc-number">8.</span> <span class="post-toc-text">F5的问题</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#defs-h"><span class="post-toc-number">9.</span> <span class="post-toc-text">defs.h</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#基本使用"><span class="post-toc-number">1.</span> <span class="post-toc-text">基本使用</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#C"><span class="post-toc-number">2.</span> <span class="post-toc-text">C++</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#RTTI-Runtime-Type-Identification"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">RTTI(Runtime Type Identification)</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#HITCON-Training-Lab15"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">HITCON Training Lab15</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Patch"><span class="post-toc-number">3.</span> <span class="post-toc-text">Patch</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#IDA脚本"><span class="post-toc-number">4.</span> <span class="post-toc-text">IDA脚本</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#反静态分析"><span class="post-toc-number">5.</span> <span class="post-toc-text">反静态分析</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#反动态分析"><span class="post-toc-number">6.</span> <span class="post-toc-text">反动态分析</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#自己学习一丢丢C"><span class="post-toc-number">7.</span> <span class="post-toc-text">自己学习一丢丢C++</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#F5的问题"><span class="post-toc-number">8.</span> <span class="post-toc-text">F5的问题</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#defs-h"><span class="post-toc-number">9.</span> <span class="post-toc-text">defs.h</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#数据类型"><span class="post-toc-number">10.</span> <span class="post-toc-text">数据类型</span></a></li></ol>
     </ul>
     
 
@@ -521,11 +521,13 @@ call demo_call
 <ol>
 <li><p>数据相关<br>db 1字节    byte<br>dw 2字节    word<br>dd 4字节    dword<br>dq 8字节    qword</p>
 </li>
-<li><p>数组<br>选中数据开头, <code>Edit -&gt; Array</code>,可以创建数组<br>这样子关于数组的访问就是基于<code>Array_head + offset</code>的形式</p>
-</li>
-<li><p>结构体<br>结构体, 几乎没法直接分辨是用了结构体<br>要自己手动识别, 然后添加</p>
+<li><p>数组<br>选中数据开头, <code>Edit -&gt; Array</code>,可以创建数组<br>这样子关于数组的访问就是基于<code>Array_head + offset</code>的形式<br>后来又遇到了问题…我的数组每个元素多大…怎么在建立数组菜单里没法选择<br>然后发现是需要先把数据开头第一个元素变成想要的类型, 比如word<br>然后再新建数组, 得到的就是数组元素大小就是和第一个元素一样的</p>
 </li>
 </ol>
+<ol>
+<li>结构体<br>结构体, 几乎没法直接分辨是用了结构体<br>要自己手动识别, 然后添加<br>一般一个变量(加不同间隔)偏移量的..这个变量可能就是某种类型的<br>特别是看到有的时候会把什么函数指针啊, 之类的赋值给他的成员<br>基本就是个类or结构体了</li>
+</ol>
+<p>在建立结构体的时候要注意那个, emmmmm, 注意在结构体末尾那一行点新建元素…不是开头那一行, 具体是怎么的来着…忘记了, 算了, 2333333</p>
 <h2 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h2><p>C++ 果然复杂的…毛线一样</p>
 <ol>
 <li><p>this<br>所有非静态C++成员函数都是用this指针<br>把this看做是传递到所有非静态成员函数的第一个隐含参数<br>MS VC++ 遵循thiscall, 把this传入到ECX寄存器<br>GUN g++ 把this看成最左边的参数,最后压入栈</p>
@@ -559,9 +561,8 @@ call demo_call
 <p>vtable是放在rodata段的…那么就不能hack了是吗…<br>emmm,好像不需要hack这个表…我们的hack点在于把对象中指向vtable的指针的指向改变…</p>
 <p>其实不太懂,我这里个g++涉及到类, 比如 new, 和对象成员函数调用都是用了fastcall</p>
 <p>而且这一块的汇编..惨不忍睹…<br>我还是太菜了</p>
-<ol>
-<li>RTTI(Runtime Type Identification)<br>运行时类型识别</li>
-</ol>
+<h3 id="RTTI-Runtime-Type-Identification"><a href="#RTTI-Runtime-Type-Identification" class="headerlink" title="RTTI(Runtime Type Identification)"></a>RTTI(Runtime Type Identification)</h3><p>运行时类型识别</p>
+<h3 id="HITCON-Training-Lab15"><a href="#HITCON-Training-Lab15" class="headerlink" title="HITCON Training Lab15"></a>HITCON Training Lab15</h3><p>就是一个关于类的pwn…C++的逆向还是太….<br>看着太累了</p>
 <h2 id="Patch"><a href="#Patch" class="headerlink" title="Patch"></a>Patch</h2><p>上次做题目,patch是使劲点patch,结果发现没毛用<br>后来在IDA里记下offset, 然后用<code>GHex</code>修改的…</p>
 <p>今天翻开书…看到这样子一段话</p>
 <blockquote>
@@ -715,6 +716,7 @@ call 各种命名空间::~basic_string()   ;销毁ss
 <p>This file contains definitions used by the Hex-Rays decompiler output.</p>
 </blockquote>
 <p>比如我们提取出IDA里的某一块逻辑出来, 这个时候会有一些比如<code>DOWRD</code>之类类型的定义, 这些定义都在这个头文件里, </p>
+<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><p>今天想要…把数据变成负数的时候…一时不知道怎么办<br>然后发现要先变成10进制, 然后右键选单里才有变成负数…<br>右键的时候稍微靠后一点…离的太近可能出不来</p>
 
         
     
@@ -841,7 +843,7 @@ call 各种命名空间::~basic_string()   ;销毁ss
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="/archives/2018/03/">三月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/01/">一月 2018<span class="sidebar_archives-count">10</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/10/">十月 2017<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">16</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">38</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">13</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">52</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">26</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">13</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/11/">十一月 2016<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/10/">十月 2016<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/07/">七月 2016<span class="sidebar_archives-count">13</span></a>
+                <a class="sidebar_archives-link" href="/archives/2018/07/">七月 2018<span class="sidebar_archives-count">14</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/06/">六月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/05/">五月 2018<span class="sidebar_archives-count">11</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/04/">四月 2018<span class="sidebar_archives-count">12</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/03/">三月 2018<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/01/">一月 2018<span class="sidebar_archives-count">10</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/10/">十月 2017<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">16</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">38</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">13</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">52</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">26</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">13</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/11/">十一月 2016<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/10/">十月 2016<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/07/">七月 2016<span class="sidebar_archives-count">13</span></a>
             </ul>
         </li>
         
@@ -859,7 +861,7 @@ call 各种命名空间::~basic_string()   ;销毁ss
             </a>
             <ul class="dropdown-menu">
                 <li>
-                <a class="sidebar_archives-link" href="/categories/issue/">issue<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/trick/">trick<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/writeup/">writeup<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/备忘/">备忘<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/学习/">学习<span class="sidebar_archives-count">26</span></a></li><li><a class="sidebar_archives-link" href="/categories/日记/">日记<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/categories/笔记/">笔记<span class="sidebar_archives-count">1</span></a>
+                <a class="sidebar_archives-link" href="/categories/issue/">issue<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/trick/">trick<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/categories/writeup/">writeup<span class="sidebar_archives-count">24</span></a></li><li><a class="sidebar_archives-link" href="/categories/writeup/学习/">学习<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/咸鱼/">咸鱼<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/备忘/">备忘<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/学习/">学习<span class="sidebar_archives-count">35</span></a></li><li><a class="sidebar_archives-link" href="/categories/日记/">日记<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/笔记/">笔记<span class="sidebar_archives-count">1</span></a>
             </ul>
         </li>
         
