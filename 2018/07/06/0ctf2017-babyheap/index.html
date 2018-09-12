@@ -246,7 +246,7 @@
 
     
         <meta property="article:published_time" content="Fri Jul 06 2018 20:22:24 GMT+0800" />
-        <meta property="article:modified_time" content="Tue Jul 10 2018 19:28:33 GMT+0800" />
+        <meta property="article:modified_time" content="Thu Jul 19 2018 12:37:01 GMT+0800" />
     
 
     <!-- The Twitter Card protocol -->
@@ -273,7 +273,7 @@
     "mainEntityOfPage": "http://yoursite.com/2018/07/06/0ctf2017-babyheap/index.html",
     "headline": "0ctf2017 | babyheap",
     "datePublished": "Fri Jul 06 2018 20:22:24 GMT+0800",
-    "dateModified": "Tue Jul 10 2018 19:28:33 GMT+0800",
+    "dateModified": "Thu Jul 19 2018 12:37:01 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "Aryb1n",
@@ -351,6 +351,15 @@
 
     <!-- Left aligned menu below button -->
     
+    
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#关于跳转表"><span class="post-toc-number">1.</span> <span class="post-toc-text">关于跳转表</span></a></li></ol>
+    </ul>
     
 
 
@@ -515,6 +524,9 @@ gdb<span class="token operator">-</span>peda$ x<span class="token operator">/</s
 <p>这个地方在我的环境里是距离<code>main_arena</code>距离为<code>0x7ffff7dd1b20 - 0x7ffff7dd1aed</code>, 所以<code>fake_chunk</code>地址是<code>main_arena - 0x33</code>, 这个<code>0x33</code>应该是出现在通过fake_chunk来更改<code>malloc_hook</code>的各种WP里…可以记住这值了<br>23333, 也有的人写<code>malloc_hook - 0x23</code>, 一样的</p>
 <p>而且由于伪造的<code>size</code>是0x7f, 所以…在计算大小的时候, <code>fastbin_index(0x7f)</code>, 是属于fastbinY[5], 对应chunk大小是<code>0x70</code>, data部分是<code>0x60</code>的…所以要选择分配对应大小的块, 才可以</p>
 <p>喔, That’ all.</p>
+<h3 id="关于跳转表"><a href="#关于跳转表" class="headerlink" title="关于跳转表"></a>关于跳转表</h3><p>IDA里出现了这个内容…虽然算一下就OK, 但看着很不直观</p>
+<pre class="line-numbers language-c"><code class="language-c">  <span class="token function">JUMPOUT</span><span class="token punctuation">(</span>__CS__<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span>dword_14F4 <span class="token operator">+</span> dword_14F4<span class="token punctuation">[</span>v3<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
         
     
@@ -641,7 +653,7 @@ gdb<span class="token operator">-</span>peda$ x<span class="token operator">/</s
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="/archives/2018/07/">七月 2018<span class="sidebar_archives-count">14</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/06/">六月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/05/">五月 2018<span class="sidebar_archives-count">11</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/04/">四月 2018<span class="sidebar_archives-count">12</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/03/">三月 2018<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/01/">一月 2018<span class="sidebar_archives-count">10</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/10/">十月 2017<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">16</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">38</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">13</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">52</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">26</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">13</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/11/">十一月 2016<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/10/">十月 2016<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/07/">七月 2016<span class="sidebar_archives-count">13</span></a>
+                <a class="sidebar_archives-link" href="/archives/2018/09/">九月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/07/">七月 2018<span class="sidebar_archives-count">18</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/06/">六月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/05/">五月 2018<span class="sidebar_archives-count">11</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/04/">四月 2018<span class="sidebar_archives-count">12</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/03/">三月 2018<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/01/">一月 2018<span class="sidebar_archives-count">10</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/10/">十月 2017<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">16</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">38</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">13</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">52</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">26</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">13</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/11/">十一月 2016<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/10/">十月 2016<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/07/">七月 2016<span class="sidebar_archives-count">13</span></a>
             </ul>
         </li>
         
@@ -659,7 +671,7 @@ gdb<span class="token operator">-</span>peda$ x<span class="token operator">/</s
             </a>
             <ul class="dropdown-menu">
                 <li>
-                <a class="sidebar_archives-link" href="/categories/issue/">issue<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/trick/">trick<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/categories/writeup/">writeup<span class="sidebar_archives-count">24</span></a></li><li><a class="sidebar_archives-link" href="/categories/writeup/学习/">学习<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/咸鱼/">咸鱼<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/备忘/">备忘<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/学习/">学习<span class="sidebar_archives-count">35</span></a></li><li><a class="sidebar_archives-link" href="/categories/日记/">日记<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/笔记/">笔记<span class="sidebar_archives-count">1</span></a>
+                <a class="sidebar_archives-link" href="/categories/issue/">issue<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/trick/">trick<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/categories/writeup/">writeup<span class="sidebar_archives-count">27</span></a></li><li><a class="sidebar_archives-link" href="/categories/writeup/学习/">学习<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/咸鱼/">咸鱼<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/备忘/">备忘<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/学习/">学习<span class="sidebar_archives-count">35</span></a></li><li><a class="sidebar_archives-link" href="/categories/日记/">日记<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/笔记/">笔记<span class="sidebar_archives-count">1</span></a>
             </ul>
         </li>
         

