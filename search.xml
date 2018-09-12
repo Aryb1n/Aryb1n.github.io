@@ -6,6 +6,13 @@
       <title><![CDATA[好久不更blog]]></title>
       <url>/2018/09/12/%E5%A5%BD%E4%B9%85%E4%B8%8D%E6%9B%B4blog/</url>
       <content type="html"><![CDATA[<p>真的是好久不更blog…最近的生活有点迷</p>
+<p>还是linux的操作比较流畅, 开心</p>
+<p>最近学逆向用了一段时间windows, 给我的感觉是windows上的字体看起来很精细…还有就是我的机子跑windows有点…不流畅, 经常卡顿, 可能是硬件老了吧</p>
+<p>开始还准备在windows上搞个ubuntu虚拟机就暂时不用ubuntu了<br>然而…我发现…有点卡, 特别是做kernel pwn的时候, 我又开一个qemu…弹一个新的终端都要卡一下</p>
+<p>!!!不过有一个很nice的地方, 就是我的burp在windows下及其的流畅</p>
+<p>windows下涉及到请求https的时候, 我的就不是很正常, 可能是某些东西没装上</p>
+<p>wireshark好像也有依赖没装上</p>
+<p>本来准备把blog的文件夹打包一遍然后搞到windows下的虚拟机里跑…现在感觉linux这么流畅不太想搞了==</p>
 ]]></content>
       
         
