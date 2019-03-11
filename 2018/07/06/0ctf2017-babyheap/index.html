@@ -246,7 +246,7 @@
 
     
         <meta property="article:published_time" content="Fri Jul 06 2018 20:22:24 GMT+0800" />
-        <meta property="article:modified_time" content="Thu Jul 19 2018 12:37:01 GMT+0800" />
+        <meta property="article:modified_time" content="Mon Mar 11 2019 23:01:24 GMT+0800" />
     
 
     <!-- The Twitter Card protocol -->
@@ -273,7 +273,7 @@
     "mainEntityOfPage": "http://yoursite.com/2018/07/06/0ctf2017-babyheap/index.html",
     "headline": "0ctf2017 | babyheap",
     "datePublished": "Fri Jul 06 2018 20:22:24 GMT+0800",
-    "dateModified": "Thu Jul 19 2018 12:37:01 GMT+0800",
+    "dateModified": "Mon Mar 11 2019 23:01:24 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "Aryb1n",
@@ -506,6 +506,98 @@
 <p>然后通过两次fastbin大小的请求, 把这块smallbin再申请出来, 再把size改回去, 好让他释放后放到unsorted bin</p>
 <p>这一波神奇的操作就是为了让俩块bheap都持有这块smallbin的指针…</p>
 <p>使得我们能够释放一个bheap, 把smallbin放入了unsorted bin, 的同时, 用另一块持有这块堆块指针的bheap能够使用dump来leak出来地址</p>
+<blockquote>
+<p>update 2019-3-11<br>当时感觉上面说的方法很…奇特…今天发现一个dalao的blog里写的感觉很棒..一种不同的方法<br>dalao的blog链接: <a href="http://www.pwndog.top/2018/09/11/%E5%A0%86%E6%BA%A2%E5%87%BA%E7%9A%84%E5%85%AD%E7%A7%8D%E5%88%A9%E7%94%A8%E6%89%8B%E6%B3%95/" target="_blank" rel="external">http://www.pwndog.top/2018/09/11/%E5%A0%86%E6%BA%A2%E5%87%BA%E7%9A%84%E5%85%AD%E7%A7%8D%E5%88%A9%E7%94%A8%E6%89%8B%E6%B3%95/</a></p>
+</blockquote>
+<p>对于三个块进行操作, </p>
+<pre><code>...
+malloc(0x60)
+malloc(0x60)
+malloc(0x60)
+...
+</code></pre><p>对应的内存分布图</p>
+<pre><code>-------------
+chunk2 0x71
+-------------
+chunk3 0x71
+-------------
+chunk4 0x71
+-------------
+</code></pre><p>然后fill这个chunk2..溢出使得chunk3的size发生变化</p>
+<pre><code>-------------
+chunk2 0x71
+-------------
+chunk3 0xe1 (0x70 * 2 + 1)
+-------------
+chunk4 0x71
+-------------
+</code></pre><p>然后free掉chunk3…因为0xe1大小已经属于fastbin了…所以free掉的时候会放进unsorted bin</p>
+<p>然后再进行malloc…这里就是神奇的地方…由于fastbin里没找到合适的, 但unsorted bin里有一块大小0xe0的块, 就会把他切分, 把靠前的0x70字节(原来chunk3位置的块)返回作为这次malloc的分配的块, 然后接下来的0x70(由于我们溢出改了size,才让系统认为我们free掉了一个0xe0的块,所以靠后的这0x70其实是原来的chunk4的位置)就被放回到unsorted bin里继续候着…<br>所以这个时候就出现了</p>
+<pre><code>0x558d9949e0e0: 0x0000000000000000  0x0000000000000071 -&gt; chunk2
+0x558d9949e0f0: 0x6161616161616161  0x6161616161616161
+0x558d9949e100: 0x6161616161616161  0x6161616161616161
+0x558d9949e110: 0x6161616161616161  0x6161616161616161
+0x558d9949e120: 0x6161616161616161  0x6161616161616161
+0x558d9949e130: 0x6161616161616161  0x6161616161616161
+0x558d9949e140: 0x6161616161616161  0x6161616161616161
+0x558d9949e150: 0x0000000000000000  0x0000000000000071 -&gt; chunk3, 刚malloc回来
+0x558d9949e160: 0x0000000000000000  0x0000000000000000
+0x558d9949e170: 0x0000000000000000  0x0000000000000000
+0x558d9949e180: 0x0000000000000000  0x0000000000000000
+0x558d9949e190: 0x0000000000000000  0x0000000000000000
+0x558d9949e1a0: 0x0000000000000000  0x0000000000000000
+0x558d9949e1b0: 0x0000000000000000  0x0000000000000000
+0x558d9949e1c0: 0x0000000000000000  0x0000000000000071 -&gt; 切剩下放回unsorted bin
+0x558d9949e1d0: 0x00007ff6212b8b78  0x00007ff6212b8b78
+0x558d9949e1e0: 0x0000000000000000  0x0000000000000000
+</code></pre><p>这个时候由于chunk4切剩下放回了unsorted bin, 就使的现在show 一下chunk4就能得到libc</p>
+<p>dalao tql, 我们做的就是写chunk2溢出修改到chunk3的size, 然后free掉chunk3, show chunk4</p>
+<p>但…不知道我理解的对不对…因为之前一直因为, 这个切一部分unsorted bin的操作是只有没找到合适的smallbin才切…没发现…这tm也能切…没找到合适的fastbin也能切???</p>
+<p>所以准备在free之后..在malloc的地方打断点,调试的学习一下</p>
+<p>woc…我的这个源码好像对不上…醉了, 明明都是2.23</p>
+<p>只能依稀的观察到这个0xe0的块开始在 bins0 …. 然后 到了…bins26…然后他…好像就被切了..之后的0x70又在bins0里</p>
+<p>在这个中有提到 <a href="http://brieflyx.me/2016/heap/glibc-heap/" target="_blank" rel="external">http://brieflyx.me/2016/heap/glibc-heap/</a></p>
+<p>这个应该是前面的fastbinY和smallbin都没有找到合适的,所以开始处理unsorted的块</p>
+<p>迭代过程中,找到大小正好的就返回, 不然的话, 就把这个块放到对应的small bin或者large bin里<br>等到unsorted里没有块l<br>然后在small bins和large bins里找到满足需求的最小块, 然后切分, 前一块给用户, 后面一块放到unsorted bin里</p>
+<p>好了,学到了….我去再仔细看看源代码</p>
+<p>调试一下可以发现, 我们free掉chunk3的时候, unsorted bin里的0xe0这块不叫last_reminder, 而之后切剩下这块叫做last_reminder<br>(p main_arena 能看到这个结构)</p>
+<p>看一下last_reminder定义是…<br>/<em> The remainder from the most recent split of a small request </em>/<br>那….为什么我的一个split of a fast request也叫….last_reminder</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;stdio.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;string.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;stdlib.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">void</span> <span class="token operator">*</span> ck2 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x60</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token operator">*</span> ck3 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x60</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token operator">*</span> ck4 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x60</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">char</span> <span class="token operator">*</span> l <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">char</span><span class="token operator">*</span><span class="token punctuation">)</span>ck2<span class="token punctuation">;</span>
+    l<span class="token punctuation">[</span><span class="token number">96</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0x00</span><span class="token punctuation">;</span>
+    l<span class="token punctuation">[</span><span class="token number">96</span> <span class="token operator">+</span> <span class="token number">8</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0xe1</span><span class="token punctuation">;</span>
+
+    <span class="token function">getchar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">free</span><span class="token punctuation">(</span>ck3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">getchar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x60</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">getchar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>验证一下…</p>
+<pre><code>gdb-peda$ heap all
+Top Chunk:  0x602560
+Last Remainder:  0x6020e0
+0x602000 SIZE=0x70 DATA[0x602010] |................................| INUSED PREV_INUSE
+0x602070 SIZE=0x70 DATA[0x602080] |H.......H.......................| INUSED PREV_INUSE
+0x6020e0 SIZE=0x70 DATA[0x6020f0] |x.......x.......................| PREV_INUSE INUSED
+0x602150 SIZE=0x410 DATA[0x602160] |................................| INUSED
+0x602560 SIZE=0x20aa0 TOP_CHUNK
+</code></pre><p>看来我一直对这个last_reminder有误解</p>
+<p>不过这个dalao的完整的exp在我这边跑不起来</p>
+<blockquote>
+<p>以下是之前的记录 </p>
+</blockquote>
 <p>再说这个错位分配<code>fake_chunk</code>到<code>malloc_hook</code>附近的操作</p>
 <p>我的环境是这样, 和ctf-wiki中介绍的一样, malloc_hook和realloc_hook挨着的, 和<code>main_arena</code>差一点</p>
 <pre class="line-numbers language-c"><code class="language-c">gdb<span class="token operator">-</span>peda$ x<span class="token operator">/</span>gx <span class="token number">0x7ffff7dd1b08</span>
