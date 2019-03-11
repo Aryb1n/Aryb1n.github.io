@@ -885,6 +885,11 @@ Last Remainder:  0x6020e0
 0x602150 SIZE=0x410 DATA[0x602160] |................................| INUSED
 0x602560 SIZE=0x20aa0 TOP_CHUNK
 </code></pre><p>看来我一直对这个last_reminder有误解</p>
+<p>喔,不是,原来是我对这个 smallbin理解有误…fastbin大小是包含在了smallbin大小里</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">define</span> in_smallbin_range(sz)                                                  \
+    ((unsigned long) (sz) &lt; (unsigned long) MIN_LARGE_SIZE)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>明天再继续仔细看一看</p>
 <p>不过这个dalao的完整的exp在我这边跑不起来</p>
 <blockquote>
 <p>以下是之前的记录 </p>
