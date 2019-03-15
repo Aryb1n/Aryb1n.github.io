@@ -3,6 +3,94 @@
   
     
     <entry>
+      <title><![CDATA[heap | malloc consolidate]]></title>
+      <url>/2019/03/15/heap-malloc-consolidate/</url>
+      <content type="html"><![CDATA[<p>起初完全不懂…<br>看了源代码, 笔记记在了0ctf2017-babyheap里<br>就大概是<code>_int_malloc</code>里</p>
+<ol>
+<li>请求的大小是large bin的时候, 常见</li>
+<li>要用到top chunk, 但发现top chunk不够大了, (不太常见, 得多勤快</li>
+</ol>
+<p>然后看到ctf-wiki对house_of_rabbit的讲解这个poc1<br><a href="https://ctf-wiki.github.io/ctf-wiki/pwn/linux/glibc-heap/house_of_rabbit/" target="_blank" rel="external">https://ctf-wiki.github.io/ctf-wiki/pwn/linux/glibc-heap/house_of_rabbit/</a></p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;stdio.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;stdlib.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;string.h></span></span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">long</span><span class="token operator">*</span> chunk1<span class="token operator">=</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x40</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//0x602000</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">long</span><span class="token operator">*</span> chunk2<span class="token operator">=</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x40</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//0x602050</span>
+    <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">free</span><span class="token punctuation">(</span>chunk1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">free</span><span class="token punctuation">(</span>chunk2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">//    chunk1[-1]=0xa1; //modify chunk1 size to be 0xa1</span>
+    <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这里<code>chunk1[-1]=0xa1</code>赋值的这里, 如果有这一句, 那么<code>malloc_consolidate</code>之后,fastbin不会被合并</p>
+<pre class="line-numbers language-c"><code class="language-c">gdb<span class="token operator">-</span>peda$ heap freed 
+FASTBINS<span class="token punctuation">:</span>
+UNSORTBINS <span class="token punctuation">:</span> 
+bins <span class="token number">8</span> <span class="token punctuation">:</span> 
+<span class="token number">0x602050</span> SIZE<span class="token operator">=</span><span class="token number">0x50</span> DATA<span class="token punctuation">[</span><span class="token number">0x602060</span><span class="token punctuation">]</span> <span class="token operator">|</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token operator">|</span> PREV_INUSE INUSED
+bins <span class="token number">18</span> <span class="token punctuation">:</span> 
+<span class="token number">0x602000</span> SIZE<span class="token operator">=</span><span class="token number">0xa0</span> DATA<span class="token punctuation">[</span><span class="token number">0x602010</span><span class="token punctuation">]</span> <span class="token operator">|</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token operator">|</span> PREV_INUSE INUSED
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>达到的目的就是…<code>0x602000</code> overlap掉了 <code>0x602050</code></p>
+<p>如果没有这一句,,,就会变成</p>
+<pre class="line-numbers language-c"><code class="language-c">gdb<span class="token operator">-</span>peda$ heap freed
+FASTBINS<span class="token punctuation">:</span>
+UNSORTBINS <span class="token punctuation">:</span> 
+bins <span class="token number">18</span> <span class="token punctuation">:</span> 
+<span class="token number">0x602000</span> SIZE<span class="token operator">=</span><span class="token number">0xa0</span> DATA<span class="token punctuation">[</span><span class="token number">0x602010</span><span class="token punctuation">]</span> <span class="token operator">|</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token operator">|</span> PREV_INUSE INUSED
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>两块就变成一块了</p>
+<p>所以这个…改掉某一fastbin free块的size…会对其他块在合并的时候造成问题…?</p>
+<blockquote>
+<p>house of rabbit 就利用了在 malloc consolidate 的时候 fastbin 中的堆块进行合并时 size 没有进行检查从而伪造一个假的堆块</p>
+</blockquote>
+<p>todo: 好好看看malloc_consolidate的代码<br>todo: hose_of_orange<br>todo: house_of_Roman</p>
+]]></content>
+      
+        <categories>
+            
+            <category> trick </category>
+            
+        </categories>
+        
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[33c3 CTF | babyfengshui]]></title>
+      <url>/2019/03/12/33c3-CTF-babyfengshui/</url>
+      <content type="html"><![CDATA[<p>这题…有一个假设就是<br>省略了读题<br>desc 和 user 是挨着的, 所以设置了验证</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>uint32_t<span class="token punctuation">)</span> store<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token operator">-></span>desc <span class="token operator">+</span> sz <span class="token operator">>=</span> <span class="token punctuation">(</span>uint32_t<span class="token punctuation">)</span> store<span class="token punctuation">[</span>idx<span class="token punctuation">]</span> <span class="token operator">-</span> <span class="token number">4</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>而关键就是打破这个假设</p>
+<p>直接学了一下wp</p>
+<p><a href="http://bruce30262.logdown.com/posts/1256093-33c3-ctf-2016-babyfengshui" target="_blank" rel="external">http://bruce30262.logdown.com/posts/1256093-33c3-ctf-2016-babyfengshui</a></p>
+<p>这一篇的wp是. desc是fastbin大小..free掉一个user, 会出现一个fastbin(desc)和一个unsorted(user数据结构,大小0x80), 然后申请一个带有0x80大小的desc的user..由于题目逻辑是先malloc出来的给desc…所以desc就占有了之前user的这块内存</p>
+<p>大致先记录一下…回头看,现在先吃饭</p>
+<p>还有一种做法</p>
+<p><a href="https://firmianay.gitbooks.io/ctf-all-in-one/content/doc/6.1.20_pwn_33c3ctf2016_babyfengshui.html" target="_blank" rel="external">https://firmianay.gitbooks.io/ctf-all-in-one/content/doc/6.1.20_pwn_33c3ctf2016_babyfengshui.html</a></p>
+<p>就是desc是和user同大小0x80…然后删掉一个user…那么由于是smallbin, 所以会合并然后进入到unsorted里…那么下次再申请一个0x100的desc, 就能这个合并过后的分出来了</p>
+<p>之后再继续学习</p>
+<p>todo: xnuca note</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> writeup </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[学期要结束了]]></title>
       <url>/2018/12/16/%E5%AD%A6%E6%9C%9F%E8%A6%81%E7%BB%93%E6%9D%9F%E4%BA%86/</url>
       <content type="html"><![CDATA[<p>忙忙碌碌, 一个学期就要结束了</p>
@@ -885,13 +973,86 @@ Last Remainder:  0x6020e0
 0x602150 SIZE=0x410 DATA[0x602160] |................................| INUSED
 0x602560 SIZE=0x20aa0 TOP_CHUNK
 </code></pre><p>看来我一直对这个last_reminder有误解</p>
-<p>喔,不是,原来是我对这个 smallbin理解有误…fastbin大小是包含在了smallbin大小里</p>
+<p>喔,不是,原来是我对这个 smallbin理解有误…fastbin大小是包含在了smallbin大小里, 好吧, 我好菜啊</p>
 <pre class="line-numbers language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">define</span> in_smallbin_range(sz)                                                  \
     ((unsigned long) (sz) &lt; (unsigned long) MIN_LARGE_SIZE)</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>明天再继续仔细看一看</p>
-<p>不过这个dalao的完整的exp在我这边跑不起来</p>
+<p>仔细的阅读了一下<br>‘_int_malloc’会<br>先精准的匹配fastbin<br>然后精准匹配smallbin<br>然后..<del>还没匹配到的话</del>, 如果是large的请求, 就把fastbin合并丢到unsorted bin里了, 就是传说中的<code>malloc_consolidate</code></p>
+<p>这里的说明就是他代码是 </p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">in_smallbin_range</span><span class="token punctuation">(</span>nb<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+ <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+ <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+ <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">hava_fastchunks</span><span class="token punctuation">(</span>av<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">malloc_consolidate</span><span class="token punctuation">(</span>av<span class="token punctuation">)</span>
+ <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>就算是请求smallbin, 但没有匹配到, 也不会进行malloc_consolidate, 我之前理解错了</p>
+<p>之后就是一个大循环<br>进入大循环 <a href="https://heap-exploitation.dhavalkapil.com/diving_into_glibc_heap/core_functions.html" target="_blank" rel="external">说明</a></p>
+<ol>
+<li>Size falls into ‘fastbin’ range but no fastchunk is available.</li>
+<li>Size falls into ‘smallbin’ range but no smallchunk is available (calls malloc_consolidate during initialization).</li>
+<li>Size falls into ‘largbin’ range.<br>(而不是某些文章分析说的, 进入大循环说明就是一定要分配large bin了</li>
+</ol>
+<p>大循环(有点复杂….)…不过这个大循环怎么结束呢, 没有强制最多多少次?</p>
+<pre><code>1. 小循环, 会反向的遍历unsorted bin...最多1w次
+    - 先对当前块检查大小是不是符合规矩, 不然就报个错
+    - 如果当前块大小符合smallbin 并且 是last_reminder 并且 unsorted里就这一个块 并且 大小够: 就把这块给切分, 前一块返回给用户, 后一块做为新的last_reminder
+    &gt; 那么我有个问题就是, last_reminder是从last_reminder切出来得到的, 那最开始的那一块last_reminder从何而来, 通过搜索...`av-&gt;last_remainder =`, 我找到了另一处赋值, 在小循环之外
+    - 如果不满足上述, 那么就把当前块放回对应的smallbin或者largebin里, 这个就是题目中看到的unsorted先回到了smallbin的地方
+2. 寻找largebin
+3. 到了这里说明...不能精准匹配了, 尝试找一块更大的块切开, 我们题目exp里切切开就是在这个地方..., 产生了最初的last_reminder, 切完之后, 剩下的部分好像是属于smallbin, 才给last_reminder赋值 
+</code></pre><pre class="line-numbers language-c"><code class="language-c">
+  <span class="token comment" spellcheck="true">/* advertise as last remainder */</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">in_smallbin_range</span> <span class="token punctuation">(</span>nb<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    av<span class="token operator">-></span>last_remainder <span class="token operator">=</span> remainder<span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">in_smallbin_range</span> <span class="token punctuation">(</span>remainder_size<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+      remainder<span class="token operator">-></span>fd_nextsize <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+      remainder<span class="token operator">-></span>bk_nextsize <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre><code>4. 到了这里就要用top了...
+5. ~~再次合并fastbin, 就是malloc_consolidate...~~ 这里有点问题 ... 并不是要用top就malloc_consolidate
+6. 用sysmalloc
+</code></pre><p>4.5.6 这里的逻辑是</p>
+<pre class="line-numbers language-c"><code class="language-c">use_top<span class="token punctuation">:</span>
+victim <span class="token operator">=</span> av <span class="token operator">-></span> top<span class="token punctuation">;</span>
+size <span class="token operator">=</span> <span class="token function">chunsize</span><span class="token punctuation">(</span>victim<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">long</span><span class="token punctuation">)</span> size <span class="token operator">>=</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">long</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>nb <span class="token operator">+</span> MINSIZE<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// top大小够用...使用top</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">hava_fastchunks</span><span class="token punctuation">(</span>av<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">malloc_consolidate</span><span class="token punctuation">(</span>av<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// top大小不够...才malloc_consolidate</span>
+<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 使用sysmalloc....</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>也就是说…其实吧, 这里出现的malloc_consolidate的几率也比较小…<br>所以大概认为malloc_consolidate基本只会粗线在largebin的申请中</p>
+<p><del>我有个问题, 在这里最后都用sysmalloc了….肯定就结束了, 那这个大循环有什么意义呢, 大循环这里代码大概是</del> 问题解决</p>
+<pre class="line-numbers language-c"><code class="language-c">  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span><span class="token punctuation">;</span> <span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+      <span class="token keyword">int</span> iters <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+      <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>victim <span class="token operator">=</span> <span class="token function">unsorted_chunks</span> <span class="token punctuation">(</span>av<span class="token punctuation">)</span><span class="token operator">-></span>bk<span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token function">unsorted_chunks</span> <span class="token punctuation">(</span>av<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+
+        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+
+          <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">++</span>iters <span class="token operator">>=</span> MAX_ITERS<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// 小循环最多1k次</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token comment" spellcheck="true">// 寻找largbin, 切大块, 用top....无数代码</span>
+        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token comment" spellcheck="true">// 合并fastbin, 用sysmalloc</span>
+    <span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><del>有没有大佬能解答我的问题, 私撩我好嘛</del> 问题解决..自己没好好读代码</p>
 <blockquote>
+<p>我的理解仿佛和大佬不一样, a, 我好菜啊</p>
+<p>不过这个dalao的完整的exp在我这边跑不起来</p>
 <p>以下是之前的记录 </p>
 </blockquote>
 <p>再说这个错位分配<code>fake_chunk</code>到<code>malloc_hook</code>附近的操作</p>
