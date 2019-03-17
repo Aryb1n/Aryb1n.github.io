@@ -3,6 +3,116 @@
   
     
     <entry>
+      <title><![CDATA[unlink | 记录]]></title>
+      <url>/2019/03/17/unlink-%E8%AE%B0%E5%BD%95/</url>
+      <content type="html"><![CDATA[<p>学习全靠宋师傅帮助, 宋师傅tql, 我好菜啊</p>
+<p>how2heap的例子, 去掉了printf..就是下面的</p>
+<p>就是喜闻乐见的chunk0溢出, 修改chunk1的size里的in_use, 以及prevsize, 然后再free chunk1的时候chunk0就会惨遭unlink</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;string.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdint.h></span></span>
+
+
+uint64_t <span class="token operator">*</span>chunk0_ptr<span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+
+    <span class="token keyword">int</span> malloc_size <span class="token operator">=</span> <span class="token number">0x80</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//we want to be big enough not to use fastbins</span>
+    <span class="token keyword">int</span> header_size <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+
+
+    chunk0_ptr <span class="token operator">=</span> <span class="token punctuation">(</span>uint64_t<span class="token operator">*</span><span class="token punctuation">)</span> <span class="token function">malloc</span><span class="token punctuation">(</span>malloc_size<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//chunk0</span>
+    uint64_t <span class="token operator">*</span>chunk1_ptr  <span class="token operator">=</span> <span class="token punctuation">(</span>uint64_t<span class="token operator">*</span><span class="token punctuation">)</span> <span class="token function">malloc</span><span class="token punctuation">(</span>malloc_size<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//chunk1</span>
+
+    chunk0_ptr<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span>uint64_t<span class="token punctuation">)</span> <span class="token operator">&amp;</span>chunk0_ptr<span class="token operator">-</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>uint64_t<span class="token punctuation">)</span><span class="token operator">*</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    chunk0_ptr<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span>uint64_t<span class="token punctuation">)</span> <span class="token operator">&amp;</span>chunk0_ptr<span class="token operator">-</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>uint64_t<span class="token punctuation">)</span><span class="token operator">*</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">/*
+    chunk0_ptr[0] = (uint64_t) &amp;chunk0_ptr-(sizeof(uint64_t)*3);
+    chunk0_ptr[1] = (uint64_t) &amp;chunk0_ptr-(sizeof(uint64_t)*2);
+    */</span>
+
+    uint64_t <span class="token operator">*</span>chunk1_hdr <span class="token operator">=</span> chunk1_ptr <span class="token operator">-</span> header_size<span class="token punctuation">;</span>
+
+    chunk1_hdr<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> malloc_size<span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//    chunk1_hdr[0] = malloc_size + 0x10;</span>
+
+    chunk1_hdr<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">&amp;</span><span class="token operator">=</span> <span class="token operator">~</span><span class="token number">1</span><span class="token punctuation">;</span>
+
+    <span class="token function">free</span><span class="token punctuation">(</span>chunk1_ptr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+    <span class="token keyword">char</span> victim_string<span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token function">strcpy</span><span class="token punctuation">(</span>victim_string<span class="token punctuation">,</span><span class="token string">"Hello!~"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    chunk0_ptr<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span>uint64_t<span class="token punctuation">)</span> victim_string<span class="token punctuation">;</span>
+
+    chunk0_ptr<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0x4141414142424242LL</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这个注释吧,是我加的…我开始想第一个问题就是</p>
+<p>在伪造fake chunk的时候为什么不能换成注释这种…</p>
+<p>这样子为什么不可以呢</p>
+<pre><code>----------- &lt;---- fake_chunk
+prevsize
+----------
+size
+----------
+fake_fd
+----------
+fake_bk
+----------
+....
+----------
+</code></pre><p>为什么要给chunk0的<code>fake_size</code>和<code>fake_prevsize</code>留位置</p>
+<pre><code>----------- 
+prevsize
+----------
+size
+----------&lt;---- fake_chunk
+fake_prev
+----------
+fake_size
+----------
+fake_fd
+----------
+fake_bk
+----------
+....
+----------
+</code></pre><p>是因为题目中一般都是</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">char</span> <span class="token operator">*</span> something_list<span class="token punctuation">[</span><span class="token number">20</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+something_list<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x20</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// chunk0</span>
+something_list<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x20</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// chunk1</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>所以一般只能找到指向chunk的data的指针, 但很难找到指向chunk头部的指针, 所以要从头开始构造<br>比如这个<code>something_list[0]</code>就是指向chunk0的data字段的….所以只能从这里开始伪造一个完整的fake_chunk</p>
+<p>第二个问题, 就是既然要从头伪造, 为什么这里没有给<code>chunk0_ptr[0]</code>和<code>chunk1_ptr[1]</code>赋值呢<br>本来给fake_chunk的size赋值是为了过这个check</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">define</span> unlink(AV, P, BK, FD) {                                            \
+    if (__builtin_expect (chunksize(P) != (next_chunk(P))->prev_size, 0))      \
+      malloc_printerr (check_action, "corrupted size vs. prev_size", P, AV);  \
+</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>但这里都是0, 所以相当于</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token function">chunksize</span><span class="token punctuation">(</span>P<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token function">next_chunk</span><span class="token punctuation">(</span>P<span class="token punctuation">)</span> <span class="token operator">=</span> P <span class="token comment" spellcheck="true">// 由于size字段是0...所以找到的next_chunk还是自己</span>
+<span class="token punctuation">(</span><span class="token function">next_chunk</span><span class="token punctuation">(</span>P<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">-></span>prev_size <span class="token operator">=</span> P <span class="token operator">-></span>prev_size
+<span class="token comment" spellcheck="true">// 所以相当于比较了P自己的prev_size和自己的size, 真好, 都是0</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>wo好菜啊, 我要加油, 宋师傅tql</p>
+]]></content>
+      
+        <categories>
+            
+            <category> pwn </category>
+            
+        </categories>
+        
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[heap | malloc consolidate]]></title>
       <url>/2019/03/15/heap-malloc-consolidate/</url>
       <content type="html"><![CDATA[<p>起初完全不懂…<br>看了源代码, 笔记记在了0ctf2017-babyheap里<br>就大概是<code>_int_malloc</code>里</p>
@@ -11772,6 +11882,21 @@ function doSomething2(){
     
     <entry>
       <title><![CDATA[ramda]]></title>
+      <url>/2017/05/23/ramda/</url>
+      <content type="html"><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>今天在知乎上看到了这个<code>Ramda</code><br>是一个函数式的.额,然后就想到了underscore</p>
+<p>搜了一下看到了<br>官网<code>http://ramdajs.com/</code>, github 8k star<br>所有的方法都支持Curry</p>
+<p>哦还搜到了一篇文章<br><a href="http://www.ruanyifeng.com/blog/2017/03/ramda.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2017/03/ramda.html</a></p>
+<p>还有一本gitbook是js函数式<br><a href="https://www.gitbook.com/book/llh911001/mostly-adequate-guide-chinese/details" target="_blank" rel="external">https://www.gitbook.com/book/llh911001/mostly-adequate-guide-chinese/details</a></p>
+<p>想有时间学一下,先mark一下</p>
+<p>算了不过了,mark啥,现在就学学呗</p>
+<p>等我先写完,,,那个a的href和onclick就学这个</p>
+]]></content>
+      
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[ramda]]></title>
       <url>/2017/05/23/Ramda/</url>
       <content type="html"><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>今天在知乎上看到了这个<code>Ramda</code><br>是一个函数式的.额,然后就想到了underscore</p>
 <p>搜了一下看到了<br>官网<code>http://ramdajs.com/</code>, github 8k star<br>所有的方法都支持Curry</p>
@@ -11830,21 +11955,6 @@ R<span class="token punctuation">.</span><span class="token function">test</span
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>确实很语义化,很酷炫,,,</p>
 <p>后面还有个很长的例子,,,很酷炫</p>
-]]></content>
-      
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[ramda]]></title>
-      <url>/2017/05/23/ramda/</url>
-      <content type="html"><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>今天在知乎上看到了这个<code>Ramda</code><br>是一个函数式的.额,然后就想到了underscore</p>
-<p>搜了一下看到了<br>官网<code>http://ramdajs.com/</code>, github 8k star<br>所有的方法都支持Curry</p>
-<p>哦还搜到了一篇文章<br><a href="http://www.ruanyifeng.com/blog/2017/03/ramda.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2017/03/ramda.html</a></p>
-<p>还有一本gitbook是js函数式<br><a href="https://www.gitbook.com/book/llh911001/mostly-adequate-guide-chinese/details" target="_blank" rel="external">https://www.gitbook.com/book/llh911001/mostly-adequate-guide-chinese/details</a></p>
-<p>想有时间学一下,先mark一下</p>
-<p>算了不过了,mark啥,现在就学学呗</p>
-<p>等我先写完,,,那个a的href和onclick就学这个</p>
 ]]></content>
       
         
@@ -15535,14 +15645,14 @@ creature<span class="token punctuation">.</span><span class="token function">sle
   
     
     <entry>
-      <title><![CDATA[友链]]></title>
-      <url>/links/index.html</url>
+      <title><![CDATA[tags]]></title>
+      <url>/tags/index.html</url>
       <content type="html"></content>
     </entry>
     
     <entry>
-      <title><![CDATA[tags]]></title>
-      <url>/tags/index.html</url>
+      <title><![CDATA[友链]]></title>
+      <url>/links/index.html</url>
       <content type="html"></content>
     </entry>
     
